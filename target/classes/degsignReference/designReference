@@ -1,0 +1,52 @@
+전체 - 배경색은 밝게
+
+header - 로고 좌측 배치, 나머지 메뉴들 우측 정렬, home, 영화, 극장, 리뷰 (로그인, 회원가입, 마이페이지 우측 배치), 우측 검색, 아래쪽에 구분선
+footer - 하얀색
+
+daum 영화 페이지 참조
+main - megabox, 배경화면은 밝게, 콘텐츠 주변 배경색은 어둡게, 좌우 스크롤 기능
+
+
+movie
+movieContent - 
+movieList - 가운데 배치, 색상은 
+
+review
+reviewList - 
+reviewRegist - 
+reviewContent - 
+reviewUpdate - 
+
+
+theater- 
+
+
+user
+join - 비동기
+login - 비동기
+mypage - 
+userInfo - 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

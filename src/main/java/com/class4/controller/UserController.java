@@ -19,6 +19,7 @@ public class UserController {
 	
 	@RequestMapping("/login")
 	public String login() {
+		System.out.println(1);
 		return "user/login";
 	}
 	

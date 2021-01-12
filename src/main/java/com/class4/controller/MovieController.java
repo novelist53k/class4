@@ -12,4 +12,21 @@ public class MovieController {
 		return "movie/movieList";
 	}
 	
+	@RequestMapping("/movieContent")
+	public String movieContent() {
+		return "movie/movieContent";
+	}
+	
+	@RequestMapping("/movieRegist")
+	public String movieRegist() {
+		return "movie/movieRegist";
+				
+	}	
+	
+	@RequestMapping("/movieUpdate")
+	public String movieUpdate() {
+		return "movie/movieUpdate";
+				
+	}	
+	
 }

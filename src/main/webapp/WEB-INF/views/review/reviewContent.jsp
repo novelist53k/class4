@@ -27,104 +27,90 @@ ul,li{
 }
 
 
-/* 리뷰 상세 포스터 */
 section {
-	/* margin-top: 30px; */
-	/* margin-left: 330px; */
-	padding: 20px;
-	background-color: rgb(238, 230, 230);
-	width: 996px;
-	margin: 30px auto;
+    /* margin-top: 30px; */
+    /* margin-left: 330px; */
+    padding: 20px;
+    background-color: rgb(238, 230, 230);
+    width: 996px;
+    margin: 30px auto;
+    background: radial-gradient( rgba(193, 193, 193), rgba(47, 47, 47, 0.8) );
+    /* background: radial-gradient( rgb(253, 119, 119,.3), rgb(250, 63, 63,.8) ); */
+    
 }
 
-.my-header {
-	position: fixed; /*boby기준으로 헤더 고정*/
-	top: 0;
-	left: 0;
-	width: 100%;
-	background-color: rgb(27, 27, 27);
-	z-index: 50; /*z축으로 50*/
-	color: white;
+.movie-img{
+    width: 19%;
+    height: 90%;
+    position: absolute;
+    float: left;
+    
+}
+.bno{
+    position: absolute;
+    top: 5px;
+    left: 12px;
+    z-index: 5;
+    font-size: 30px;
+    font-weight: bold;
+    color: black;
 }
 
-.my-header a {
-	color: white;
-	font-size: 15px;
-}
-
-.my-header a img {
-	background-color: white;
-	width: 30px;
-	height: 30px;
-}
-
-.navbar {
-	margin-bottom: 0;
-}
-
-.navbar-brand {
-	padding: 10px 20px;
-}
-
-.nav {
-	font-size: 15px;
-}
-
-hr {
-	margin-top: 20px;
-	margin-bottom: 20px;
-	border-top: 1px solid black;
-}
-
-.movie-img {
-	width: 20%;
-	height: 90%;
-	position: absolute;
-	float: left;
-	background: radial-gradient(#131111, #999999) fixed;
-	z-index: 1;
-}
-
-.bno {
-	position: absolute;
-	top: 5px;
-	left: 12px;
-	z-index: 5;
-	font-size: 30px;
-	font-weight: bold;
-	color: black;
-}
-
-.movie-img img {
-	width: 90%;
-	height: 100%;
-	z-index: 0;
+.movie-img img{
+    width: 100%;
+    height: 100%;
 }
 
 .review-content {
-	display: inline-block;
-	position: relative;
-	background-color: blanchedalmond;
-	padding: 10px;
-	left: 120px;
-	width: 80%;
-	border-radius: 10px;
+    display: inline-block;
+    position: relative;
+    background-color: black;
+    padding:10px;
+    left: 120px;
+    width: 80%;
+    /* border: 1px solid rgb(214, 213, 213); */
+    border-radius: 5px;
+    color: rgb(214, 213, 213);
 }
 
-.wrap {
-	background-color: rgb(27, 27, 27);
-	overflow: hidden;
-	margin: 10px;
-	padding: 10px;
-	border: 1px solid;
-	position: relative;
-	width: 600px;
-	/* flex-basis: 1000px; */
-	flex-shrink: 0;
-	margin: 0 auto;
+.wrap{
+    background-color: whitesmoke;
+    overflow: hidden;
+    margin: 10px;
+    padding: 10px;
+    border: 1px;
+    position: relative;
+    width: 600px;
+    /* flex-basis: 1000px; */
+    flex-shrink: 0;
+    margin: 0 auto;
+    background: linear-gradient( to left, rgba(193, 193, 193), black );
+}
+
+
+/* 리뷰 내용 작성 */
+.content{
+    width: 600px;
+    margin: 5px auto;
+}
+
+/* 댓글 프로필 이미지 */
+
+.profile-img img{
+    width: 55px;
+    margin-right: 5px;
+    float: left;
 }
 
 /* 댓글 */
+.form-control {
+    margin-top: 0;
+}
+
+
+.reply-content textarea{
+    width: 90%;
+}
 
 .reply-wrap{
     position: relative;
@@ -142,7 +128,7 @@ hr {
     <lable style="font-size: 40px;">영화 리뷰 상세페이지</lable>
     <div class = wrap>
         <div class = "movie-img">
-            <img src="${pageContext.request.contextPath}/resources/img/movie_image.jpg" alt="영화포스터">
+            <img src="${pageContext.request.contextPath }/resources/img/movie_image.jpg" alt="영화포스터">
             
         </div>    
         <div class = "review-content">
@@ -157,25 +143,28 @@ hr {
     <div class="content form-group">
         <label>내용</label>
         <textarea class="form-control" rows="10" name='content'></textarea>
-    </div>
-    <div class="btns" style="text-align: right;">
-        <button class = "list-btn">목록</button>
-        <button type = "submit" class = "list-modify">수정</button>
-        <button class = "list-delete">삭제</button>
-    </div>    
-    
-    
-    <label>댓글</label>
-    <div class="reply-wrap">
-        <div class="reply-content">
-            <textarea class="form-control" rows="2" id="reply" readonly></textarea>
-        </div>
-        <div class="reply-btn">
+        <div class="btns" style="text-align: right; margin-top: 5px;">
+            <button class = "list-btn">목록</button>
             <button type = "submit" class = "list-modify">수정</button>
             <button class = "list-delete">삭제</button>
+        </div>    
+        <label>댓글</label>
+        <div class="reply-wrap">
+            <div class="profile-img">
+                <img src="${pageContext.request.contextPath }/resources/img/default_profile.gif" alt="profile">
+            </div>
+            <div class="reply-content">
+                <textarea class="form-control" rows="2" id="reply" readonly></textarea>
+            </div>
+            <div class="reply-btn">
+                <button type = "submit" class = "list-modify">수정</button>
+                <button class = "list-delete">삭제</button>
+            </div>
+        </div>
+        <div class = "more-btn" >
+            <button type="button" style="width: 100%; margin-top: 10px; background-color: rgb(37,37,37); color: white;">댓글 더보기</button>
         </div>
     </div>
-    <div class = "more-btn" >
-        <button type="button" style="width: 100%; margin-top: 10px; background-color: rgb(37,37,37); color: white;">댓글 더보기</button>
-    </div>
+    
+    
 </section>

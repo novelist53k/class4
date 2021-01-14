@@ -27,114 +27,73 @@ ul,li{
 }
 
 
-/* 리뷰 상세 포스터 */
 section {
-	/* margin-top: 30px; */
-	/* margin-left: 330px; */
-	padding: 20px;
-	background-color: rgb(238, 230, 230);
-	width: 996px;
-	margin: 30px auto;
+    /* margin-top: 30px; */
+    /* margin-left: 330px; */
+    padding: 20px;
+    background-color: rgb(238, 230, 230);
+    width: 996px;
+    margin: 30px auto;
+    background: radial-gradient( rgba(193, 193, 193), rgba(47, 47, 47, 0.8) );
+    /* background: radial-gradient( rgb(253, 119, 119,.3), rgb(250, 63, 63,.8) ); */
+    
 }
 
-.my-header {
-	position: fixed; /*boby기준으로 헤더 고정*/
-	top: 0;
-	left: 0;
-	width: 100%;
-	background-color: rgb(27, 27, 27);
-	z-index: 50; /*z축으로 50*/
-	color: white;
+.movie-img{
+    width: 19%;
+    height: 90%;
+    position: absolute;
+    float: left;
+    
+}
+.bno{
+    position: absolute;
+    top: 5px;
+    left: 12px;
+    z-index: 5;
+    font-size: 30px;
+    font-weight: bold;
+    color: black;
 }
 
-.my-header a {
-	color: white;
-	font-size: 15px;
-}
-
-.my-header a img {
-	background-color: white;
-	width: 30px;
-	height: 30px;
-}
-
-.navbar {
-	margin-bottom: 0;
-}
-
-.navbar-brand {
-	padding: 10px 20px;
-}
-
-.nav {
-	font-size: 15px;
-}
-
-hr {
-	margin-top: 20px;
-	margin-bottom: 20px;
-	border-top: 1px solid black;
-}
-
-.movie-img {
-	width: 20%;
-	height: 90%;
-	position: absolute;
-	float: left;
-	background: radial-gradient(#131111, #999999) fixed;
-	z-index: 1;
-}
-
-.bno {
-	position: absolute;
-	top: 5px;
-	left: 12px;
-	z-index: 5;
-	font-size: 30px;
-	font-weight: bold;
-	color: black;
-}
-
-.movie-img img {
-	width: 90%;
-	height: 100%;
-	z-index: 0;
+.movie-img img{
+    width: 100%;
+    height: 100%;
 }
 
 .review-content {
-	display: inline-block;
-	position: relative;
-	background-color: blanchedalmond;
-	padding: 10px;
-	left: 120px;
-	width: 80%;
-	border-radius: 10px;
-}
-
-.wrap {
-	background-color: rgb(27, 27, 27);
-	overflow: hidden;
-	margin: 10px;
-	padding: 10px;
-	border: 1px solid;
-	position: relative;
-	width: 600px;
-	/* flex-basis: 1000px; */
-	flex-shrink: 0;
-	margin: 0 auto;
-}
-
-/* 댓글 */
-
-.reply-wrap{
+    display: inline-block;
     position: relative;
+    background-color: black;
+    padding:10px;
+    left: 120px;
+    width: 80%;
+    /* border: 1px solid rgb(214, 213, 213); */
+    border-radius: 5px;
+    color: rgb(214, 213, 213);
 }
 
-.reply-btn{
-    position: absolute;
-    right: 10px;
-    top : 10px;
+.wrap{
+    background-color: whitesmoke;
+    overflow: hidden;
+    margin: 10px;
+    padding: 10px;
+    border: 1px;
+    position: relative;
+    width: 600px;
+    /* flex-basis: 1000px; */
+    flex-shrink: 0;
+    margin: 0 auto;
+    background: linear-gradient( to left, rgba(193, 193, 193), black );
 }
+
+
+/* 리뷰 내용 작성 */
+.content{
+    width: 600px;
+    margin: 5px auto;
+}
+
 
 </style>  	
 	
@@ -154,12 +113,12 @@ hr {
 		</div>
 	</div>
 
-	<div class="form-group">
+	<div class="content form-group">
 		<label>내용</label>
 		<textarea class="form-control" rows="10" name='content'></textarea>
-	</div>
-	<div class="btns" style="text-align: right;">
-		<button type="submit" class="list-modify">작성</button>
-		<button class="list-delete">취소</button>
+		<div class="btns" style="text-align: right;">
+			<button type="submit" class="list-modify">작성</button>
+			<button class="list-delete">취소</button>
+		</div>
 	</div>
 </section>

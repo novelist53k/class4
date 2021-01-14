@@ -28,138 +28,101 @@ ul,li{
 
 /* 리뷰 상세 포스터 */
 section {
-	/* margin-top: 30px; */
-	/* margin-left: 330px; */
-	padding: 20px;
-	background-color: rgb(238, 230, 230);
-	width: 996px;
-	margin: 30px auto;
+    /* margin-top: 30px; */
+    /* margin-left: 330px; */
+    padding: 20px;
+    background-color: rgb(238, 230, 230);
+    width: 996px;
+    margin: 30px auto;
+    background: radial-gradient( rgba(193, 193, 193), rgba(47, 47, 47, 0.8) );
+    /* background: radial-gradient( rgb(253, 119, 119,.3), rgb(250, 63, 63,.8) ); */
+    
 }
 
-.my-header {
-	position: fixed; /*boby기준으로 헤더 고정*/
-	top: 0;
-	left: 0;
-	width: 100%;
-	background-color: rgb(27, 27, 27);
-	z-index: 50; /*z축으로 50*/
-	color: white;
+
+.movie-img{
+    width: 19%;
+    height: 90%;
+    position: absolute;
+    float: left;
+    
+}
+.bno{
+    position: absolute;
+    top: 5px;
+    left: 12px;
+    z-index: 5;
+    font-size: 30px;
+    font-weight: bold;
+    color: black;
 }
 
-.my-header a {
-	color: white;
-	font-size: 15px;
-}
-
-.my-header a img {
-	background-color: white;
-	width: 30px;
-	height: 30px;
-}
-
-.navbar {
-	margin-bottom: 0;
-}
-
-.navbar-brand {
-	padding: 10px 20px;
-}
-
-.nav {
-	font-size: 15px;
-}
-
-hr {
-	margin-top: 20px;
-	margin-bottom: 20px;
-	border-top: 1px solid black;
-}
-
-.movie-img {
-	width: 20%;
-	height: 90%;
-	position: absolute;
-	float: left;
-	background: radial-gradient(#131111, #999999) fixed;
-	z-index: 1;
-}
-
-.bno {
-	position: absolute;
-	top: 5px;
-	left: 12px;
-	z-index: 5;
-	font-size: 30px;
-	font-weight: bold;
-	color: black;
-}
-
-.movie-img img {
-	width: 90%;
-	height: 100%;
-	z-index: 0;
+.movie-img img{
+    width: 100%;
+    height: 100%;
 }
 
 .review-content {
-	display: inline-block;
-	position: relative;
-	background-color: blanchedalmond;
-	padding: 10px;
-	left: 120px;
-	width: 80%;
-	border-radius: 10px;
+    display: inline-block;
+    position: relative;
+    background-color: black;
+    padding:10px;
+    left: 120px;
+    width: 80%;
+    /* border: 1px solid rgb(214, 213, 213); */
+    border-radius: 5px;
+    color: rgb(214, 213, 213);
 }
 
-.wrap {
-	background-color: rgb(27, 27, 27);
-	overflow: hidden;
-	margin: 10px;
-	padding: 10px;
-	border: 1px solid;
-	position: relative;
-	width: 600px;
-	/* flex-basis: 1000px; */
-	flex-shrink: 0;
-	margin: 0 auto;
+.wrap{
+    background-color: whitesmoke;
+    overflow: hidden;
+    margin: 10px;
+    padding: 10px;
+    border: 1px;
+    position: relative;
+    width: 600px;
+    /* flex-basis: 1000px; */
+    flex-shrink: 0;
+    margin: 0 auto;
+    background: linear-gradient( to left, rgba(193, 193, 193), black );
 }
 
 /* 검색 */
 .search input {
-	height: 30px;
+    height: 30px;   
+}    
+.search{
+    position: relative;
+    top: 20px;
+    text-align: right;
 }
-
-.search {
-	position: relative;
-	top: 20px;
-	text-align: right;
-}
-
 .search .btn {
-	background-color: indigo;
+    background-color: white;
+    border: 1px solid black;
+    color: black;
 }
 
 /* 사이드 */
-.side {
-	position: fixed;
-	left: 170px;
-	top: 300px;
-	z-index: 10;
-}
 
+.side {position: fixed; left: 170px; top: 300px; z-index: 10;}
 .side li {
-	background-color: #e40c0c;
-	text-align: center;
-	padding: 5px 10px;
-	border: 2px solid black;
-	color: rgb(235, 230, 230);
-	font-size: 25px;
+    background-color: #e40c0c; 
+    text-align: center; 
+    padding: 5px 10px; 
+    border: 1px solid black; 
+    color: rgb(235, 230, 230); 
+    font-size: 25px;}
+.side li a {
+    text-decoration: none;
+    color: black;
+    font-size: 25px;    
+    display: block;
 }
 
-.side li a {
-	text-decoration: none;
-	color: white;
-	font-size: 25px;
-	display: block;
+.side .theater{
+    background-color: whitesmoke;
+
 }
 
 /* 페이징 */
@@ -204,205 +167,225 @@ hr {
 	bottom: 300px;
 }
 </style>
+
 <section>
-	<div class="search">
-		<select style="height: 30px;">
-			<option value="장르">장르</option>
-			<option value="영화제목">영화제목</option>
-			<option value="감독">감독</option>
-			<option value="배우">배우</option>
-		</select> <input type="text">
-		<button class="btn btn-primary">검색</button>
-	</div>
-
-	<div class="review-main">
-		<lable style="font-size: 40px;">영화 리뷰</lable>
-		<hr>
-		<div class=wrap>
-			<span class="bno"> <em>1</em>
-			</span>
-			<div class="movie-img">
-				<img src="${pageContext.request.contextPath }/resources/img/movie_image.jpg" alt="영화포스터">
-
-			</div>
-			<div class="review-content">
-				<p>제목 : 무슨 내용인지 모르겠음;;;;;;;;;;;;;;;;asdasdsadas</p>
-				<p>내용 : 제 취향은 아닌듯 합니다.</p>
-				<p>작성자 : 콩나드라</p>
-				<p>평점 4.0/4.5</p>
-				<p>2020-12-10</p>
-			</div>
+        <div class = "search">
+            <select style="height: 30px;">
+		        <option value="장르">장르</option>
+		        <option value="영화제목">영화제목</option>
+		        <option value="감독">감독</option>
+		        <option value="배우">배우</option>
+		    </select>
+		    <input type="text">
+		    <button class="btn btn-primary">검색</button>
 		</div>
-
-		<div class=wrap>
-			<span class="bno"> <em>2</em>
-			</span>
-			<div class="movie-img">
-				<img src="${pageContext.request.contextPath }/resources/img/movie_image.jpg" alt="영화포스터">
-
-			</div>
-			<div class="review-content">
-				<p>제목 : 무슨 내용인지 모르겠음</p>
-				<p>내용 : 제 취향은 아닌듯 합니다.</p>
-				<p>작성자 : 콩나드라</p>
-				<p>평점 4.0/4.5</p>
-				<p>2020-12-10</p>
-			</div>
-		</div>
-
-		<div class=wrap>
-			<span class="bno"> <em>3</em>
-			</span>
-			<div class="movie-img">
-				<img src="${pageContext.request.contextPath }/resources/img/movie_image.jpg" alt="영화포스터">
-
-			</div>
-			<div class="review-content">
-				<p>제목 : 무슨 내용인지 모르겠음</p>
-				<p>내용 : 제 취향은 아닌듯 합니다.</p>
-				<p>작성자 : 콩나드라</p>
-				<p>평점 4.0/4.5</p>
-				<p>2020-12-10</p>
-			</div>
-		</div>
-
-		<div class=wrap>
-			<span class="bno"> <em>4</em>
-			</span>
-			<div class="movie-img">
-				<img src="${pageContext.request.contextPath }/resources/img/movie_image.jpg" alt="영화포스터">
-
-			</div>
-			<div class="review-content">
-				<p>제목 : 무슨 내용인지 모르겠음</p>
-				<p>내용 : 제 취향은 아닌듯 합니다.</p>
-				<p>작성자 : 콩나드라</p>
-				<p>평점 4.0/4.5</p>
-				<p>2020-12-10</p>
-			</div>
-		</div>
-
-		<div class=wrap>
-			<span class="bno"> <em>5</em>
-			</span>
-			<div class="movie-img">
-				<img src="${pageContext.request.contextPath }/resources/img/movie_image.jpg" alt="영화포스터">
-
-			</div>
-			<div class="review-content">
-				<p>제목 : 무슨 내용인지 모르겠음</p>
-				<p>내용 : 제 취향은 아닌듯 합니다.</p>
-				<p>작성자 : 콩나드라</p>
-				<p>평점 4.0/4.5</p>
-				<p>2020-12-10</p>
-			</div>
-		</div>
-
-		<div class=wrap>
-			<span class="bno"> <em>6</em>
-			</span>
-			<div class="movie-img">
-				<img src="${pageContext.request.contextPath }/resources/img/movie_image.jpg" alt="영화포스터">
-
-			</div>
-			<div class="review-content">
-				<p>제목 : 무슨 내용인지 모르겠음</p>
-				<p>내용 : 제 취향은 아닌듯 합니다.</p>
-				<p>작성자 : 콩나드라</p>
-				<p>평점 4.0/4.5</p>
-				<p>2020-12-10</p>
-			</div>
-		</div>
-
-		<div class=wrap>
-			<span class="bno"> <em>7</em>
-			</span>
-			<div class="movie-img">
-				<img src="${pageContext.request.contextPath }/resources/img/movie_image.jpg" alt="영화포스터">
-
-			</div>
-			<div class="review-content">
-				<p>제목 : 무슨 내용인지 모르겠음</p>
-				<p>내용 : 제 취향은 아닌듯 합니다.</p>
-				<p>작성자 : 콩나드라</p>
-				<p>평점 4.0/4.5</p>
-				<p>2020-12-10</p>
-			</div>
-		</div>
-
-		<div class=wrap>
-			<span class="bno"> <em>8</em>
-			</span>
-			<div class="movie-img">
-				<img src="${pageContext.request.contextPath }/resources/img/movie_image.jpg" alt="영화포스터">
-
-			</div>
-			<div class="review-content">
-				<p>제목 : 무슨 내용인지 모르겠음</p>
-				<p>내용 : 제 취향은 아닌듯 합니다.</p>
-				<p>작성자 : 콩나드라</p>
-				<p>평점 4.0/4.5</p>
-				<p>2020-12-10</p>
-			</div>
-		</div>
-
-		<div class=wrap>
-			<span class="bno"> <em>9</em>
-			</span>
-			<div class="movie-img">
-				<img src="${pageContext.request.contextPath }/resources/img/movie_image.jpg" alt="영화포스터">
-
-			</div>
-			<div class="review-content">
-				<p>제목 : 무슨 내용인지 모르겠음</p>
-				<p>내용 : 제 취향은 아닌듯 합니다.</p>
-				<p>작성자 : 콩나드라</p>
-				<p>평점 4.0/4.5</p>
-				<p>2020-12-10</p>
-			</div>
-		</div>
-
-		<div class=wrap>
-			<span class="bno"> <em>10</em>
-			</span>
-			<div class="movie-img">
-				<img src="${pageContext.request.contextPath }/resources/img/movie_image.jpg" alt="영화포스터">
-
-			</div>
-			<div class="review-content">
-				<p>제목 : 무슨 내용인지 모르겠음</p>
-				<p>내용 : 제 취향은 아닌듯 합니다.</p>
-				<p>작성자 : 콩나드라</p>
-				<p>평점 4.0/4.5</p>
-				<p>2020-12-10</p>
-			</div>
-		</div>
-		<div class="page_wrap">
-			<div class="page_nation">
-				<a href="#" class="arrow"><img src="${pageContext.request.contextPath}/resources/img/page_pprev.png"></a> <a
-					href="#" class="arrow"><img src="${pageContext.request.contextPath}/resources/img/page_prev.png"></a> <a
-					href="#" class="active">1</a> <a href="#">2</a> <a href="#">3</a> <a
-					href="#">4</a> <a href="#">5</a> <a href="#">6</a> <a href="#">7</a>
-				<a href="#">8</a> <a href="#">9</a> <a href="#">10</a> <a href="#"
-					class="arrow"><img src="${pageContext.request.contextPath}/resources/img/page_next.png"></a> <a href="#"
-					class="arrow"><img src="${pageContext.request.contextPath}/resources/img/page_nnext.png"></a>
-			</div>
-		</div>
-
-		<!-- TOP(위로 가기 버튼) -->
-		<div class="top">
-			<a href="#"><img src="${pageContext.request.contextPath}/resources/img/btn_top.png" alt="top-btn"></a>
-
-		</div>
-
-		<!-- 사이드 -->
-		<aside class="side">
-			<ul class="side-list">
-				<li>영화관 찾기</li>
-				<li><a href="">CGV</a></li>
-				<li><a href="">롯데시네마</a></li>
-				<li><a href="">메가박스</a></li>
-			</ul>
-		</aside>
+		
+		<div class = "review-main">
+		    <label style="font-size: 40px;">영화 리뷰</label>
+		    <hr>
+		    <div class = wrap>
+		        <span class = "bno">
+		            <em>1</em>
+		        </span>
+		        <div class = "movie-img">
+		            <img src="${pageContext.request.contextPath}/resources/img/movie_image.jpg" alt="영화포스터">
+		            
+		        </div>    
+		        <div class = "review-content">
+		            <p>제목 : 무슨 내용인지 모르겠음;;;;;;;;;;;;;;;;asdasdsadas</p>
+		            <p>내용 : 제 취향은 아닌듯 합니다.</p>
+		            <p>작성자 : 콩나드라</p>
+		            <p>평점 4.0/4.5</p>
+		            <p>2020-12-10</p>
+		        </div>
+		    </div>
+		    
+		    <div class = wrap>
+		        <span class = "bno">
+		            <em>2</em>
+		        </span>
+		        <div class = "movie-img">
+		            <img src="${pageContext.request.contextPath}/resources/img/movie_image.jpg" alt="영화포스터">
+		            
+		        </div>    
+		        <div class = "review-content">
+		            <p>제목 : 무슨 내용인지 모르겠음</p>
+		            <p>내용 : 제 취향은 아닌듯 합니다.</p>
+		            <p>작성자 : 콩나드라</p>
+		            <p>평점 4.0/4.5</p>
+		            <p>2020-12-10</p>
+		        </div>
+		    </div>
+		
+		    <div class = wrap>
+		        <span class = "bno">
+		            <em>3</em>
+		        </span>
+		        <div class = "movie-img">
+		            <img src="${pageContext.request.contextPath}/resources/img/movie_image.jpg" alt="영화포스터">
+		            
+		        </div>    
+		        <div class = "review-content">
+		            <p>제목 : 무슨 내용인지 모르겠음</p>
+		            <p>내용 : 제 취향은 아닌듯 합니다.</p>
+		            <p>작성자 : 콩나드라</p>
+		            <p>평점 4.0/4.5</p>
+		            <p>2020-12-10</p>
+		        </div>
+		    </div>
+		
+		    <div class = wrap>
+		        <span class = "bno">
+		            <em>4</em>
+		        </span>
+		        <div class = "movie-img">
+		            <img src="${pageContext.request.contextPath}/resources/img/movie_image.jpg" alt="영화포스터">
+		            
+		        </div>    
+		        <div class = "review-content">
+		            <p>제목 : 무슨 내용인지 모르겠음</p>
+		            <p>내용 : 제 취향은 아닌듯 합니다.</p>
+		            <p>작성자 : 콩나드라</p>
+		            <p>평점 4.0/4.5</p>
+		            <p>2020-12-10</p>
+		        </div>
+		    </div>
+		
+		    <div class = wrap>
+		        <span class = "bno">
+		            <em>5</em>
+		        </span>
+		        <div class = "movie-img">
+		            <img src="${pageContext.request.contextPath}/resources/img/movie_image.jpg" alt="영화포스터">
+		            
+		        </div>    
+		        <div class = "review-content">
+		            <p>제목 : 무슨 내용인지 모르겠음</p>
+		            <p>내용 : 제 취향은 아닌듯 합니다.</p>
+		            <p>작성자 : 콩나드라</p>
+		            <p>평점 4.0/4.5</p>
+		            <p>2020-12-10</p>
+		        </div>
+		    </div>
+		
+		    <div class = wrap>
+		        <span class = "bno">
+		            <em>6</em>
+		        </span>
+		        <div class = "movie-img">
+		            <img src="${pageContext.request.contextPath}/resources/img/movie_image.jpg" alt="영화포스터">
+		            
+		        </div>    
+		        <div class = "review-content">
+		            <p>제목 : 무슨 내용인지 모르겠음</p>
+		            <p>내용 : 제 취향은 아닌듯 합니다.</p>
+		            <p>작성자 : 콩나드라</p>
+		            <p>평점 4.0/4.5</p>
+		            <p>2020-12-10</p>
+		        </div>
+		    </div>
+		
+		    <div class = wrap>
+		        <span class = "bno">
+		            <em>7</em>
+		        </span>
+		        <div class = "movie-img">
+		            <img src="${pageContext.request.contextPath}/resources/img/movie_image.jpg" alt="영화포스터">
+		            
+		        </div>    
+		        <div class = "review-content">
+		            <p>제목 : 무슨 내용인지 모르겠음</p>
+		            <p>내용 : 제 취향은 아닌듯 합니다.</p>
+		            <p>작성자 : 콩나드라</p>
+		            <p>평점 4.0/4.5</p>
+		            <p>2020-12-10</p>
+		        </div>
+		    </div>
+		
+		    <div class = wrap>
+		        <span class = "bno">
+		            <em>8</em>
+		        </span>
+		        <div class = "movie-img">
+		            <img src="${pageContext.request.contextPath}/resources/img/movie_image.jpg" alt="영화포스터">
+		            
+		        </div>    
+		        <div class = "review-content">
+		            <p>제목 : 무슨 내용인지 모르겠음</p>
+		            <p>내용 : 제 취향은 아닌듯 합니다.</p>
+		            <p>작성자 : 콩나드라</p>
+		            <p>평점 4.0/4.5</p>
+		            <p>2020-12-10</p>
+		        </div>
+		    </div>
+		
+		    <div class = wrap>
+		        <span class = "bno">
+		            <em>9</em>
+		        </span>
+		        <div class = "movie-img">
+		            <img src="${pageContext.request.contextPath}/resources/img/movie_image.jpg" alt="영화포스터">
+		            
+		        </div>    
+		        <div class = "review-content">
+		            <p>제목 : 무슨 내용인지 모르겠음</p>
+		            <p>내용 : 제 취향은 아닌듯 합니다.</p>
+		            <p>작성자 : 콩나드라</p>
+		            <p>평점 4.0/4.5</p>
+		            <p>2020-12-10</p>
+		        </div>
+		    </div>
+		
+		    <div class = wrap>
+		        <span class = "bno">
+		            <em>10</em>
+		        </span>
+		        <div class = "movie-img">
+		            <img src="${pageContext.request.contextPath}/resources/img/movie_image.jpg" alt="영화포스터">
+		            
+		        </div>    
+		        <div class = "review-content">
+		            <p>제목 : 무슨 내용인지 모르겠음</p>
+		            <p>내용 : 제 취향은 아닌듯 합니다.</p>
+		            <p>작성자 : 콩나드라</p>
+		            <p>평점 4.0/4.5</p>
+		            <p>2020-12-10</p>
+		        </div>
+		    </div>
+		    <div class = "page_wrap">
+		        <div class ="page_nation">
+		            <a href="#" class = "arrow"><img src="img/page_pprev.png"></a>
+		            <a href="#" class = "arrow"><img src="img/page_prev.png"></a>
+		            <a href="#" class="active">1</a>
+		            <a href="#">2</a>
+		            <a href="#">3</a>
+		            <a href="#">4</a>
+		            <a href="#">5</a>
+		            <a href="#">6</a>
+		            <a href="#">7</a>
+		            <a href="#">8</a>
+		            <a href="#">9</a>
+		            <a href="#">10</a>
+		            <a href="#" class = "arrow"><img src="img/page_next.png"></a>
+		            <a href="#" class = "arrow"><img src="img/page_nnext.png"></a>
+		        </div>
+		    </div>
+		    
+		    <!-- TOP(위로 가기 버튼) -->
+		    <div class = "top">
+		        <a href="#" ><img src="${pageContext.request.contextPath }/resources/img/btn_top.png" alt="top-btn"></a>
+		        
+		    </div> 
+		    
+		    <!-- 사이드 -->
+		    <aside class="side">    
+		        <ul class="side-list">
+		            <li>영화관 찾기</li>
+		            <li class = "theater"><a href="">CGV</a></li>
+		            <li class = "theater"><a href="">롯데시네마</a></li>
+		            <li class = "theater"><a href="">메가박스</a></li>
+		        </ul>    
+		    </aside>
+		    
 </section>
 

@@ -10,27 +10,27 @@
     
     .semi-back{
         
-        margin: 0 auto;       
+        margin: 0 auto;      
+        margin-top:30px; 
         margin-bottom: -80px;
         width: 80%;
         background-color: rgba(0, 0, 0, 0.856);
         padding:100px;
         line-height: auto;
+        border-radius: 8px;
 
     }
     .mypage-back{
-      background-color: white;
-      border-radius: 7px;
-      padding: 50px;
-    }
-    .joinArea{
-        margin: 0 auto;
+    	margin: 0 auto;
         padding: 50px;
         width: 1200px;
         line-height: normal;
         background-color: white;
-        opacity: 0.9;
+        opacity:1;
         border-radius: 8px;
+    }
+    .joinArea{
+        
     }
     .input-group{
         margin-top: 150px;
@@ -428,6 +428,7 @@
           </div>
           </div>
         </div>
+       
       </ul>
     </div>
     <div id="menu2" class="tab-pane fade">
@@ -509,6 +510,17 @@
     var inp = document.querySelector(".diretorSection");
     inp.removeChild(inp.children[2])
   }
+  
+	//주소찾기
+  function goPopup(){
+    		var pop = window.open("${pageContext.request.contextPath}/resources/popup/jusoPopup.jsp","pop","width=570,height=420, scrollbars=yes, resizable=yes");
+    		
+    	}
+    	function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn,detBdNmList,bdNm,bdKdcd,siNm,sggNm,emdNm,liNm,rn,udrtYn,buldMnnm,buldSlno,mtYn,lnbrMnnm,lnbrSlno,emdNo){
+    		document.getElementById("addrBasic").value = roadAddrPart1;
+    		document.getElementById("addrDetail").value = addrDetail;
+    		document.getElementById("addrZipNum").value = zipNo;
+    	}
     
 
 

@@ -3,9 +3,9 @@
 <style>
 
  body{ position: relative; margin-bottom: 30px; }
-   .semi-back{margin: 0 auto; margin-top:30px; margin-bottom: -80px; width: 80%; background-color: rgba(0, 0, 0, 0.856); padding:150px; }
+   .semi-back{margin: 0 auto; margin-top:30px; margin-bottom: -80px; width: 80%; background-color: rgba(0, 0, 0, 0.856); padding:150px; border-radius: 8px;}
     .joinArea{ margin: 0 auto; padding: 50px; width: 1200px; line-height: normal; background-color: white;
-        opacity: 0.9; border-radius: 8px;  }
+        opacity: 1; border-radius: 8px;  }
         
     .input-group{ margin-top: 150px; margin: 0 auto; width: 60%; padding-top: 8px; }
     .box{width: 250px; border-bottom: 1px solid #E1E1E1;  border-top:1px solid #E1E1E1; margin: 50px auto; margin-top: -10px;
@@ -337,12 +337,14 @@ $("#checkBtn").click(function(){
   var add = document.querySelector(".diretorSection").appendChild(input)
   input.setAttribute('class','likeDirector')
   input.setAttribute('id','likeDirector')
+  input.setAttribute('name','likeDirector')
   }
   function addActor(){
   var input = document.createElement("input")
   var add = document.querySelector(".actorSection").appendChild(input)
   input.setAttribute('class','likeActor')
   input.setAttribute('id','likeActor')
+  input.setAttribute('name','likeActor')
   }
   function minusActor() {
     var inp = document.querySelector(".actorSection");

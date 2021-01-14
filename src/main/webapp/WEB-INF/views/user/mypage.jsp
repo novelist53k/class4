@@ -337,7 +337,7 @@
 
   <div class="tab-content">
     <div id="myInfo" class="myInfo tab-pane fade in active">
-      <form action="#" class="joinForm" method="GET">
+      <form action="#" class="joinForm" method="POST">
         <br>
         <label for="id" class="joinLabel">ID</label><br>
         <input type="text" class="joinId" name="id" id="id" readonly>
@@ -347,7 +347,9 @@
         <input type="password" class="password" name="password" id="password"><br>
         <label for="pwCheck" class="joinLabel">PASSWORD 확인</label><br>
         <input type="password" class="pwCheck" name="pwCheck" id="pwCheck" ><br>
-        
+        <label for="pwCheck" class="joinLabel">이름</label><br>
+        <input type="password" class="pwCheck" id="userName" name="userName" >            
+        <br>
         <label for="gender" class="joinLabel">성별</label>
         <select name="gender" id="gender" class="gender">
           <option value="man">남자</option>
@@ -355,7 +357,7 @@
         </select> 
         <label for="gender" class="joinLabel"> 나이</label>
         <select name="age" id="age" class="age">
-          <script language="JavaScript">
+          <script>
           for(i=7; i<100;i++){
           document.write("<option value='"+i+" '>"+i+"</option>")
           
@@ -430,7 +432,7 @@
     </div>
     <div id="menu2" class="tab-pane fade">
       <br>
-      <BUtton class="delUser btn-danger">회원탈퇴</BUtton>
+      <Button class="delUser btn-danger" id="delUser" data-toggle="modal" data-target="#myModal1">회원탈퇴</BUtton>
     </div>
     
   </div>
@@ -438,9 +440,29 @@
 </div>
 </div>
       
-    
+<div class="modal fade" id="myModal1" role="dialog">
+                <div class="modal-dialog">
+                
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title"></h4>
+                        </div>
+                        <div class="modal-body">
+                            
+                            비밀번호 확인 <input type="text" class="loginPw" id="loginPw">
+                        </div>
+                        <div class="modal-footer">
+                        	
+                            <button type="button" class="btn btn-primary" id="loginBtn" data-dismiss="modal">확인</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+                        </div>
+                    </div>
+                </div>
+            </div>    
   
-</div>
+
 
 </section>
 

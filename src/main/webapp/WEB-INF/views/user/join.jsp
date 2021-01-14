@@ -150,6 +150,7 @@
     .addrBtn{
       margin-bottom:15px;
     }
+    
 </style>
 <section>
 
@@ -160,17 +161,20 @@
           <form action="joinForm" class="joinForm" method="GET">
             <h4 class="box">회원가입</h4>
             <label for="id" class="joinLabel ">ID(*)</label><br>
-            <input type="text" class="joinId" name="id" id="id">
-            <button class="checkBtn btn-primary" id="checkBtn">중복체크</button>
+            <input type="text" class="joinId userId" name="id" id="userId" placeholder="알파벳포함 4글자 이상">
+            <button type="button" class="checkBtn btn-primary" id="checkBtn">중복체크</button>
             <p class="msgId" id="msgId"></p>               
             <br>
-            <label for="password" class="joinLabel pwlabel">PASSWORD(*)</label><br>
-            <input type="password" class="password" id="password" name="password">
+            <label for="password" class="joinLabel pwlabel" >PASSWORD(*)</label><br>
+            <input type="password" class="password" id="password" name="password" placeholder="알파벳포함 8글자 이상 16글자 미만"> 
             <p class="msgPw" id="msgPw"></p>  
             <br>
             <label for="pwCheck" class="joinLabel">PASSWORD 확인(*)</label><br>
             <input type="password" class="pwCheck" id="pwCheck" name="pwCheck" >
             <p id="msgPw-c"></p>
+            <br>
+            <label for="pwCheck" class="joinLabel">이름</label><br>
+            <input type="password" class="pwCheck" id="userName" name="userName" >            
             <br>
             
             <label for="gender" class="joinLabel">성별</label>
@@ -180,7 +184,7 @@
             </select> 
             <label for="gender" class="joinLabel"> 나이</label>
             <select name="age" id="age" class="age">
-              <script language="JavaScript">
+              <script>
               for(i=7; i<100;i++){
               document.write("<option value='"+i+" '>"+i+"</option>")
               
@@ -232,7 +236,7 @@
             </div>
             <br>
                     
-            <button type="submit" class="btn joinbtn " style="padding: 15px;">가입</button>
+            <button type="submit" class="btn joinbtn" id="joinBtn" style="padding: 15px;">가입</button>
             <button type="button" class="btn btn-default" style="padding: 15px;" onclick="location=''">취소</button>
           </form>
         </div>
@@ -256,22 +260,22 @@
   }
 
 //아이디 옵션
-var id = document.getElementById("id");
+var id = document.getElementById("userId");
 id.onkeyup=function(){
 
   var regex = /^[A-Za-z0-9+]{4,12}$/; 
-            if(regex.test(document.getElementById("id").value )) {
-                document.getElementById("id").style.borderColor = "green";
+            if(regex.test(document.getElementById("userId").value )) {
+                document.getElementById("userId").style.borderColor = "green";
                 document.getElementById("msgId").innerHTML = "아이디중복체크는 필수 입니다";
 
             } else {
-                document.getElementById("id").style.borderColor = "red";
+                document.getElementById("userId").style.borderColor = "red";
                 document.getElementById("msgId").innerHTML = "";
             }
   
 }
-//패스워드 옵션
-var pw = document.getElementById("password");
+	//패스워드 옵션
+	var pw = document.getElementById("password");
         pw.onkeyup = function(){
             var regex = /^[A-Za-z0-9+]{8,16}$/;
              if(regex.test(document.getElementById("password").value )) {
@@ -297,10 +301,32 @@ var pw = document.getElementById("password");
 
 //중복체크
 $("#checkBtn").click(function(){
-  if($("#id").val() === ""){
+	var userId = $("#userId").val()
+	$.ajax({
+    			type : "POST",
+    			url : "idCheck",
+    			data : JSON.stringify({"userId": userId}),
+    			contentType : "application/json; charset=utf-8",
+    			success : function(data){
+    				if(data == 0){
+    					$("#userId").attr("readonly",true);
+    					$("#msgId").html = "사용 가능한 아이디입니다";
+    					
+    				}else{
+    					alert("사용 불가능합니다 다시 입력해주세요")
+    					$("#userId").val("")
+    					return;
+    				}
+    			},
+    			error : function(status, error){}	
+    			
+    		})
+  if($("#userId").val() === ""){
     alert("아이디를 입력하세요")
-  }else if($("#id").val().length <6){
+    return;
+  }else if($("#userId").val().length <6){
     alert("아이디는 6글자 이상입니다")
+    return;
   }
 
 })
@@ -310,11 +336,13 @@ $("#checkBtn").click(function(){
   var input = document.createElement("input")
   var add = document.querySelector(".diretorSection").appendChild(input)
   input.setAttribute('class','likeDirector')
+  input.setAttribute('id','likeDirector')
   }
   function addActor(){
   var input = document.createElement("input")
   var add = document.querySelector(".actorSection").appendChild(input)
   input.setAttribute('class','likeActor')
+  input.setAttribute('id','likeActor')
   }
   function minusActor() {
     var inp = document.querySelector(".actorSection");

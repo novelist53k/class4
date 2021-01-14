@@ -109,34 +109,44 @@ section {
     background-color: whitesmoke;
 }
 /* 페이징 */
-.page_wrap {
-	margin-top: 5px;
-	text-align: center;
-	font-size: 15;
+.page_wrap{
+    margin-top: 5px;
+    text-align: center;
+    font-size: 15;
 }
-.page_nation {
-	display: inline-block;
+
+.page_nation{
+    display: inline-block;
 }
-.page_nation a {
-	display: block;
-	margin: 0 3px;
-	float: left;
-	border: 1px solid black;
-	width: 25px;
-	height: 25px;
-	text-align: center;
-	background-color: #fff;
-	font-size: 13px;
-	color: #999999;
-	text-decoration: none;
+
+.page_nation a{
+    display: block;
+    margin: 0 3px;
+    float: left;
+    border: 1px solid black;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    background-color:#fff;
+    font-size: 15px;
+    color:#999999;
+    text-decoration: none;
+
 }
-.page_nation arrow {
-	border: 1px solid #ccc;
+
+.page_nation img{
+    vertical-align: 0%;
 }
-.page_nation .active {
-	background-color: #42454c;
-	color: #fff;
-	border: 1px solid #42454c;
+
+
+.page_nation arrow{
+    border: 1px solid #ccc;
+}
+
+.page_nation .active{
+    background-color:#42454c;
+	color:#fff;
+	border:1px solid #42454c;
 }
 /* 위로 가기 버튼 */
 .top {

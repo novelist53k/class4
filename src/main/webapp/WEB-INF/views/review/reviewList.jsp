@@ -12,20 +12,14 @@
 	* {
 	box-sizing: border-box;
 }
-
-
 /*css 폰트 url(css에서는 <style> 입력 안함)*/
 @import url('https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&display=swap');
-
 body, html{
     font-family: 'East Sea Dokdo', cursive;
 }
-
 ul,li{
     list-style: none;
 }
-
-
 /* 리뷰 상세 포스터 */
 section {
     /* margin-top: 30px; */
@@ -38,8 +32,6 @@ section {
     /* background: radial-gradient( rgb(253, 119, 119,.3), rgb(250, 63, 63,.8) ); */
     
 }
-
-
 .movie-img{
     width: 19%;
     height: 90%;
@@ -56,12 +48,10 @@ section {
     font-weight: bold;
     color: black;
 }
-
 .movie-img img{
     width: 100%;
     height: 100%;
 }
-
 .review-content {
     display: inline-block;
     position: relative;
@@ -73,7 +63,6 @@ section {
     border-radius: 5px;
     color: rgb(214, 213, 213);
 }
-
 .wrap{
     background-color: whitesmoke;
     overflow: hidden;
@@ -87,7 +76,6 @@ section {
     margin: 0 auto;
     background: linear-gradient( to left, rgba(193, 193, 193), black );
 }
-
 /* 검색 */
 .search input {
     height: 30px;   
@@ -102,9 +90,7 @@ section {
     border: 1px solid black;
     color: black;
 }
-
 /* 사이드 */
-
 .side {position: fixed; left: 170px; top: 300px; z-index: 10;}
 .side li {
     background-color: #e40c0c; 
@@ -119,23 +105,18 @@ section {
     font-size: 25px;    
     display: block;
 }
-
 .side .theater{
     background-color: whitesmoke;
-
 }
-
 /* 페이징 */
 .page_wrap {
 	margin-top: 5px;
 	text-align: center;
 	font-size: 15;
 }
-
 .page_nation {
 	display: inline-block;
 }
-
 .page_nation a {
 	display: block;
 	margin: 0 3px;
@@ -149,17 +130,14 @@ section {
 	color: #999999;
 	text-decoration: none;
 }
-
 .page_nation arrow {
 	border: 1px solid #ccc;
 }
-
 .page_nation .active {
 	background-color: #42454c;
 	color: #fff;
 	border: 1px solid #42454c;
 }
-
 /* 위로 가기 버튼 */
 .top {
 	position: fixed;
@@ -354,8 +332,8 @@ section {
 		    </div>
 		    <div class = "page_wrap">
 		        <div class ="page_nation">
-		            <a href="#" class = "arrow"><img src="img/page_pprev.png"></a>
-		            <a href="#" class = "arrow"><img src="img/page_prev.png"></a>
+		            <a href="#" class = "arrow"><img src="${pageContext.request.contextPath }/resources/img/page_pprev.png"></a>
+		            <a href="#" class = "arrow"><img src="${pageContext.request.contextPath }/resources/img/page_prev.png"></a>
 		            <a href="#" class="active">1</a>
 		            <a href="#">2</a>
 		            <a href="#">3</a>
@@ -366,8 +344,8 @@ section {
 		            <a href="#">8</a>
 		            <a href="#">9</a>
 		            <a href="#">10</a>
-		            <a href="#" class = "arrow"><img src="img/page_next.png"></a>
-		            <a href="#" class = "arrow"><img src="img/page_nnext.png"></a>
+		            <a href="#" class = "arrow"><img src="${pageContext.request.contextPath }/resources/img/page_next.png"></a>
+		            <a href="#" class = "arrow"><img src="${pageContext.request.contextPath }/resources/img/page_nnext.png"></a>
 		        </div>
 		    </div>
 		    
@@ -388,4 +366,3 @@ section {
 		    </aside>
 		    
 </section>
-

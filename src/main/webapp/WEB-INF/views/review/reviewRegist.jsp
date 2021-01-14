@@ -13,20 +13,14 @@
 	* {
 	box-sizing: border-box;
 }
-
-
 /*css 폰트 url(css에서는 <style> 입력 안함)*/
 @import url('https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&display=swap');
-
 body, html{
     font-family: 'East Sea Dokdo', cursive;
 }
-
 ul,li{
     list-style: none;
 }
-
-
 section {
     /* margin-top: 30px; */
     /* margin-left: 330px; */
@@ -38,7 +32,6 @@ section {
     /* background: radial-gradient( rgb(253, 119, 119,.3), rgb(250, 63, 63,.8) ); */
     
 }
-
 .movie-img{
     width: 19%;
     height: 90%;
@@ -55,12 +48,10 @@ section {
     font-weight: bold;
     color: black;
 }
-
 .movie-img img{
     width: 100%;
     height: 100%;
 }
-
 .review-content {
     display: inline-block;
     position: relative;
@@ -72,7 +63,6 @@ section {
     border-radius: 5px;
     color: rgb(214, 213, 213);
 }
-
 .wrap{
     background-color: whitesmoke;
     overflow: hidden;
@@ -86,15 +76,11 @@ section {
     margin: 0 auto;
     background: linear-gradient( to left, rgba(193, 193, 193), black );
 }
-
-
 /* 리뷰 내용 작성 */
 .content{
     width: 600px;
     margin: 5px auto;
 }
-
-
 </style>  	
 	
 <section>

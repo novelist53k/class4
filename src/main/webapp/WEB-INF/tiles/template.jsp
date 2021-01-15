@@ -21,7 +21,12 @@
     
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
 
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
+    
     <!-- 구글맵 SDK 로드 -->
+    <script defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDY6Dq01vAGSL5h4iUfxaK0VylTXC4bgfo&callback=initMap">
+    </script>
     
 </head>
 <body>

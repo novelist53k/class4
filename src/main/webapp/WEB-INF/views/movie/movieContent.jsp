@@ -14,7 +14,14 @@
 
         <div class="mid2">
           <div class="info-box">
-            <span class="mov-title"><b>원더우먼</b></span>
+            <span class="mov-title">
+            <b>원더우먼</b>
+             <!-- 관리자 아이디로 로그인시에만 보이게 하기 -->
+            <div class="btn-box">
+              <input type="button" value="수정">
+              <input type="button" value="삭제">
+            </div>
+            </span>
             <div class="mov-sec">
               <span class="mov-ftitle"><h4>Wonder Woman</h4></span>
               <div class="star-box">
@@ -134,8 +141,6 @@
                   <br>
                   <span class="text1">주저리주저리주저리주저리주저리주저리주저리주주저리주저리주저리주저리주저리주저리주저리주저리주저리주주저리주저리</span>
                   <br>
-                  <span class="writer">작성자</span> 
-                  <span class="regdate">작성일</span>
                   <span class="recom">추천</span>
                   <a href="#"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" style="color: black;"></span></a>
                 </td>

@@ -56,12 +56,12 @@
                             <h4 class="modal-title">로그인</h4>
                         </div>
                         <div class="modal-body">
-                            ID :<input type="text"><br>
-                            PW :<input type="text">
+                            ID :<input type="text" id="loginId" name="loginId"><br>
+                            PW :<input type="text" id="loginPw" name="loginPw">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Join</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Login</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" id="login" name="login">Login</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         </div>
                         <p></p>
@@ -71,4 +71,26 @@
         </nav>
         
     </header>
+    <script>
+    	$("#login").click(function(){
+    		console.log("login버튼 누름")
+    		var loginId = $("#loginId").val();
+    		var loginPw = $("#loginPw").val();
+    		console.log(loginId);
+    		console.log(loginPw);
+    		$.ajax({
+    			type : "POST",
+    			url : "login",
+    			data : JSON.stringify({"userId":loginId,"password":loginPw}),
+    			contentType : "application/json; charset=utf-8",
+    			success : function(data){
+    					console.log(data);
+    					
+    				
+    			},
+    			error : function(status, error){}	
+    		})
+    	})
+    
+    </script>
     	

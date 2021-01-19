@@ -13,23 +13,17 @@
 	* {
 	box-sizing: border-box;
 }
-/*css 폰트 url(css에서는 <style> 입력 안함)*/
-@import url('https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&display=swap');
-body, html{
-    font-family: 'East Sea Dokdo', cursive;
-}
-ul,li{
+
+ul,ol{
     list-style: none;
 }
+/* 리뷰 상세 포스터 */
 section {
-    /* margin-top: 30px; */
-    /* margin-left: 330px; */
-    padding: 20px;
-    background-color: rgb(238, 230, 230);
+
+    padding: 20px 60px;
     width: 996px;
-    margin: 30px auto;
-    background: radial-gradient( rgba(193, 193, 193), rgba(47, 47, 47, 0.8) );
-    /* background: radial-gradient( rgb(253, 119, 119,.3), rgb(250, 63, 63,.8) ); */
+    height: 1150px;
+
     
 }
 .movie-img{
@@ -39,30 +33,25 @@ section {
     float: left;
     
 }
-.bno{
-    position: absolute;
-    top: 5px;
-    left: 12px;
-    z-index: 5;
-    font-size: 30px;
-    font-weight: bold;
-    color: black;
-}
+
+
 .movie-img img{
     width: 100%;
     height: 100%;
 }
+
 .review-content {
     display: inline-block;
     position: relative;
-    background-color: black;
     padding:10px;
     left: 120px;
     width: 80%;
+    height: 150px;
     /* border: 1px solid rgb(214, 213, 213); */
     border-radius: 5px;
-    color: rgb(214, 213, 213);
+
 }
+
 .wrap{
     background-color: whitesmoke;
     overflow: hidden;
@@ -74,37 +63,73 @@ section {
     /* flex-basis: 1000px; */
     flex-shrink: 0;
     margin: 0 auto;
-    background: linear-gradient( to left, rgba(193, 193, 193), black );
+
 }
+
+
+
 /* 리뷰 내용 작성 */
 .content{
     width: 600px;
     margin: 5px auto;
 }
+
+/* 댓글 프로필 이미지 */
+
+.profile-img img{
+    width: 55px;
+    margin-right: 5px;
+    float: left;
+}
+
+/* 댓글 */
+.form-control {
+    margin-top: 0;
+}
+
+
+.reply-content textarea{
+    width: 90%;
+}
+
+.reply-wrap{
+    position: relative;
+    margin-top: 20px;
+}
+
+.reply-btn{
+    position: absolute;
+    right: 10px;
+    top : 10px;
+}
 </style>  	
 	
 <section>
-	<lable style="font-size: 40px;">영화 리뷰 작성 페이지</lable>
-	<div class=wrap>
-		<div class="movie-img">
-			<img src="${pageContext.request.contextPath}/resources/img/movie_image.jpg" alt="영화포스터">
+    <lable style="font-size: 40px; font-weight: bold;">영화 리뷰 작성 페이지</lable>
+    <hr style="border-bottom: 3px solid black; margin: 10px 0;">
+    <div class = wrap>
+        <div class = "movie-img">
+            <img src="${pageContext.request.contextPath }/resources/img/movie_image.jpg" alt="영화포스터">
+            
+        </div>    
+        <div class = "review-content">
+          <p>트라이얼 오브 더 시카코 7</p>
+          <p>2020.10.09 (금) 16:45 ~ 18:38</p>
+        </div>
+    </div>
+    
+    <div class="content form-group">
+        <label>제목</label>
+        <textarea class="content form-control" rows = "1" name="title" placeholder="제목을 입력해주세요"></textarea>
 
-		</div>
-		<div class="review-content">
-			<p>제목 : 무슨 내용인지 모르겠음</p>
-			<p>내용 : 제 취향은 아닌듯 합니다.</p>
-			<p>작성자 : 콩나드라</p>
-			<p>평점 4.0/4.5</p>
-			<p>2020-12-10</p>
-		</div>
-	</div>
 
-	<div class="content form-group">
-		<label>내용</label>
-		<textarea class="form-control" rows="10" name='content'></textarea>
-		<div class="btns" style="text-align: right;">
-			<button type="submit" class="list-modify">작성</button>
-			<button class="list-delete">취소</button>
-		</div>
-	</div>
+        <label>내용</label>
+        <textarea class="content form-control" rows="10" name='content' placeholder="영화를 어떻게 보셨나요?"></textarea>
+    </div>
+    <div class="btns" style="text-align: right;">
+            <button type = "submit" class = "list-modify">작성</button>
+            <button class = "list-delete">취소</button>
+    </div>    
 </section>
+
+<footer>

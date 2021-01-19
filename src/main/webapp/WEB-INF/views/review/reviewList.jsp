@@ -9,110 +9,168 @@
 	<!--합쳐지고 최소화된 최신 자바스크립트 --> 
 	<script src="../resource /js /bootstrap.min.js "> </script>
 	
-	* {
-	box-sizing: border-box;
+* {
+box-sizing: border-box;
+
 }
-/*css 폰트 url(css에서는 <style> 입력 안함)*/
-@import url('https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&display=swap');
-body, html{
-    font-family: 'East Sea Dokdo', cursive;
-}
-ul,li{
+
+ul,ol {
     list-style: none;
 }
 /* 리뷰 상세 포스터 */
 section {
-    /* margin-top: 30px; */
-    /* margin-left: 330px; */
-    padding: 20px;
-    background-color: rgb(238, 230, 230);
+
+    padding: 20px 60px;
     width: 996px;
-    margin: 30px auto;
-    background: radial-gradient( rgba(193, 193, 193), rgba(47, 47, 47, 0.8) );
-    /* background: radial-gradient( rgb(253, 119, 119,.3), rgb(250, 63, 63,.8) ); */
+    height: 1150px;
     
 }
-.movie-img{
-    width: 19%;
-    height: 90%;
-    position: absolute;
+
+.box_profile{
+    position: relative;
+}
+
+
+.profile_img img{
+    width: 60px;
+    height: 60px;
     float: left;
+    margin: 0 26px 0 20px;
+}
+
+.profile_mask img{
+    display: block;
+    position: absolute;
+    top: px;
+    left: 20px;
+    width: 60px;
+    height: 61px;
+    /* background: 0 0 no-repeat; */
+}
+
+.writer_info{
+    position: relative;
+}
+
+.writer_info .writer_etc{
+    position: absolute;
+    bottom: -130px;
+    left: 110px;
+}
+
+
+
+.review_list{
+    border-top: 1px solid rgb(162, 162, 162) ;
+    height: 770px;
+    padding: 0px;
+    
     
 }
-.bno{
-    position: absolute;
-    top: 5px;
-    left: 12px;
-    z-index: 5;
-    font-size: 30px;
-    font-weight: bold;
+
+.box-comment{
+    margin-left: 110px;
+}
+
+.box-comment a{
     color: black;
+    text-decoration: none;
 }
-.movie-img img{
-    width: 100%;
-    height: 100%;
+
+.review_main ul li.review_comment:nth-child(2n+1){
+    border-right: 1px solid rgb(174, 174, 174);
+    border-bottom: 1px solid rgb(174, 174, 174);
+    width: 50%;
+    height: 200px;
+    padding: 20px 0;
+    
+
 }
-.review-content {
-    display: inline-block;
-    position: relative;
-    background-color: black;
-    padding:10px;
-    left: 120px;
-    width: 80%;
-    /* border: 1px solid rgb(214, 213, 213); */
-    border-radius: 5px;
-    color: rgb(214, 213, 213);
+
+.review_main ul li.review_comment{
+    border-right: none;
+    border-bottom: 1px solid rgb(174, 174, 174);
+    width: 50%;
+    height: 200px;
+    padding: 20px 0;
+    float: left;
+    word-break: break-all;
+    
 }
-.wrap{
-    background-color: whitesmoke;
-    overflow: hidden;
-    margin: 10px;
-    padding: 10px;
-    border: 1px;
-    position: relative;
-    width: 600px;
-    /* flex-basis: 1000px; */
-    flex-shrink: 0;
-    margin: 0 auto;
-    background: linear-gradient( to left, rgba(193, 193, 193), black );
-}
+
+
+
 /* 검색 */
 .search input {
     height: 30px;   
 }    
 .search{
     position: relative;
-    top: 20px;
+    top: 30px;
     text-align: right;
 }
 .search .btn {
     background-color: white;
     border: 1px solid black;
     color: black;
+    height: 30px;
 }
+
+
 /* 사이드 */
-.side {position: fixed; left: 170px; top: 300px; z-index: 10;}
+
+
+@media screen and (max-width: 1200px) {
+    #right_banner {
+      display: none;
+    }
+  }
+
+.side {position: fixed; 
+        right: 100px; 
+        bottom: 100px;
+        font-size: 15px; 
+        z-index: 10;
+
+    }
+
 .side li {
     background-color: #e40c0c; 
     text-align: center; 
     padding: 5px 10px; 
     border: 1px solid black; 
     color: rgb(235, 230, 230); 
-    font-size: 25px;}
+}
+
 .side li a {
     text-decoration: none;
-    color: black;
-    font-size: 25px;    
+    color: black;    
     display: block;
+    height: 20px;
+    line-height: 20px;
 }
+
 .side .theater{
     background-color: whitesmoke;
+    width: 100%;
+    height: 30px;
+
 }
+.side .top{
+    border: 0px;
+    background-color: white;
+}
+
+.side .top img{
+    width: 50px;
+}
+
 /* 페이징 */
+
 .page_wrap{
-    margin-top: 5px;
+    margin-top: 15px;
     text-align: center;
-    font-size: 15;
+    font-size: 15px;
 }
 
 .page_nation{
@@ -135,7 +193,7 @@ section {
 }
 
 .page_nation img{
-    vertical-align: 0%;
+    vertical-align: 10%;
 }
 
 
@@ -148,231 +206,351 @@ section {
 	color:#fff;
 	border:1px solid #42454c;
 }
-/* 위로 가기 버튼 */
-.top {
-	position: fixed;
-	right: 300px;
-	bottom: 300px;
-}
+
 </style>
 
 <section>
         <div class = "search">
             <select style="height: 30px;">
-		        <option value="장르">장르</option>
-		        <option value="영화제목">영화제목</option>
-		        <option value="감독">감독</option>
-		        <option value="배우">배우</option>
-		    </select>
-		    <input type="text">
-		    <button class="btn btn-primary">검색</button>
-		</div>
-		
-		<div class = "review-main">
-		    <label style="font-size: 40px;">영화 리뷰</label>
-		    <hr>
-		    <div class = wrap>
-		        <span class = "bno">
-		            <em>1</em>
-		        </span>
-		        <div class = "movie-img">
-		            <img src="${pageContext.request.contextPath}/resources/img/movie_image.jpg" alt="영화포스터">
-		            
-		        </div>    
-		        <div class = "review-content">
-		            <p>제목 : 무슨 내용인지 모르겠음;;;;;;;;;;;;;;;;asdasdsadas</p>
-		            <p>내용 : 제 취향은 아닌듯 합니다.</p>
-		            <p>작성자 : 콩나드라</p>
-		            <p>평점 4.0/4.5</p>
-		            <p>2020-12-10</p>
-		        </div>
-		    </div>
-		    
-		    <div class = wrap>
-		        <span class = "bno">
-		            <em>2</em>
-		        </span>
-		        <div class = "movie-img">
-		            <img src="${pageContext.request.contextPath}/resources/img/movie_image.jpg" alt="영화포스터">
-		            
-		        </div>    
-		        <div class = "review-content">
-		            <p>제목 : 무슨 내용인지 모르겠음</p>
-		            <p>내용 : 제 취향은 아닌듯 합니다.</p>
-		            <p>작성자 : 콩나드라</p>
-		            <p>평점 4.0/4.5</p>
-		            <p>2020-12-10</p>
-		        </div>
-		    </div>
-		
-		    <div class = wrap>
-		        <span class = "bno">
-		            <em>3</em>
-		        </span>
-		        <div class = "movie-img">
-		            <img src="${pageContext.request.contextPath}/resources/img/movie_image.jpg" alt="영화포스터">
-		            
-		        </div>    
-		        <div class = "review-content">
-		            <p>제목 : 무슨 내용인지 모르겠음</p>
-		            <p>내용 : 제 취향은 아닌듯 합니다.</p>
-		            <p>작성자 : 콩나드라</p>
-		            <p>평점 4.0/4.5</p>
-		            <p>2020-12-10</p>
-		        </div>
-		    </div>
-		
-		    <div class = wrap>
-		        <span class = "bno">
-		            <em>4</em>
-		        </span>
-		        <div class = "movie-img">
-		            <img src="${pageContext.request.contextPath}/resources/img/movie_image.jpg" alt="영화포스터">
-		            
-		        </div>    
-		        <div class = "review-content">
-		            <p>제목 : 무슨 내용인지 모르겠음</p>
-		            <p>내용 : 제 취향은 아닌듯 합니다.</p>
-		            <p>작성자 : 콩나드라</p>
-		            <p>평점 4.0/4.5</p>
-		            <p>2020-12-10</p>
-		        </div>
-		    </div>
-		
-		    <div class = wrap>
-		        <span class = "bno">
-		            <em>5</em>
-		        </span>
-		        <div class = "movie-img">
-		            <img src="${pageContext.request.contextPath}/resources/img/movie_image.jpg" alt="영화포스터">
-		            
-		        </div>    
-		        <div class = "review-content">
-		            <p>제목 : 무슨 내용인지 모르겠음</p>
-		            <p>내용 : 제 취향은 아닌듯 합니다.</p>
-		            <p>작성자 : 콩나드라</p>
-		            <p>평점 4.0/4.5</p>
-		            <p>2020-12-10</p>
-		        </div>
-		    </div>
-		
-		    <div class = wrap>
-		        <span class = "bno">
-		            <em>6</em>
-		        </span>
-		        <div class = "movie-img">
-		            <img src="${pageContext.request.contextPath}/resources/img/movie_image.jpg" alt="영화포스터">
-		            
-		        </div>    
-		        <div class = "review-content">
-		            <p>제목 : 무슨 내용인지 모르겠음</p>
-		            <p>내용 : 제 취향은 아닌듯 합니다.</p>
-		            <p>작성자 : 콩나드라</p>
-		            <p>평점 4.0/4.5</p>
-		            <p>2020-12-10</p>
-		        </div>
-		    </div>
-		
-		    <div class = wrap>
-		        <span class = "bno">
-		            <em>7</em>
-		        </span>
-		        <div class = "movie-img">
-		            <img src="${pageContext.request.contextPath}/resources/img/movie_image.jpg" alt="영화포스터">
-		            
-		        </div>    
-		        <div class = "review-content">
-		            <p>제목 : 무슨 내용인지 모르겠음</p>
-		            <p>내용 : 제 취향은 아닌듯 합니다.</p>
-		            <p>작성자 : 콩나드라</p>
-		            <p>평점 4.0/4.5</p>
-		            <p>2020-12-10</p>
-		        </div>
-		    </div>
-		
-		    <div class = wrap>
-		        <span class = "bno">
-		            <em>8</em>
-		        </span>
-		        <div class = "movie-img">
-		            <img src="${pageContext.request.contextPath}/resources/img/movie_image.jpg" alt="영화포스터">
-		            
-		        </div>    
-		        <div class = "review-content">
-		            <p>제목 : 무슨 내용인지 모르겠음</p>
-		            <p>내용 : 제 취향은 아닌듯 합니다.</p>
-		            <p>작성자 : 콩나드라</p>
-		            <p>평점 4.0/4.5</p>
-		            <p>2020-12-10</p>
-		        </div>
-		    </div>
-		
-		    <div class = wrap>
-		        <span class = "bno">
-		            <em>9</em>
-		        </span>
-		        <div class = "movie-img">
-		            <img src="${pageContext.request.contextPath}/resources/img/movie_image.jpg" alt="영화포스터">
-		            
-		        </div>    
-		        <div class = "review-content">
-		            <p>제목 : 무슨 내용인지 모르겠음</p>
-		            <p>내용 : 제 취향은 아닌듯 합니다.</p>
-		            <p>작성자 : 콩나드라</p>
-		            <p>평점 4.0/4.5</p>
-		            <p>2020-12-10</p>
-		        </div>
-		    </div>
-		
-		    <div class = wrap>
-		        <span class = "bno">
-		            <em>10</em>
-		        </span>
-		        <div class = "movie-img">
-		            <img src="${pageContext.request.contextPath}/resources/img/movie_image.jpg" alt="영화포스터">
-		            
-		        </div>    
-		        <div class = "review-content">
-		            <p>제목 : 무슨 내용인지 모르겠음</p>
-		            <p>내용 : 제 취향은 아닌듯 합니다.</p>
-		            <p>작성자 : 콩나드라</p>
-		            <p>평점 4.0/4.5</p>
-		            <p>2020-12-10</p>
-		        </div>
-		    </div>
-		    <div class = "page_wrap">
-		        <div class ="page_nation">
-		            <a href="#" class = "arrow"><img src="${pageContext.request.contextPath }/resources/img/page_pprev.png"></a>
-		            <a href="#" class = "arrow"><img src="${pageContext.request.contextPath }/resources/img/page_prev.png"></a>
-		            <a href="#" class="active">1</a>
-		            <a href="#">2</a>
-		            <a href="#">3</a>
-		            <a href="#">4</a>
-		            <a href="#">5</a>
-		            <a href="#">6</a>
-		            <a href="#">7</a>
-		            <a href="#">8</a>
-		            <a href="#">9</a>
-		            <a href="#">10</a>
-		            <a href="#" class = "arrow"><img src="${pageContext.request.contextPath }/resources/img/page_next.png"></a>
-		            <a href="#" class = "arrow"><img src="${pageContext.request.contextPath }/resources/img/page_nnext.png"></a>
-		        </div>
-		    </div>
-		    
-		    <!-- TOP(위로 가기 버튼) -->
-		    <div class = "top">
-		        <a href="#" ><img src="${pageContext.request.contextPath }/resources/img/btn_top.png" alt="top-btn"></a>
-		        
-		    </div> 
-		    
-		    <!-- 사이드 -->
-		    <aside class="side">    
-		        <ul class="side-list">
-		            <li>영화관 찾기</li>
-		            <li class = "theater"><a href="">CGV</a></li>
-		            <li class = "theater"><a href="">롯데시네마</a></li>
-		            <li class = "theater"><a href="">메가박스</a></li>
-		        </ul>    
-		    </aside>
-		    
-</section>
+                <option value="장르">장르</option>
+                <option value="영화제목">영화제목</option>
+                <option value="감독">감독</option>
+                <option value="배우">배우</option>
+            </select>
+            <input type="text">
+            <button class="btn btn-primary">검색</button>
+        </div>
+        
+        <!--리뷰 -->
+        <div class = "review_main">
+            <lable style="font-size: 40px; font-weight: bold;">영화 리뷰</lable>
+            <hr style="border-bottom: 3px solid black; margin: 10px 0;">
+
+            <ul class="review_list" id="movie_review_list">
+                <li class="review_comment">
+                    <div class="box_profile">
+                        <span class="profile_img">
+                            <img src="${pageContext.request.contextPath }/resources/img/default_profile.gif" alt="프로필 이미지">
+                        </span>
+                        <span class="profile_mask">
+                            <img src="${pageContext.request.contextPath }/resources/img/bg_photocircle.png" alt="원형 프레임">
+                        </span>
+                    </div>
+                    <div class="box_contents">
+                        <ul class="writer_info">
+                            <li class = "movie_title">
+                                <label>원더우먼</label>
+                                <span class = "point glyphicon glyphicon glyphicon-star" aria-hidden="true" style="color: rgb(233, 49, 49);"></span>
+                                <span class = "score">5</span><br>
+                            </li>
+                            <li class="writer_name">
+                                <p>김민건</p>
+                            </li>
+                            <li class="writer_etc">
+                                <span class = "day">2021.01.07</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="box-comment">
+                        <a href="#"><p>감동은 나에게 다가와 감동란이 되었다.</p></a>
+
+                    </div>
+                </li>
+                <li class="review_comment">
+                    <div class="box_profile">
+                        <span class="profile_img">
+                            <img src="${pageContext.request.contextPath }/resources/img/default_profile.gif" alt="프로필 이미지">
+                        </span>
+                        <span class="profile_mask">
+                            <img src="${pageContext.request.contextPath }/resources/img/bg_photocircle.png" alt="원형 프레임">
+                        </span>
+                    </div>
+                    <div class="box_contents">
+                        <ul class="writer_info">
+                            <li class = "movie_title">
+                                <label>영화제목</label>
+                                <span class = "point glyphicon glyphicon glyphicon-star" aria-hidden="true" style="color: rgb(233, 49, 49);"></span>
+                                <span class = "score">5</span><br>
+                            </li>
+                            <li class="writer_name">
+                                <p>김민건</p>
+                            </li>
+                            <li class="writer_etc">
+                                <span class = "day">2021.01.07</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="box-comment">
+                        <a href="#"><p>볼때마다 느낌과 감동이 새롭네요. 이전에 볼때는 아주 잘 만든 공상과학영화라며 감상했는데, 오늘 보니 현재 코로나시대여서 그런지 현실감이 더욱 와닿고 곧 닥칠 미래인것처럼 다기옵니다.</p></a>
+
+                    </div>
+                </li>
+                <li class="review_comment">
+                    <div class="box_profile">
+                        <span class="profile_img">
+                            <img src="${pageContext.request.contextPath }/resources/img/default_profile.gif" alt="프로필 이미지">
+                        </span>
+                        <span class="profile_mask">
+                            <img src="${pageContext.request.contextPath }/resources/img/bg_photocircle.png" alt="원형 프레임">
+                        </span>
+                    </div>
+                    <div class="box_contents">
+                        <ul class="writer_info">
+                            <li class = "movie_title">
+                                <label>영화제목</label>
+                                <span class = "point glyphicon glyphicon glyphicon-star" aria-hidden="true" style="color: rgb(233, 49, 49);"></span>
+                                <span class = "score">5</span><br>
+                            </li>
+                            <li class="writer_name">
+                                <p>김민건</p>
+                            </li>
+                            <li class="writer_etc">
+                                <span class = "day">2021.01.07</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="box-comment">
+                        <a href="#"><p>감동은 나에게 다가와 감동란이 되었다.</p></a>
+
+                    </div>
+                </li>
+                <li class="review_comment">
+                    <div class="box_profile">
+                        <span class="profile_img">
+                            <img src="${pageContext.request.contextPath }/resources/img/default_profile.gif" alt="프로필 이미지">
+                        </span>
+                        <span class="profile_mask">
+                            <img src="${pageContext.request.contextPath }/resources/img/bg_photocircle.png" alt="원형 프레임">
+                        </span>
+                    </div>
+                    <div class="box_contents">
+                        <ul class="writer_info">
+                            <li class = "movie_title">
+                                <label>영화제목</label>
+                                <span class = "point glyphicon glyphicon glyphicon-star" aria-hidden="true" style="color: rgb(233, 49, 49);"></span>
+                                <span class = "score">5</span><br>
+                            </li>
+                            <li class="writer_name">
+                                <p>김민건</p>
+                            </li>
+                            <li class="writer_etc">
+                                <span class = "day">2021.01.07</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="box-comment">
+                        <a href="#"><p>감동은 나에게 다가와 감동란이 되었다.</p></a>
+
+                    </div>
+                </li>
+                <li class="review_comment">
+                    <div class="box_profile">
+                        <span class="profile_img">
+                            <img src="${pageContext.request.contextPath }/resources/img/default_profile.gif" alt="프로필 이미지">
+                        </span>
+                        <span class="profile_mask">
+                            <img src="${pageContext.request.contextPath }/resources/img/bg_photocircle.png" alt="원형 프레임">
+                        </span>
+                    </div>
+                    <div class="box_contents">
+                        <ul class="writer_info">
+                            <li class = "movie_title">
+                                <label>영화제목</label>
+                                <span class = "point glyphicon glyphicon glyphicon-star" aria-hidden="true" style="color: rgb(233, 49, 49);"></span>
+                                <span class = "score">5</span><br>
+                            </li>
+                            <li class="writer_name">
+                                <p>김민건</p>
+                            </li>
+                            <li class="writer_etc">
+                                <span class = "day">2021.01.07</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="box-comment">
+                        <a href="#"><p>감동은 나에게 다가와 감동란이 되었다.</p></a>
+
+                    </div>
+                </li>
+                <li class="review_comment">
+                    <div class="box_profile">
+                        <span class="profile_img">
+                            <img src="${pageContext.request.contextPath }/resources/img/default_profile.gif" alt="프로필 이미지">
+                        </span>
+                        <span class="profile_mask">
+                            <img src="${pageContext.request.contextPath }/resources/img/bg_photocircle.png" alt="원형 프레임">
+                        </span>
+                    </div>
+                    <div class="box_contents">
+                        <ul class="writer_info">
+                            <li class = "movie_title">
+                                <label>영화제목</label>
+                                <span class = "point glyphicon glyphicon glyphicon-star" aria-hidden="true" style="color: rgb(233, 49, 49);"></span>
+                                <span class = "score">5</span><br>
+                            </li>
+                            <li class="writer_name">
+                                <p>김민건</p>
+                            </li>
+                            <li class="writer_etc">
+                                <span class = "day">2021.01.07</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="box-comment">
+                        <a href="#"><p>감동은 나에게 다가와 감동란이 되었다.</p></a>
+
+                    </div>
+                </li>
+                <li class="review_comment">
+                    <div class="box_profile">
+                        <span class="profile_img">
+                            <img src="${pageContext.request.contextPath }/resources/img/default_profile.gif" alt="프로필 이미지">
+                        </span>
+                        <span class="profile_mask">
+                            <img src="${pageContext.request.contextPath }/resources/img/bg_photocircle.png" alt="원형 프레임">
+                        </span>
+                    </div>
+                    <div class="box_contents">
+                        <ul class="writer_info">
+                            <li class = "movie_title">
+                                <label>영화제목</label>
+                                <span class = "point glyphicon glyphicon glyphicon-star" aria-hidden="true" style="color: rgb(233, 49, 49);"></span>
+                                <span class = "score">5</span><br>
+                            </li>
+                            <li class="writer_name">
+                                <p>김민건</p>
+                            </li>
+                            <li class="writer_etc">
+                                <span class = "day">2021.01.07</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="box-comment">
+                        <a href="#"><p>감동은 나에게 다가와 감동란이 되었다.</p></a>
+
+                    </div>
+                </li>
+                <li class="review_comment">
+                    <div class="box_profile">
+                        <span class="profile_img">
+                            <img src="${pageContext.request.contextPath }/resources/img/default_profile.gif" alt="프로필 이미지">
+                        </span>
+                        <span class="profile_mask">
+                            <img src="${pageContext.request.contextPath }/resources/img/bg_photocircle.png" alt="원형 프레임">
+                        </span>
+                    </div>
+                    <div class="box_contents">
+                        <ul class="writer_info">
+                            <li class = "movie_title">
+                                <label>영화제목</label>
+                                <span class = "point glyphicon glyphicon glyphicon-star" aria-hidden="true" style="color: rgb(233, 49, 49);"></span>
+                                <span class = "score">5</span><br>
+                            </li>
+                            <li class="writer_name">
+                                <p>김민건</p>
+                            </li>
+                            <li class="writer_etc">
+                                <span class = "point glyphicon glyphicon glyphicon-star" aria-hidden="true" style="color: rgb(233, 49, 49);"></span>                                <span class = "score">5</span><br>
+                                <span class = "day">2021.01.07</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="box-comment">
+                        <a href="#"><p>감동은 나에게 다가와 감동란이 되었다.</p></a>
+
+                    </div>
+                </li>
+                <li class="review_comment">
+                    <div class="box_profile">
+                        <span class="profile_img">
+                            <img src="${pageContext.request.contextPath }/resources/img/default_profile.gif" alt="프로필 이미지">
+                        </span>
+                        <span class="profile_mask">
+                            <img src="${pageContext.request.contextPath }/resources/img/bg_photocircle.png" alt="원형 프레임">
+                        </span>
+                    </div>
+                    <div class="box_contents">
+                        <ul class="writer_info">
+                            <li class = "movie_title">
+                                <label>영화제목</label>
+                                <span class = "point glyphicon glyphicon glyphicon-star" aria-hidden="true" style="color: rgb(233, 49, 49);"></span>
+                                <span class = "score">5</span><br>
+                            </li>
+                            <li class="writer_name"> 
+                                <p>김민건</p>
+                            </li>
+                            <li class="writer_etc">
+                                <span class = "day">2021.01.07</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="box-comment">
+                        <a href="#"><p>감동은 나에게 다가와 감동란이 되었다.</p></a>
+
+                    </div>
+                </li>
+                <li class="review_comment">
+                    <div class="box_profile">
+                        <span class="profile_img">
+                            <img src="${pageContext.request.contextPath }/resources/img/default_profile.gif" alt="프로필 이미지">
+                        </span>
+                        <span class="profile_mask">
+                            <img src="${pageContext.request.contextPath }/resources/img/bg_photocircle.png" alt="원형 프레임">
+                        </span>
+                    </div>
+                    <div class="box_contents">
+                        <ul class="writer_info">
+                            <li class = "movie_title">
+                                <label>영화제목</label>
+                                <span class = "point glyphicon glyphicon glyphicon-star" aria-hidden="true" style="color: rgb(233, 49, 49);"></span>
+                                <span class = "score">5</span><br>
+                            </li>
+                            <li class="writer_name">
+                                <p>김민건</p>
+                            </li>
+                            <li class="writer_etc">
+                                <span class = "day">2021.01.07</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="box-comment">
+                        <a href="#"><p>감동은 나에게 다가와 감동란이 되었다.</p></a>
+
+                    </div>
+                </li>
+            </ul>
+         </div>
+         
+        </section>
+
+        
+        <!-- 사이드 -->
+        <aside class="side" id="right_banner">    
+            <ul class="side-list">
+                <li>영화관 찾기</li>
+                <li class = "theater"><a href="https://www.cgv.co.kr/">CGV</a></li>
+                <li class = "theater"><a href="https://www.lottecinema.co.kr/NLCHS">롯데시네마</a></li>
+                <li class = "theater"><a href="https://www.megabox.co.kr/">메가박스</a></li>
+                <li class = "top"><a href="#" ><img src="img/btn_top2.png" alt="top-btn"></a></li>
+            </ul>       
+           </aside>
+
+    <!-- 페이징 -->
+    <div class = "page_wrap">
+       <div class ="page_nation">
+           <a href="#" class = "arrow"><img src="${pageContext.request.contextPath }/resources/img/page_pprev.png"></a>
+           <a href="#" class = "arrow"><img src="${pageContext.request.contextPath }/resources/img/page_prev.png"></a>
+           <a href="#" class="active">1</a>
+           <a href="#">2</a>
+           <a href="#">3</a>
+           <a href="#">4</a>
+           <a href="#">5</a>
+           <a href="#">6</a>
+           <a href="#">7</a>
+           <a href="#">8</a>
+           <a href="#">9</a>
+           <a href="#">10</a>
+           <a href="#" class = "arrow"><img src="${pageContext.request.contextPath }/resources/img/page_next.png"></a>
+           <a href="#" class = "arrow"><img src="${pageContext.request.contextPath }/resources/img/page_nnext.png"></a>
+       </div>
+   </div>

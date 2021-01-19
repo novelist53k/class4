@@ -1,0 +1,19 @@
+===============현재 개봉작=====================
+create table movie(
+    mno number(10),  --영화순번
+    title varchar2(200) not null, --영화제목
+    ftitle varchar2(50) not null, --영화제목 외국어
+    genre varchar2(200) not null, --장르
+    grade varchar2(50) not null, --시청등급
+    regdate date default sysdate,  --개봉일
+    director varchar2(30) not null, --감독
+    actor varchar2(100) not null,  --출연진
+    subhead varchar2(1000),  --줄거리제목
+    content varchar2(2000),   --줄거리
+    poster varchar2(500),  --포스터
+    trailer varchar2(2000)  --예고편
+);
+alter table movie add CONSTRAINT movie_pk primary key (mno);
+create SEQUENCE moive_seq increment by 1 start with 1 nocache;
+
+===============================================

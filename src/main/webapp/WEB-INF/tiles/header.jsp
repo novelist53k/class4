@@ -1,6 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-	
+	<style>
+		.loginPw, .loginId{
+      display: inline-block;
+      width: 275px;
+      height: 34px;
+      padding: 6px 12px;
+      font-size: 14px;
+      line-height: 1.42857143;
+      color: #555;
+      background-color: #fff;
+      background-image: none;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-bottom: 25px;
+    }
+	</style>
     <header>
     	<nav class="navbar navbar-default" >
             <div class="container-fluid">
@@ -56,8 +71,8 @@
                             <h4 class="modal-title">로그인</h4>
                         </div>
                         <div class="modal-body">
-                            ID :<input type="text" id="loginId" name="loginId"><br>
-                            PW :<input type="text" id="loginPw" name="loginPw">
+                            ID  :<input type="text" id="loginId" name="loginId" class="loginId"><br>
+                            PW :<input type="text" id="loginPw" name="loginPw" class="loginPw">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Join</button>
@@ -80,7 +95,7 @@
     		console.log(loginPw);
     		$.ajax({
     			type : "POST",
-    			url : "login",
+    			url : "${pageContext.request.contextPath }/user/login",
     			data : JSON.stringify({"userId":loginId,"password":loginPw}),
     			contentType : "application/json; charset=utf-8",
     			success : function(data){

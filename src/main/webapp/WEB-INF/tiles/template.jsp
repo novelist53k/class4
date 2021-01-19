@@ -24,9 +24,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
     
     <!-- 구글맵 SDK 로드 -->
-    <script defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDY6Dq01vAGSL5h4iUfxaK0VylTXC4bgfo&callback=initMap">
-    </script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=255004399b3a7ae9b36ca16f55ee38ed"></script>
     
 </head>
 <body>

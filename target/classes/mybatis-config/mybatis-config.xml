@@ -6,6 +6,6 @@
 <!-- mapper에서 사용할 단축일므을 typeAliases에 기술합니다. -->
 <configuration>
  	<typeAliases>
-		
+		<typeAlias type="com.class4.command.CurrentFilmVO" alias="CurrentFilmVO"/>
  	</typeAliases>   
 </configuration>

@@ -148,35 +148,13 @@
     <script>
         // 맵을 생성하는 코드
         const myLatLng = {lat: "", lng: ""};
-        let map;
 
-        function coordsSuccess(position) {
-            myLatLng.lat = position.coords.latitude;
-            myLatLng.lng = position.coords.longitude;
-            console.log("내 위치 정보", myLatLng.lat, myLatLng.lng);
+        var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+        var options = { //지도를 생성할 때 필요한 기본 옵션
+            center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
+            level: 3 //지도의 레벨(확대, 축소 정도)
+        };
 
-            getFecth();
-        }
-
-        function coordsFail() {
-            console.log("위치정보 파악 실패");
-        }
-
-        function initMap() {
-            navigator.geolocation.getCurrentPosition(coordsSuccess, coordsFail);
-
-
-            map = new google.maps.Map(document.getElementById("map"), {
-            center: { lat: -34.397, lng: 150.644 },
-            zoom: 8,
-            });
-
-            // 지도에 마커 정보 추가하기
-            // The marker, positioned at Uluru
-            const marker = new google.maps.Marker({
-                position: { lat: -34.397, lng: 150.644 },
-                map: map,
-            });
-        }
+        var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
 
     </script>

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.class4.command.CurrentFilmVO;
 import com.class4.movieList.mapper.MovieListMapper;
+import com.class4.util.Criteria;
 
 @Service("movieListService")
 public class MovieListServiceImpl implements MovieListService{
@@ -14,9 +15,15 @@ public class MovieListServiceImpl implements MovieListService{
 	private MovieListMapper movieListMapper;
 	
 	@Override
-	public ArrayList<CurrentFilmVO> movieList() {
+	public ArrayList<CurrentFilmVO> movieList(Criteria cri) {
 		
-		return movieListMapper.movieList();
+		return movieListMapper.movieList(cri);
+	}
+
+	@Override
+	public int getTotal() {
+		
+		return movieListMapper.getTotal();
 	}
 	
 }

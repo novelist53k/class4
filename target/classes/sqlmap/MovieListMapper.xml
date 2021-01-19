@@ -6,7 +6,18 @@
 <mapper namespace="com.class4.movieList.mapper.MovieListMapper">
 
 	<select id="movieList" resultType="CurrentFilmVO">
-		select * from movie
+		<![CDATA[  
+		select *
+		from(select rownum as rn,
+   				 a.*
+				from(select * 
+    				from movie) a)
+			where rn > (#{pageNum}-1) * #{amount} and rn <= #{pageNum} * #{amount}
+			]]>
+	
 	</select>
-
+	
+	<select id="getTotal" resultType="int">
+		select count(*) from movie
+	</select>
 </mapper>

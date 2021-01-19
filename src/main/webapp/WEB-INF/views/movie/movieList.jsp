@@ -3,15 +3,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-    <div class="movie_list_tab" id = tab-menu>
+    <form class="movie_list_tab" id = tab-menu>
         <ul class="outbox">
-              <li class="left-inbox"><a href="#">현재개봉작</a></li>
-              <li class="right-inbox"><a href="#">개봉예정작</a></li>
+              <li class="left-inbox"><a href="#" data-release="current">현재개봉작</a></li>
+              <li class="right-inbox"><a href="#" data-release="expected">개봉예정작</a></li>
         </ul>
-    </div>
+    </form>
 	
       <section class = "movie_list_area">
-        <div>
+        <div class = "box_list_movie">
             <ul class="list_movie">
             
             	<c:forEach var="vo" items="${list }">
@@ -42,22 +42,60 @@
             </ul>
         </div>
         
-        <form class="page-form">
-            <div class="pagination">
-              <a href="#">&laquo;</a>
-              <a href="#">1</a>
-              <a href="#">2</a>
-              <a href="#">3</a>
-              <a href="#">4</a>
-              <a href="#">5</a>
-              <a href="#">6</a>
-              <a href="#">&raquo;</a>
-            </div>  
-          </form>
+        <form action="movieList" name="pageForm">
+		    		
+                    <div class="text-center">
+                    <hr>
+                    <ul class="pagination pagination-sm">
+                        <!-- 3.이전버튼활성화여부 -->
+                        <c:if test="${pageVO.prev }">
+                        <li>
+                        	<a href="#" data-page="${pageVO.startPage-1 }">이전</a>
+                        </li>
+                        </c:if>
+                        <!-- 1.페이지네이션 번호 처리 -->
+                        <c:forEach var="num" begin="${pageVO.startPage }" end="${pageVO.endPage }">
+                        <li class="${num == pageVO.pageNum ? 'active' : '' }">
+                        	<a href="#" data-page="${num }" >${num }</a>
+                        </li>
+                        </c:forEach>	
+                        
+                        <!-- 2.다음버튼활성화여부 -->
+                        <c:if test="${pageVO.next }">
+                        <li>
+                        	<a href="#" data-page="${pageVO.endPage+1 }">다음</a>
+                        </li>
+                        </c:if>
+                    </ul>
+                    
+                    </div>
+                   	<input type="hidden" name="pageNum" value="${pageVO.cri.pageNum }">
+                   	<input type="hidden" name="release" value="${pageVO.cri.release }">
+                   
+		    		</form>		    		
+
         
       <input type="button" value="영화등록" class="btn-regist">
      </section>
+     <script>
+   		//현재개봉작,개봉예정작 구분
+	   	var leftinbox = document.querySelector(".left-inbox");
+	   	leftinbox.onclick = function(){
+	   		event.preventDefault();
+	   		var current = event.target.innerText;
+	   		document.pageForm.release.value = current;
+     	}
+     </script>
 
     <script>
    
-    </script>
+   	var pagination = document.querySelector(".pagination");
+   	pagination.onclick = function(){
+   		event.preventDefault();
+   		if(event.target.tagName !== "A") return;
+   		
+   		var pageNum = event.target.dataset.page;
+   		document.pageForm.pageNum.value = pageNum;
+   		document.pageForm.submit();
+   	}
+   	</script>

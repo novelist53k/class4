@@ -174,7 +174,7 @@
             <p id="msgPw-c"></p>
             <br>
             <label for="pwCheck" class="joinLabel">이름</label><br>
-            <input type="password" class="pwCheck" id="userName" name="userName" >            
+            <input type="text" class="pwCheck" id="userName" name="userName" >            
             <br>
             
             <label for="gender" class="joinLabel">성별</label>
@@ -184,7 +184,7 @@
             </select> 
             <label for="gender" class="joinLabel"> 나이</label>
             <select name="age" id="age" class="age">
-              <script>
+            <script>
               for(i=7; i<100;i++){
               document.write("<option value='"+i+" '>"+i+"</option>")
               
@@ -194,7 +194,7 @@
             </select>
             <br>
             <label for="email" class="joinLabel">EMAIL</label><br>
-            <input type="text" class="email1" name="email1"> @ <select id="email2" class="email2" onchange="email(this)">
+            <input type="text" class="userEmail1" name="userEmail1" id="userEmail1"> @ <select id="userEmail2" class="email2" onchange="email(this)">
               <option class="option" value="choice">선택</option>
               <option class="option" value="gmail.com">gmail.com</option>
               <option class="option" value="naver.com" >naver.com</option>
@@ -225,18 +225,25 @@
             <button type="button" class="minus btn-primary" onclick="minusDirector()">-</button>
             <div class="genre">
               <label class="joinLabel">선호하는 장르</label><br>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" value="romence"> 로맨스</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" value="animation"> 애니메이션</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" value="SF"> SF</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" value="comedy"> 코미디</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" value="horror"> 공포</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" value="thiler"> 스릴러</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" value="documentry"> 다큐멘터리</label>
-            
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" value="SF"> SF</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" value="romens"> 로맨스</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" value="action"> 액션</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" value="fantasy"> 판타지</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" value="horror"> 공포</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" value="thiler"> 스릴러</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" value="documentry"> 다큐멘터리</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" value="crime"> 범죄</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" value="mistery"> 미스테리</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" value="famliy"> 가족</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" value="drama"> 드라마</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" value="animation"> 애니메이션</label>
+              
+              
+              
             </div>
             <br>
                     
-            <button type="submit" class="btn joinbtn" id="joinBtn" style="padding: 15px;">가입</button>
+            <button type="button" class="btn joinbtn" id="UserJoin" name="UserJoin" style="padding: 15px;">가입</button>
             <button type="button" class="btn btn-default" style="padding: 15px;" onclick="location=''">취소</button>
           </form>
         </div>
@@ -249,6 +256,40 @@
 </section>
 
 <script>
+$("#UserJoin").click(function(){
+	console.log("가입 버튼 누름")
+	var userId = $("#userId").val();
+	var userPw = $("#password").val();
+	var userName = $("#userName").val();	
+	var userEmail1 = $("#userEmail1").val();
+	var userEmail2 = $("#userEmail2").val();
+	var addrZipNum = $("#addrZipNum").val();
+	var addrBasic = $("#addrBasic").val();
+	var addrDetail = $("#addrDetail").val();
+	//비동기
+	
+	$.ajax({
+		type : "POST",
+		url : "JoinReq",
+		data : JSON.stringify({"userId": userId, "password":userPw,
+			"userName":userName,"userPhone1":userPhone1,"userPhone2":userPhone2,
+			"userEmail1":userEmail1,"userEmail2":userEmail2,"addrZipNum":addrZipNum,
+			"addrBasic":addrBasic,"addrDetail":addrDetail}),
+		contentType : "application/json; charset=utf-8",
+		success : function(data){
+				console.log(data);
+				if(data == 1){
+					alert("가입을 환영합니다");
+					location.href="/myweb/user/userLogin"
+				}
+			
+		},
+		error : function(status, error){}	
+		
+	})
+	
+})
+
   // 직접입력 선택시 input으로 바꿈
   function email(selected){
     var index = selected.selectedIndex;

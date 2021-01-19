@@ -44,7 +44,7 @@
 	</bean>
 	
 	<!-- 매퍼스캔명령으로 인터페이스 위치를 지정 -->
-	<mybatis-spring:scan base-package="com.class4.*.mapper"/>
+	<mybatis-spring:scan base-package="com.class4.**.mapper"/>
 
 	
 	

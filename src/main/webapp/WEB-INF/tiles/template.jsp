@@ -23,6 +23,10 @@
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
     
+    <!-- swiper -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script>
+    
     <!-- 구글맵 SDK 로드 -->
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=255004399b3a7ae9b36ca16f55ee38ed"></script>
     

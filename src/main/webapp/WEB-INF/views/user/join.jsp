@@ -163,7 +163,7 @@
             <label for="id" class="joinLabel ">ID(*)</label><br>
             <input type="text" class="joinId userId" name="id" id="userId" placeholder="알파벳포함 4글자 이상">
             <button type="button" class="checkBtn btn-primary" id="checkBtn">중복체크</button>
-            <p class="msgId" id="msgId"></p>               
+            <p class="msgId" id="msgId" name="msgId"></p>               
             <br>
             <label for="password" class="joinLabel pwlabel" >PASSWORD(*)</label><br>
             <input type="password" class="password" id="password" name="password" placeholder="알파벳포함 8글자 이상 16글자 미만"> 
@@ -194,7 +194,7 @@
             </select>
             <br>
             <label for="email" class="joinLabel">EMAIL</label><br>
-            <input type="text" class="userEmail1" name="userEmail1" id="userEmail1"> @ <select id="userEmail2" class="email2" onchange="email(this)">
+            <input type="text" class="email2" name="userEmail1" id="userEmail1"> @ <select id="userEmail2" class="email2" onchange="email(this)">
               <option class="option" value="choice">선택</option>
               <option class="option" value="gmail.com">gmail.com</option>
               <option class="option" value="naver.com" >naver.com</option>
@@ -225,18 +225,18 @@
             <button type="button" class="minus btn-primary" onclick="minusDirector()">-</button>
             <div class="genre">
               <label class="joinLabel">선호하는 장르</label><br>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" value="SF"> SF</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" value="romens"> 로맨스</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" value="action"> 액션</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" value="fantasy"> 판타지</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" value="horror"> 공포</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" value="thiler"> 스릴러</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" value="documentry"> 다큐멘터리</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" value="crime"> 범죄</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" value="mistery"> 미스테리</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" value="famliy"> 가족</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" value="drama"> 드라마</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" value="animation"> 애니메이션</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="SF"/> SF</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="romens"/> 로맨스</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="action"/> 액션</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="fantasy"/> 판타지</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="horror"/> 공포</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="thiler"/> 스릴러</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="documentry"/> 다큐멘터리</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="crime"/> 범죄</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="mistery"/> 미스테리</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="famliy"/> 가족</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="drama"/> 드라마</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="animation"/> 애니메이션</label>
               
               
               
@@ -258,35 +258,58 @@
 <script>
 $("#UserJoin").click(function(){
 	console.log("가입 버튼 누름")
-	var userId = $("#userId").val();
-	var userPw = $("#password").val();
-	var userName = $("#userName").val();	
-	var userEmail1 = $("#userEmail1").val();
-	var userEmail2 = $("#userEmail2").val();
-	var addrZipNum = $("#addrZipNum").val();
-	var addrBasic = $("#addrBasic").val();
-	var addrDetail = $("#addrDetail").val();
-	//비동기
+	var genre = [];
+	var actor =[];
+	var director =[];
+	
+	$('input[name="genreLike"]:checked').each(function(i){
+		genre.push($(this).val());
+	});
+	$('input[name="likeActor"]').each(function(i){
+		actor.push($(this).val());
+	});
+	$('input[name="likeDirector"]').each(function(i){
+		director.push($(this).val());
+	});
+	var list ={"genreList" : genre,
+			"directorList" : director,
+			"actorList" : actor	}
+	
+	//체크박스 값 얻기
+		
+	console.log(genre)
+	console.log(actor)
+	console.log(director)
 	
 	$.ajax({
-		type : "POST",
 		url : "JoinReq",
-		data : JSON.stringify({"userId": userId, "password":userPw,
-			"userName":userName,"userPhone1":userPhone1,"userPhone2":userPhone2,
-			"userEmail1":userEmail1,"userEmail2":userEmail2,"addrZipNum":addrZipNum,
-			"addrBasic":addrBasic,"addrDetail":addrDetail}),
-		contentType : "application/json; charset=utf-8",
+		dataType: "json",
+		contentType :  "application/json; charset=UTF-8",
+		type : "post",
+		data : JSON.stringify({"userId" : $("#userId").val(),
+			"password" : $("#password").val(),
+			"userName" : $("#userName").val(),	
+			"userEmail1" : $("#userEmail1").val(),			
+			"userEmail2" : $("#userEmail2").val(),
+			"userGender" : $("#userGender").val(),
+			"userAge" : $("#userAge").val(),
+			"addrZipNum" : $("#addrZipNum").val(),
+			"addrBasic" : $("#addrBasic").val(),
+			"addrDetail" : $("#addrDetail").val()},list),
 		success : function(data){
 				console.log(data);
 				if(data == 1){
 					alert("가입을 환영합니다");
-					location.href="/myweb/user/userLogin"
+					location.href="/movie"
 				}
 			
 		},
-		error : function(status, error){}	
+		error : function(status, error){
+			console.log("ajax에러")
+		}	
 		
-	})
+	});
+ 
 	
 })
 
@@ -295,7 +318,7 @@ $("#UserJoin").click(function(){
     var index = selected.selectedIndex;
     if(index ==4){
       $(".email2").replaceWith(function() {
-        return $('<input>',{type:'text', class:'email2'})
+        return $('<input>',{type:'text', class:'email2', id:'userEmail2'})
       })
     }
   }
@@ -307,7 +330,7 @@ id.onkeyup=function(){
   var regex = /^[A-Za-z0-9+]{4,12}$/; 
             if(regex.test(document.getElementById("userId").value )) {
                 document.getElementById("userId").style.borderColor = "green";
-                document.getElementById("msgId").innerHTML = "아이디중복체크는 필수 입니다";
+                
 
             } else {
                 document.getElementById("userId").style.borderColor = "red";
@@ -342,6 +365,7 @@ id.onkeyup=function(){
 
 //중복체크
 $("#checkBtn").click(function(){
+	$("#msgId").html = "사용 가능한 아이디입니다";
 	var userId = $("#userId").val()
 	$.ajax({
     			type : "POST",
@@ -349,8 +373,9 @@ $("#checkBtn").click(function(){
     			data : JSON.stringify({"userId": userId}),
     			contentType : "application/json; charset=utf-8",
     			success : function(data){
+    				console.log(data)
     				if(data == 0){
-    					$("#userId").attr("readonly",true);
+    					   					
     					$("#msgId").html = "사용 가능한 아이디입니다";
     					
     				}else{

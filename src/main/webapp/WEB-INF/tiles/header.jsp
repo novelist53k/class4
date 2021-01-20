@@ -32,7 +32,7 @@
                     <!-- 메뉴 -->
                     <ul class="nav navbar-nav">
                         <li><a href="${pageContext.request.contextPath }" class="menu">메인</a></li>
-                        <li><a href="${pageContext.request.contextPath }/movie/movieList" class="menu">영화</a></li>
+                        <li><a href="${pageContext.request.contextPath }/movie/movieCurrent" class="menu">영화</a></li>
                         <li><a href="${pageContext.request.contextPath }/review/reviewList" class="menu">리뷰</a></li>
                         <li><a href="${pageContext.request.contextPath }/theater/theater" class="menu">영화관</a></li>
                         <li><a href="#" class="menu">다운로드</a></li>

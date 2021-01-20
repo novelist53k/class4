@@ -5,19 +5,20 @@
 
 <mapper namespace="com.class4.movieList.mapper.MovieListMapper">
 
-	<select id="movieList" resultType="CurrentFilmVO">
+	<select id="cMovieList" resultType="CurrentFilmVO">
 		<![CDATA[  
 		select *
 		from(select rownum as rn,
    				 a.*
 				from(select * 
-    				from movie) a)
+    				from cmovie
+    				order by cmno asc) a)
 			where rn > (#{pageNum}-1) * #{amount} and rn <= #{pageNum} * #{amount}
 			]]>
 	
 	</select>
 	
 	<select id="getTotal" resultType="int">
-		select count(*) from movie
+		select count(*) from cmovie
 	</select>
 </mapper>

@@ -8,5 +8,6 @@
  	<typeAliases>
 		<typeAlias type="com.class4.command.CurrentFilmVO" alias="CurrentFilmVO"/>
 		<typeAlias type="com.class4.command.UserVO" alias="UserVO"/>
+		<typeAlias type="com.class4.command.reviewBoardVO" alias="reviewBoardVO"/>
  	</typeAliases>   
 </configuration>

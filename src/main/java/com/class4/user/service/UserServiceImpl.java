@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.class4.command.UserVO;
+import com.class4.command.UserlistVO;
 import com.class4.user.mapper.UserMapper;
 
 @Service("UserService")
@@ -28,5 +29,24 @@ public class UserServiceImpl implements UserService{
 	public UserVO Login(UserVO vo) {
 		return userMapper.Login(vo);
 	}
+
+	@Override
+	public int genreList(UserVO vo) {
+		return userMapper.genreList(vo);
+		
+	}
+	@Override
+	public int actorList(UserVO vo) {
+		return userMapper.actorList(vo);
+		
+	}
+
+	@Override
+	public int directorList(UserVO vo) {
+		
+		return userMapper.directorList(vo);
+	}
+
+	
 
 }

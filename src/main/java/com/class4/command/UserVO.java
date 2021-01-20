@@ -11,13 +11,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Data
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserVO {
 	private String userId;
-	private String password;
+	private String userPw;
 	private String userName;
 	private String userEmail1;
 	private String userEmail2;
@@ -27,17 +25,18 @@ public class UserVO {
 	private String addrDetail;
 	private String addrZipNum;
 	private Timestamp regdate;
+	private int genre;
+	private String actor;
+	private String director;
+	private int[] genreLike;
+	private String[] likeActor;
+	private String[] likeDirector;
+	
 	
 	
 
-	@Override
-	public String toString() {
-		return "UserVO [userId=" + userId + ", password=" + password + ", userName=" + userName + ", userEmail1="
-				+ userEmail1 + ", userEmail2=" + userEmail2 + ", userGender=" + userGender + ", userAge=" + userAge
-				+ ", addrBasic=" + addrBasic + ", addrDetail=" + addrDetail + ", addrZipNum=" + addrZipNum
-				+ ", regdate=" + regdate +  "]";
-	}
 	
 	
 	
 }
+

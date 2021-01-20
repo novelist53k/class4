@@ -3,10 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-    <form class="movie_list_tab" id = tab-menu>
+    <form class="movie_list_tab" id = "tab-menu" name = "releaseForm" action="movieList">
+    
         <ul class="outbox">
-              <li class="left-inbox"><a href="#" data-release="current">현재개봉작</a></li>
-              <li class="right-inbox"><a href="#" data-release="expected">개봉예정작</a></li>
+              <li class="left-inbox"><a class="curm" href="movieCurrent">현재개봉작</a></li>
+              <li class="right-inbox"><a class="expm" href="movieExpected">개봉예정작</a></li>
         </ul>
     </form>
 	
@@ -35,6 +36,7 @@
                        <a href="#" class="name_movie" style="text-decoration: none; color :black; font-weight: 700">${vo.title }</a>
                     </div>
                         <span class="info_state"><fmt:formatDate value="${vo.regdate }" pattern="yyyy년MM월dd일"/> <b>개봉</b></span>
+                        
                     </div>
                 </li>
                </c:forEach>
@@ -70,25 +72,15 @@
                     
                     </div>
                    	<input type="hidden" name="pageNum" value="${pageVO.cri.pageNum }">
-                   	<input type="hidden" name="release" value="${pageVO.cri.release }">
-                   
 		    		</form>		    		
 
-        
-      <input type="button" value="영화등록" class="btn-regist">
+    		  <input type="button" value="영화등록" class="btn-regist">
      </section>
-     <script>
-   		//현재개봉작,개봉예정작 구분
-	   	var leftinbox = document.querySelector(".left-inbox");
-	   	leftinbox.onclick = function(){
-	   		event.preventDefault();
-	   		var current = event.target.innerText;
-	   		document.pageForm.release.value = current;
-     	}
-     </script>
-
+     
+	
     <script>
    
+	//페이징
    	var pagination = document.querySelector(".pagination");
    	pagination.onclick = function(){
    		event.preventDefault();
@@ -97,5 +89,13 @@
    		var pageNum = event.target.dataset.page;
    		document.pageForm.pageNum.value = pageNum;
    		document.pageForm.submit();
-   	}
+  	 	}
+   	
+   	//개봉작별로 style변화주기
+  
+   var rightbox = document.querySelector(".right-inbox");
+   var expm = document.querySelector(".expm");
+   		rightbox.style.border = "1px solid #23527c";
+   		expm.style.color = "#23527c";
+   		expm.style.fontWeight = "bold"; 
    	</script>

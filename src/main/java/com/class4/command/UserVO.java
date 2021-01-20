@@ -2,11 +2,17 @@ package com.class4.command;
 
 import java.security.Timestamp;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserVO {
@@ -15,16 +21,23 @@ public class UserVO {
 	private String userName;
 	private String userEmail1;
 	private String userEmail2;
+	private String userGender;
+	private String userAge;
 	private String addrBasic;
 	private String addrDetail;
 	private String addrZipNum;
 	private Timestamp regdate;
 	
+	
+
 	@Override
 	public String toString() {
 		return "UserVO [userId=" + userId + ", password=" + password + ", userName=" + userName + ", userEmail1="
-				+ userEmail1 + ", userEmail2=" + userEmail2 + ", addrBasic=" + addrBasic + ", addrDetail=" + addrDetail
-				+ ", addrZipNum=" + addrZipNum + ", regdate=" + regdate + "]";
+				+ userEmail1 + ", userEmail2=" + userEmail2 + ", userGender=" + userGender + ", userAge=" + userAge
+				+ ", addrBasic=" + addrBasic + ", addrDetail=" + addrDetail + ", addrZipNum=" + addrZipNum
+				+ ", regdate=" + regdate +  "]";
 	}
+	
+	
 	
 }

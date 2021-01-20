@@ -317,6 +317,23 @@
     .addrBtn{
       margin-bottom:15px;
     }
+    
+    
+    
+    .profile{
+    	float:right;    	
+    	border: 1px solid grey;
+    	
+    }
+    .profile img{
+    	height: 150px;
+    	width: 150px;
+    	
+    }
+    .profileBtn{
+    width:150px;}
+
+
 </style>
 <section>
 
@@ -339,10 +356,16 @@
     <div id="myInfo" class="myInfo tab-pane fade in active">
       <form action="#" class="joinForm" method="POST">
         <br>
-        <label for="id" class="joinLabel">ID</label><br>
-        <input type="text" class="joinId" name="id" id="id" readonly>
-        <br>
-        <br>
+        	<label for="id" class="joinLabel">ID</label><br>
+       		<input type="text" class="joinId" name="id" id="id" readonly><br>
+        	
+        	<div class="profile">
+        		<div><img alt="" src="${pageContext.request.contextPath }/resources/img/default_profile.gif"></div>
+    	    	<button class="profileBtn btn btn-default">프로필 바꾸기</button>
+	        </div>
+        
+        
+        
         <label for="password" class="joinLabel pwlabel">PASSWORD</label><br>
         <input type="password" class="password" name="password" id="password"><br>
         <label for="pwCheck" class="joinLabel">PASSWORD 확인</label><br>
@@ -357,7 +380,7 @@
         </select> 
         <label for="gender" class="joinLabel"> 나이</label>
         <select name="age" id="age" class="age">
-          <script>
+        <script>
           for(i=7; i<100;i++){
           document.write("<option value='"+i+" '>"+i+"</option>")
           

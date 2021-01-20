@@ -14,8 +14,19 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public int JoinReq(UserVO vo) {
-		System.out.println(vo.toString());
-		return 0;
+		
+		return userMapper.JoinReq(vo);
+	}
+
+	@Override
+	public int idCheck(String userId) {
+		
+		return userMapper.idCheck(userId);
+	}
+
+	@Override
+	public UserVO Login(UserVO vo) {
+		return userMapper.Login(vo);
 	}
 
 }

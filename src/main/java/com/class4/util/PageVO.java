@@ -13,10 +13,15 @@ public class PageVO {
 	private int pageNum;
 	private int amount;
 	private int total;
+	private Criteria cri;
 	
-	public PageVO(int total, int pageNum, int amount) {
-		this.pageNum = pageNum;
+	public PageVO() {
 		
+	}
+	public PageVO( Criteria cri, int total) {
+		this.pageNum = cri.getPageNum();
+		this.amount = cri.getAmount();
+		this.total = total;
 		//끝페이지
 		this.endPage = (int)Math.ceil(this.pageNum / 20.0) * 10;
 		

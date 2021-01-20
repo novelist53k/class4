@@ -86,13 +86,15 @@ section .area {
 }
 
 
+
 /* 영화리스트 */
-    .movie_list_area{text-align: center; margin: 0 auto; width: 60%; }
-        .img_g{width: 220px;}
-        .list_movie{overflow: hidden;}
-        .list_movie li{width: 220px; height:auto;float: left;position: relative; margin: 20px; }
+    .movie_list_area{text-align: center; width: 60%;margin:0 auto }
+         .movie_list_area .img_g{width: 220px; height:313px;}
+         .box_list_movie{width:100%;}
+        .list_movie{overflow: hidden;width:100%;}
+        .list_movie li{width: 220px; float: left;position: relative; margin: 35px 20px; }
         .list_movie li:hover .desc_movie{opacity: 1;}
-       /*  body{background-color: rgb(27, 27, 27);} */
+        
         .desc_movie{   
             text-decoration: none;
             position: absolute;

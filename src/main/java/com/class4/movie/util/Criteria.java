@@ -1,4 +1,4 @@
-package com.class4.util;
+package com.class4.movie.util;
 
 import lombok.Data;
 
@@ -8,7 +8,6 @@ public class Criteria {
 	private int pageNum;
 	private int amount;
 	
-	private String release; //현재개봉작
 	public Criteria() {
 		this(1,20);
 	}

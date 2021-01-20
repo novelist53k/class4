@@ -9,4 +9,5 @@ public interface ReviewBoardMapper {
 	
 	public ArrayList<reviewBoardVO> getList(Criteria cri);
 	public int getTotal(Criteria cri);
+	public reviewBoardVO getContent(int bno);
 }

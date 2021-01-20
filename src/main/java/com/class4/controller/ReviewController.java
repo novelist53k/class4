@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.class4.command.reviewBoardVO;
 import com.class4.common.util.Criteria;
@@ -21,7 +23,7 @@ public class ReviewController {
 	@Qualifier("reviewBoardService")
 	private ReviewBoardService reviewBoardService;
 	
-	
+	//검색, 페이지
 	@RequestMapping("/reviewList")
 	public String reviewList(Model model, Criteria cri) {
 		//화면으로 넘어갈 때 글정보를 가지고 갈수 있도록 처리 getList()로 조회한 결과를 리스트화면에 출력.
@@ -48,10 +50,15 @@ public class ReviewController {
 		return "redirect:/review/reviewList";
 	}
 	
-	
-	@RequestMapping("/reviewContent")
-	public String reviewContent() {
-		return "review/reviewContent";
+	//상세화면
+	@RequestMapping(value= {"/reviewContent"}, method = RequestMethod.GET)
+	public void reviewContent(@RequestParam("bno") int bno, Model model) {
+		
+		//화면으로 넘어갈때 bno기반의 데이터를 가지고 상세화면으로 가도록 getContent()로 처리
+		reviewBoardVO vo = reviewBoardService.getContent(bno);
+		model.addAttribute("vo", vo); //bno게시글에 대한 정보
+		
+		//void형 메서드는 요청의 결과가 디스패쳐서블릿으로 return됩니다.
 	}
 	
 	@RequestMapping("/reviewUpdate")

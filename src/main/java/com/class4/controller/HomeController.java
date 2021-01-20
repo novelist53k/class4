@@ -30,7 +30,6 @@ public class HomeController {
 		
 		// 비로그인시 최신작, 개봉예정작을 model 객체로 attribute
 		ArrayList<CurrentFilmVO> main = homeService.getRecentlyList();
-		System.out.println(main.get(0).toString());;
 		model.addAttribute("mainRecentlyMovie", main);
 		
 		

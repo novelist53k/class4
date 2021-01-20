@@ -27,6 +27,11 @@ public class ReviewBoardServiceImpl implements ReviewBoardService{
 		
 		return reviewBoardMapper.getTotal(cri);
 	}
-	
-	
+
+	@Override
+	public reviewBoardVO getContent(int bno) {
+		
+		return reviewBoardMapper.getContent(bno);
+	}
+
 }

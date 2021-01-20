@@ -1,4 +1,4 @@
-package com.class4.util;
+package com.class4.movie.util;
 
 import lombok.Data;
 

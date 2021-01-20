@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 	<style>
 		.loginPw, .loginId{
       display: inline-block;
@@ -31,7 +32,7 @@
                     <!-- 메뉴 -->
                     <ul class="nav navbar-nav">
                         <li><a href="${pageContext.request.contextPath }" class="menu">메인</a></li>
-                        <li><a href="${pageContext.request.contextPath }/movie/movieList" class="menu">영화</a></li>
+                        <li><a href="${pageContext.request.contextPath }/movie/movieCurrent" class="menu">영화</a></li>
                         <li><a href="${pageContext.request.contextPath }/review/reviewList" class="menu">리뷰</a></li>
                         <li><a href="${pageContext.request.contextPath }/theater/theater" class="menu">영화관</a></li>
                         <li><a href="#" class="menu">다운로드</a></li>
@@ -52,8 +53,8 @@
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="${pageContext.request.contextPath }/user/join">회원가입</a></li>
                                     <li><a href="#" data-toggle="modal" data-target="#myModal">Login</a></li>
-                                    <li><a href="${pageContext.request.contextPath }/user/mypage">마이페이지</a></li>
-                                </ul>
+                                  	<li><a href="${pageContext.request.contextPath }/user/mypage">마이페이지</a></li>
+                                </ul>                      
                             </li>
                         </ul>
                     </form>
@@ -71,8 +72,8 @@
                             <h4 class="modal-title">로그인</h4>
                         </div>
                         <div class="modal-body">
-                            ID  :<input type="text" id="loginId" name="loginId" class="loginId"><br>
-                            PW :<input type="text" id="loginPw" name="loginPw" class="loginPw">
+                            ID  :<input type="text" id="loginId" name="userId" class="userId"><br>
+                            PW :<input type="text" id="loginPw" name="userPw" class="userPw">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Join</button>
@@ -89,17 +90,22 @@
     <script>
     	$("#login").click(function(){
     		console.log("login버튼 누름")
-    		var loginId = $("#loginId").val();
-    		var loginPw = $("#loginPw").val();
-    		console.log(loginId);
-    		console.log(loginPw);
+    		var userId = $("#loginId").val();
+    		var userPw = $("#loginPw").val();
+    		console.log(userId);
+    		console.log(userPw);
     		$.ajax({
     			type : "POST",
-    			url : "${pageContext.request.contextPath }/user/login",
-    			data : JSON.stringify({"userId":loginId,"password":loginPw}),
+    			url : "login",
+    			data : JSON.stringify({"userId":userId,"userPw":userPw}),
     			contentType : "application/json; charset=utf-8",
     			success : function(data){
-    					console.log(data);
+    					if(data===1){
+    						console.log("로그인");
+    						location.href="${pageContext.request.contextPath }/user/mypage";
+    					}else{
+    						alert("없는 회원입니다")
+    					}
     					
     				
     			},

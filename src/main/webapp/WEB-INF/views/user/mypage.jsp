@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+ <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <style>
     body{
         position: relative;
@@ -349,7 +351,8 @@
   <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#myInfo">내정보</a></li>
     <li><a data-toggle="tab" href="#menu1">내가 쓴 리뷰</a></li>
-    <li><a data-toggle="tab" href="#menu2">회원탈퇴</a></li>
+    <li><a data-toggle="tab" href="#menu2">목록</a></li>
+    <li><a data-toggle="tab" href="#menu3">회원탈퇴</a></li>
   </ul>
 
   <div class="tab-content">
@@ -357,7 +360,7 @@
       <form action="#" class="joinForm" method="POST">
         <br>
         	<label for="id" class="joinLabel">ID</label><br>
-       		<input type="text" class="joinId" name="id" id="id" readonly><br>
+       		<input type="text" class="joinId" name="id" id="id" value="${userVO.userId }" readonly><br>
         	
         	<div class="profile">
         		<div><img alt="" src="${pageContext.request.contextPath }/resources/img/default_profile.gif"></div>
@@ -371,18 +374,28 @@
         <label for="pwCheck" class="joinLabel">PASSWORD 확인</label><br>
         <input type="password" class="pwCheck" name="pwCheck" id="pwCheck" ><br>
         <label for="pwCheck" class="joinLabel">이름</label><br>
-        <input type="password" class="pwCheck" id="userName" name="userName" >            
+        <input type="text" class="pwCheck" id="userName" name="userName" value="${userVO.userName}" >            
         <br>
         <label for="gender" class="joinLabel">성별</label>
+        <c:choose>
+        <c:when test="${userVO.userGender eq 'man' }">
         <select name="gender" id="gender" class="gender">
-          <option value="man">남자</option>
+	      <option value="man" selected>남자</option>
           <option value="woman">여자</option>
-        </select> 
+        </select>
+        </c:when>
+        <c:when test="${userVO.userGender eq 'woman' }">
+        <select name="gender" id="gender" class="gender">
+	      <option value="man" >남자</option>
+          <option value="woman" selected>여자</option>
+        </select>
+        </c:when> 
+        </c:choose>
         <label for="gender" class="joinLabel"> 나이</label>
         <select name="age" id="age" class="age">
         <script>
           for(i=7; i<100;i++){
-          document.write("<option value='"+i+" '>"+i+"</option>")
+          	document.write("<option value='"+i+"' readonly>"+i+"</option>")
           
           }
         </script>
@@ -390,27 +403,36 @@
         </select>
         <br>
         <label for="email" class="joinLabel">EMAIL</label><br>
-        <input type="text" class="email1" name="email1"> @ <select id="email2" class="email2" onchange="email(this)">
-          <option class="option" value="choice">선택</option>
-          <option class="option" value="gmail.com">gmail.com</option>
-          <option class="option" value="naver.com" >naver.com</option>
-          <option class="option" value="hanmail.net" >hanmail.net</option>
-          <option class="option" value="etc">직접입력</option>
+        <input type="text" class="email1" name="email1" value="${userVO.userEmail1 }"> @ 
+       
+       
+        <select id="email2" class="email2"  onchange="email(this)">          
+          <option ${userVO.userEmail2 =='google.com'?'selected':'' }value="gmail.com" >gmail.com</option>
+          <option ${userVO.userEmail2 =='naver.com'?'selected':'' } value="naver.com" >naver.com</option>
+          <option ${userVO.userEmail2 =='hanmail.net'?'selected':'' } value="hanmail.net" >hanmail.net</option>
+          <option >${userVO.userEmail2 !=('google.com'&&'naver.com'&&'hanmail.net')?'selected':'' }</option>         
         </select>
+       
+       
+       
         <br>
           <label for="joinLabel addr-num">주소</label>
-          <input type="text" class="postNum" id="addrZipNum" placeholder="우편번호" readonly>
+          <input type="text" class="postNum" id="addrZipNum" placeholder="${userVO.addrZipNum }" readonly>
           <button type="button" class="btn btn-primary addrBtn" onclick="goPopup()">주소찾기</button>
         <div class="form-group">
-          <input type="text" class="form-control" id="addrBasic" placeholder="기본주소">
+          <input type="text" class="form-control" id="addrBasic" placeholder=${userVO.addrBasic }>
         </div>
         <div class="form-group">
-            <input type="text" class="form-control" id="addrDetail" placeholder="상세주소">
+            <input type="text" class="form-control" id="addrDetail" placeholder="${userVO.addrDetail }">
         </div>
         <br>
         <div class="actorSection">
           <label for="likeActor" class="joinLabel pwlabel">관심있는 배우</label><br>
+          <input>${userVO.likeActor }
         </div>
+        
+        
+        
         <button type="button" class="add btn-primary" onclick="addActor()">+</button>
         <button type="button" class="minus btn-primary" onclick="minusActor()">-</button>
         <br>
@@ -422,14 +444,18 @@
         <button type="button" class="minus btn-primary" onclick="minusDirector()">-</button>
         <div class="genre">
           <label class="joinLabel">선호하는 장르</label><br>
-          <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" value="action"> 액션</label>
-          <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" value="romence"> 로맨스</label>
-          <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" value="animation"> 애니메이션</label>
-          <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" value="SF"> SF</label>
-          <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" value="comedy"> 코미디</label>
-          <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" value="horror"> 공포</label>
-          <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" value="thiler"> 스릴러</label>
-          <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" value="documentry"> 다큐멘터리</label>
+           <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="1"/> 애니메이션</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="2"/> 드라마</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="3"/> 가족</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="4"/> 미스테리</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="5"/> 범죄</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="6"/> 다큐멘터리</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="7"/> 스릴러</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="8"/> 공포</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="9"/> 판타지</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="10"/> 액션</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="11"/> 로맨스</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="12"/> SF</label>
         
         </div>
         <br>
@@ -458,7 +484,10 @@
       <br>
       <Button class="delUser btn-danger" id="delUser" data-toggle="modal" data-target="#myModal1">회원탈퇴</BUtton>
     </div>
-    
+    <div id="menu3" class="tab-pane fade">
+      <br>
+      <Button class="delUser btn-danger" id="delUser" data-toggle="modal" data-target="#myModal1">회원탈퇴</BUtton>
+    </div>
   </div>
 </div>
 </div>

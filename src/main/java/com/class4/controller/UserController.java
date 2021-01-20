@@ -1,6 +1,7 @@
 package com.class4.controller;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 import com.class4.command.UserVO;
+import com.class4.command.UserlistVO;
 import com.class4.user.service.UserService;
 
 @Controller
@@ -49,37 +51,49 @@ public class UserController {
 	
 	@ResponseBody
 	@RequestMapping(value="login", method=RequestMethod.POST)
-	public ModelAndView login(@RequestBody UserVO vo, Model model, HttpSession session) {
+	public int login(@RequestBody UserVO vo, Model model, HttpSession session) {
 		
 		UserVO result = userService.Login(vo);
 		
-		
-		ModelAndView mv = new ModelAndView();//뷰와model정보를 동시에 저장
-		mv.setViewName("user/userLogin");
-		
-		if(result != null) {//로그인			
-			mv.addObject("login", result);
+		if(result == null) {
 			
-		}else {//로그인 실패
-			mv.addObject("msg","아이디 비밀번호를 확인하세요");
+			return 0;
+		}else {
+			session.setAttribute("userVO", result);
+			return 1;
 		}
 		
-		return mv;
+		
 	}
-	@RequestMapping(value="JoinReq", method=RequestMethod.POST)
-	@ResponseBody
-	public int JoinReq(UserVO vo , 
-			@RequestParam (value="genreList[]") List<String> genreList,
-			@RequestParam (value="actorList[]") List<String> actorList,
-			@RequestParam (value="directorList[]") List<String> directorList) {
-		
-		System.out.println(vo.toString());
-		System.out.println("넘어옴");
-		for(String genre : genreList) {
-		System.out.println(genre);}
-		
+	@RequestMapping(value="JoinReq", method=RequestMethod.POST)	
+	public String Join(UserVO vo) {
+		int result1 = 0;
+		for (int i = 0; i < vo.getGenreLike().length; i++) {			
+			vo.setGenre(vo.getGenreLike()[i]);
+			result1 = userService.genreList(vo);
+			
+		}
+		System.out.println(result1);
+		for (int i = 0; i < vo.getLikeActor().length; i++) {
+			vo.setActor(vo.getLikeActor()[i]);
+			userService.actorList(vo);
+		}
+		for (int i = 0; i < vo.getLikeDirector().length; i++) {
+			vo.setDirector(vo.getLikeDirector()[i]);
+			userService.directorList(vo);
+		}
+			
 		int result = userService.JoinReq(vo);
+		if(result ==1) {
+			
+			return "redirect:/";
+		}else {
+			
+			return "/join";		
+			
+		}
 		
-		return result;		
 	}
+	
+	
 }

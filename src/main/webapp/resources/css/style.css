@@ -38,52 +38,33 @@ header .icon-container{
 
 
 /* main section */
-section .area {
-	width: 80%;
-	min-height: 500px;
-	margin:0 auto;
-	padding: 0px 50px;
-	background:radial-gradient(black, #304047);
+.main_area {
+    width: 80%;
+    min-height: 500px;
+    margin:0 auto;
+    padding: 0px 50px;
+    background:radial-gradient(black, #304047);
 }
+.main_area .swiper-container {
+    height:300px;
+    border:1px solid silver;
+    border-radius:7px;
+    box-shadow:0 0 5px #ccc inset;
+    width: 100%;
+}
+.main_area .swiper-slide {
+    text-align:center;
+    display:flex; /* 내용을 중앙정렬 하기위해 flex 사용 */
+    align-items:center; /* 위아래 기준 중앙정렬 */
+    justify-content:center; /* 좌우 기준 중앙정렬 */
+    width: 16.6666%;
+}
+.main_area .swiper-slide img {
+    box-shadow:0 0 5px #555;
+    width:80%; /* 이미지 최대너비를 제한, 슬라이드에 이미지가 여러개가 보여질때 필요 */
+}
+.main_area .swiper-pagination-clickable .swiper-pagination-bullet {background-color: white;}
 
-.slider_title h2 {
-	color:white;
-	padding-top:20px;
-}
-
-.my-slider-1 {
-	margin-top:100px;
-	width:660px;
-	margin-left:auto;
-	margin-right:auto;
-}
-
-.my-slider-1 .item {
-	padding-top:100px;
-	padding-bottom:100px;
-}
-
-.my-slider-1 .owl-item.active.center {
-	z-index:10;
-}
-
-.my-slider-1 .owl-item.active.center > .item {
-	margin-left:-50px;
-	margin-right:-50px;
-	margin-top:-80px;
-}
-
-.my-slider-1 > .owl-carousel.owl-theme > .owl-nav > button {
-	position:absolute;
-	top:50%;
-	transform:translateY(-50%);
-	right:calc(100% + 100px);
-}
-
-.my-slider-1 > .owl-carousel.owl-theme > .owl-nav > button:last-child {
-            left:calc(100% + 100px);
-            right:auto;
-}
 
 
 

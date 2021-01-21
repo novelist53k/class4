@@ -10,5 +10,6 @@ public interface UserMapper {
 	public int genreList(UserVO vo);
 	public int actorList(UserVO vo);
 	public int directorList(UserVO vo);
+	public boolean uploadProfile(UserVO userVO);
 	
 }

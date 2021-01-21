@@ -325,6 +325,8 @@
     .profile{
     	float:right;    	
     	border: 1px solid grey;
+    	width:150px;  
+    	height:150px;
     	
     }
     .profile img{
@@ -332,7 +334,9 @@
     	width: 150px;
     	
     }
-    .profileBtn{
+    .profile input{width: 150px;}
+    
+    .upload{
     width:150px;}
 
 
@@ -362,9 +366,14 @@
         	<label for="id" class="joinLabel">ID</label><br>
        		<input type="text" class="joinId" name="id" id="id" value="${userVO.userId }" readonly><br>
         	
-        	<div class="profile">
-        		<div><img alt="" src="${pageContext.request.contextPath }/resources/img/default_profile.gif"></div>
-    	    	<button class="profileBtn btn btn-default">프로필 바꾸기</button>
+        	<div class="profile" >
+        		<div>
+        			
+        			<img alt="" src="${pageContext.request.contextPath}/resources/img/profile/${userVO.userId }/${userVO.fileRealName }">
+        			<input type="file" name="file" id="file">
+        		</div>
+        			<button type="button" class="upload btn btn-default" id="upload" name="upload">확인</button>
+    	    	
 	        </div>
         
         
@@ -428,7 +437,8 @@
         <br>
         <div class="actorSection">
           <label for="likeActor" class="joinLabel pwlabel">관심있는 배우</label><br>
-          <input>${userVO.likeActor }
+                   	
+          
         </div>
         
         
@@ -518,8 +528,52 @@
 
 
 </section>
-
 <script>
+
+
+	
+	$("#upload").click(function(){
+		console.log("업로드 클릭")
+	
+		var file = $("#file").val();
+		var user = "${sessionScope.userVO.userId}";
+		console.log(user);
+		
+		var file = file.substring(file.lastIndexOf('.')+1, file.length).toLowerCase();
+		if(file !="jpg" && file !="png"&&file!="jpeg" && file!="gif"){
+			alert("이미지파일만 등록 가능");
+			return;
+		}else if(user==''){
+			alert("로그인 필요");
+			return;
+		}
+		var data = $("#file")
+		console.log(data);
+		console.log(data[0]);
+		console.log(data[0].files);
+		console.log(data[0].files[0]);
+		
+		var formData = new FormData();
+		formData.append("file",data[0].files[0]);
+		
+		$.ajax({
+			url:"upload",
+			processData: false,
+			contentType: false,
+			data: formData,
+			type:"POST",
+			success: function(result){
+				console.log(result);
+				alert("업로드 성공")
+			},
+			error:function(status, er){
+				alert("업로드 실패")
+			}
+		})
+	})
+
+
+
   var pw = document.getElementById("password");
         pw.onkeyup = function(){
             var regex = /^[A-Za-z0-9+]{8,16}$/;

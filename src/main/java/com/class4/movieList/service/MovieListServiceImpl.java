@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.class4.command.CurrentFilmVO;
-import com.class4.movie.util.Criteria;
+import com.class4.common.util.Criteria;
 import com.class4.movieList.mapper.MovieListMapper;
 
 @Service("movieListService")

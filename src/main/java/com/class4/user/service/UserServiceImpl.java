@@ -47,6 +47,12 @@ public class UserServiceImpl implements UserService{
 		return userMapper.directorList(vo);
 	}
 
+	@Override
+	public boolean uploadProfile(UserVO userVO) {
+		
+		return userMapper.uploadProfile(userVO);
+	}
+
 	
 
 }

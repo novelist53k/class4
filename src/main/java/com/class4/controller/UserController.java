@@ -1,5 +1,7 @@
 package com.class4.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -92,6 +95,63 @@ public class UserController {
 			return "/join";		
 			
 		}
+		
+	}
+	@ResponseBody
+	@RequestMapping(value = "upload" ,method=RequestMethod.POST )
+	public String upload(@RequestParam("file") MultipartFile file, HttpSession session) {
+		
+		
+		
+		try {
+			UserVO userVO = (UserVO)session.getAttribute("userVO");
+			
+			//폴더명
+			String fileLoca = userVO.getUserId();
+			
+			//저장할 폴더
+			String path = "D:\\course\\workspace\\class4\\src\\main\\webapp\\resources\\img\\profile\\"+fileLoca;
+			
+			File folder = new File(path);
+			if(!folder.exists()) {
+				folder.mkdir();
+			}
+			
+			String fileRealName = file.getOriginalFilename();
+			Long size = file.getSize();
+			
+			String fileExtention = fileRealName.substring(fileRealName.lastIndexOf("."), fileRealName.length());
+			
+			System.out.println(fileRealName);
+			
+			//업로드
+			File saveFile = new File(path + "\\" + fileRealName);
+			file.transferTo(saveFile);
+			userVO.setPath(path);
+			userVO.setFileRealName(fileRealName);
+			boolean result = userService.uploadProfile(userVO);
+			if(result) {
+				return "success";
+			}else {
+				return "fail";
+			}
+		} catch (IllegalStateException e) {
+			
+			e.printStackTrace();
+			return "fail";
+		} catch (IOException e) {
+
+			e.printStackTrace();
+			return "fail";
+		} catch (Exception e) {
+			
+			
+			e.printStackTrace();
+			return "fail";
+		}
+		
+		
+		
 		
 	}
 	

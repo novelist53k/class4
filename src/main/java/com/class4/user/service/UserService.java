@@ -15,4 +15,6 @@ public interface UserService {
 	public int actorList(UserVO vo);
 
 	public int directorList(UserVO vo);
+
+	public boolean uploadProfile(UserVO userVO);
 }

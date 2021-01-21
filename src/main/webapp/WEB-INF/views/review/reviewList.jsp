@@ -214,25 +214,21 @@ section {
 	cursor: pointer;
 }
 
-
-
-
 </style>
 
 <section>
 		<form action="reviewList">
 	        <div class = "search">
-	            <select class="search-select" name="searchTpye" style="height: 30px;">
-	                <option value="genre" ${pageVO.cri.searchType eq 'genre' ? 'selected' : '' }>장르</option>
+	            <select class="search-select" name="searchType" style="height: 30px;">
+	            	<option value="total" ${pageVO.cri.searchType eq 'total' ? 'selected' : ''}>전체</option>
 	                <option value="title" ${pageVO.cri.searchType eq 'title' ? 'selected' : ''}>영화제목</option>
-	                <option value="director" ${pageVO.cri.searchType eq 'director' ? 'selected' : ''}>감독</option>
-	                <option value="actor" ${pageVO.cri.searchType eq 'actor' ? 'selected' : ''}>배우</option>
+	                <option value="writer" ${pageVO.cri.searchType eq 'writer' ? 'selected' : ''}>작성자</option>
 	            </select>
 	            <input type="text" name="searchName" value="${pageVO.cri.searchName}"> 
 	            <button type="submit" class="btn btn-primary">검색</button>
 	        </div>
 	        
-	        <input type="hidden" name="pageNum" value="1"> <!-- 검색버튼이 눌리면 무조건 페이지번호를 1번호으로 다시 세팅 -->
+	        <input type="hidden" name="pageNum" value="1"> 
             <input type="hidden" name="amount" value="${pageVO.amount }">
 	        
         </form>
@@ -240,10 +236,11 @@ section {
         <div class = "review_main">
             <lable style="font-size: 40px; font-weight: bold;">영화 리뷰</lable>
             <hr style="border-bottom: 3px solid black; margin: 10px 0;">
-
+			
             <ul class="review_list" id="movie_review_list">
+            	<c:forEach var="vo" items="${list }">
                 <li class="review_comment">
-                	<span class="review_bno">1</span>
+                	<span class="review_bno">${vo.bno }</span>
                     <div class="box_profile">
                         <span class="profile_img">
                             <img src="${pageContext.request.contextPath }/resources/img/default_profile.gif" alt="프로필 이미지">
@@ -255,24 +252,27 @@ section {
                     <div class="box_contents">
                         <ul class="writer_info">
                             <li class = "movie_title">
-                                <label>원더우먼</label>
+                                <label>${vo.movieTitle }</label>
                                 <span class = "point glyphicon glyphicon glyphicon-star" aria-hidden="true" style="color: rgb(233, 49, 49);"></span>
                                 <span class = "score">5</span><br>
                             </li>
                             <li class="writer_name">
-                                <p>김민건</p>
+                                <p>${vo.writer }</p>
                             </li>
                             <li class="writer_etc">
-                                <span class = "day">2021.01.07</span>
+                                <span class = "day">
+                                	<fmt:formatDate value="${vo.regDate }" pattern="yyyy-MM-dd HH:ss"/> 
+                                </span>
                             </li>
                         </ul>
                     </div>
                     <div class="box-comment">
-                        <a href="#"><p>감동은 나에게 다가와 감동란이 되었다.</p></a>
+                        <p><a href="reviewContent?bno=${vo.bno }">${vo.content }</a></p>
 
                     </div>
                 </li>
-                <li class="review_comment">
+                </c:forEach>
+                <%-- <li class="review_comment">
                 	<span class="review_bno">2</span>
                     <div class="box_profile">
                         <span class="profile_img">
@@ -300,40 +300,18 @@ section {
                     <div class="box-comment">
                         <a href="#"><p>볼때마다 느낌과 감동이 새롭네요. 이전에 볼때는 아주 잘 만든 공상과학영화라며 감상했는데, 오늘 보니 현재 코로나시대여서 그런지 현실감이 더욱 와닿고 곧 닥칠 미래인것처럼 다기옵니다.</p></a>
                     </div>
-                </li>
+                </li> --%>
             </ul>
          </div>
-         
-         <!-- <form>
-		    <div class = "pagination_box">
-		        <ul class="pagination">
-		            <li class="page-item">
-		            <a class="page-link" href="#" aria-label="Previous">
-		                <span aria-hidden="true">&laquo;</span>
-		                <span class="sr-only">Previous</span>
-		            </a>
-		            </li>
-		            <li class="page-item"><a class="page-link" href="#">1</a></li>
-		            <li class="page-item"><a class="page-link" href="#">2</a></li>
-		            <li class="page-item"><a class="page-link" href="#">3</a></li>
-		            <li class="page-item">
-		            <a class="page-link" href="#" aria-label="Next">
-		                <span aria-hidden="true">&raquo;</span>
-		                <span class="sr-only">Next</span>
-		            </a>
-		            </li>
-		        </ul>
-		    </div>
-	    </form -->>
-		         
-		    <!-- 페이징 -->
+                  
+		  <!-- 페이징 -->
 		  <form action="reviewList" name="pageForm">  
 		    <div class = "pagination_box">
 		        <ul class="pagination">
 		        	<!--이전 버튼 -->
 		        	<c:if test="${pageVO.prev }">
 		            <li class="page-item">
-			            <a class="page-link" href="#" aria-label="Previous" data-page="${pageVO.startPage-1 }" >
+			            <a class="page-link" href="#" aria-label="Previous" data-page="${pageVO.startPage - 1}" >
 			                <span aria-hidden="true">&laquo;</span>
 			                <span class="sr-only">Previous</span>
 			            </a>
@@ -348,7 +326,7 @@ section {
 		            
 					<c:if test="${pageVO.next }">	
 		            <li class="page-item">
-			            <a class="page-link" href="#" aria-label="Next" data-page="${pageVO.endPage+1 }">
+			            <a class="page-link" href="#" aria-label="Next" data-page="${pageVO.endPage + 1 }">
 			                <span aria-hidden="true">&raquo;</span>	
 			                <span class="sr-only">Next</span>
 			            </a>
@@ -375,7 +353,7 @@ section {
                 <li class = "theater"><a href="https://www.megabox.co.kr/">메가박스</a></li>
                 <li class = "top"><a href="#" ><img src="${pageContext.request.contextPath }/resources/img/btn_top2.png" alt="top-btn"></a></li>
             </ul>       
-           </aside>
+       </aside>
            
        <script>
        

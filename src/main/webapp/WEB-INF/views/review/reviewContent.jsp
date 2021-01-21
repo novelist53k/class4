@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>    
 <style>
 	<link rel ="stylesheet " href ="../resource /css /bootstrap.min.css ">
 	
@@ -24,6 +25,7 @@ section {
     padding: 20px 60px;
     width: 996px;
     height: 1150px;
+    margin: 0 auto;
     
 }
 
@@ -68,78 +70,147 @@ section {
     margin: 0 auto;
 
 }
+
+.review_bno{
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: whitesmoke;
+}
+
+.day{
+	position: absolute;
+	top : 130px;
+}
+
+/* 댓글 프로필 이미지 */
+
+.profile-img img{
+    width: 55px;
+    margin-right: 5px;
+    float: left;
+}
+
+/*댓글 */
+.form-control {
+    margin-top: 0;
+}
+
+
+.reply-content textarea{
+    width: 815px;
+}
+
+.reply-wrap{
+    position: relative;
+    margin-top: 20px;
+}
+reply_rno{
+	position: absolute;
+	top : 0;
+	left : 0;
+}
+
+.reply-btn{
+    position: absolute;
+    right: 10px;
+    top : 25px;
+}
+
+
+
+
+
 </style>    
     
 <section>
     <lable style="font-size: 40px; font-weight: bold;">영화 리뷰 상세페이지</lable>
     <hr style="border-bottom: 3px solid black; margin: 10px 0;">
     <div class = wrap>
+    	<span class="review_bno">${vo.bno }</span>
         <div class = "movie-img">
-            <img src="img/movie_image.jpg" alt="영화포스터">
-            
+            <img src="${pageContext.request.contextPath}/resources/img/movie_image.jpg" alt="영화포스터">
         </div>    
         <div class = "review-content">
-            <p>제목 : 무슨 내용인지 모르겠음</p>
-            <p>내용 : 제 취향은 아닌듯 합니다.</p>
-            <p>작성자 : 콩나드라</p>
-            평점 : <p class = "point glyphicon glyphicon glyphicon-star" aria-hidden="true" style="color: rgb(233, 49, 49);"></p>
+        	<label>${vo.movieTitle }</label>
+            <p class = "point glyphicon glyphicon glyphicon-star" aria-hidden="true" style="color: rgb(233, 49, 49);"></p>
             <p class = "score" style="display: inline-block;">5</p>
-            <p>작성일 : 2020-12-10</p>
+            <p>${vo.writer }</p>
+			<div class = "day">	        		 
+           		<fmt:formatDate value="${vo.regDate }" pattern="yyyy-MM-dd HH:ss"/>
+        	</div>
         </div>
     </div>
 
     <div class="content form-group">
         <label>내용</label>
-        <textarea class="form-control" rows="10" name='content'></textarea>
+        <textarea class="form-control" rows="10" name="content">${vo.content }</textarea>
         <div class="btns" style="text-align: right; margin-top: 5px;">
-            <button class = "list-btn">목록</button>
-            <button type = "submit" class = "list-modify">수정</button>
+            <button class = "list-btn" onclick="location.href='reviewList'">목록</button>
+            <button type = "submit" class = "list-modify" onclick="location.herf='reviewUpdate?bno=${vo.bno}&writer=${vo.writer }'">수정</button>
             <button class = "list-delete">삭제</button>
         </div>    
         <label>댓글</label>
         <div class="reply-wrap">
+        	<c:forEach var="ReplyVO" items="${listR }">
+        	<span class="reply_rno">${ReplyVO.rno }</span>
             <div class="profile-img">
-                <img src="img/default_profile.gif" alt="profile">
+                <img src="${pageContext.request.contextPath}/resources/img/default_profile.gif" alt="profile">
             </div>
             <div class="reply-content">
-                <textarea class="form-control" rows="2" id="reply" readonly></textarea>
+                <textarea class="form-control" rows="2" id="reply" readonly>${ReplyVO.content }</textarea>
             </div>
             <div class="reply-btn">
                 <button type = "submit" class = "list-modify">수정</button>
                 <button class = "list-delete">삭제</button>
             </div>
+            </c:forEach>
         </div>
 
-        <div class="reply-wrap">
-            <div class="profile-img">
-                <img src="img/default_profile.gif" alt="profile">
-            </div>
-            <div class="reply-content">
-                <textarea class="form-control" rows="2" id="reply" readonly></textarea>
-            </div>
-            <div class="reply-btn">
-                <button type = "submit" class = "list-modify">수정</button>
-                <button class = "list-delete">삭제</button>
-            </div>
-        </div>
 
-        <div class="reply-wrap">
-            <div class="profile-img">
-                <img src="img/default_profile.gif" alt="profile">
-            </div>
-            <div class="reply-content">
-                <textarea class="form-control" rows="2" id="reply" readonly></textarea>
-            </div>
-            <div class="reply-btn">
-                <button type = "submit" class = "list-modify">수정</button>
-                <button class = "list-delete">삭제</button>
-            </div>
-        </div>
-        
         <div class = "more-btn" >
-            <button type="button" style="width: 100%; margin-top: 10px; background-color: rgb(37,37,37); color: white;">댓글 더보기</button>
+            <button type="button" id="more_repl" style="width: 100%; margin-top: 10px; background-color: rgb(37,37,37); color: white;" onclick="moreRepl()">댓글 더보기</button>
         </div>
     </div>
+    
+    <script>
+    
+    
+    
+    	/* function moreRepl(){
+    		
+    		$ajax({
+    			type : "post",
+    			url : "../review/reviewContent",
+    			data : JSON.stringfy({""}),
+    			contentType : "application/json; charset=utf-8",
+    			
+    		
+    			
+    			
+    		})
+    	} */
+    
+    	
+    </script>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
 </section>

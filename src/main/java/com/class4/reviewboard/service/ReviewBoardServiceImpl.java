@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.class4.command.ReplyVO;
 import com.class4.command.reviewBoardVO;
 import com.class4.common.util.Criteria;
 import com.class4.reviewboard.mapper.ReviewBoardMapper;
@@ -21,6 +22,7 @@ public class ReviewBoardServiceImpl implements ReviewBoardService{
 		
 		return reviewBoardMapper.getList(cri);
 	}
+	
 
 	@Override
 	public int getTotal(Criteria cri) {
@@ -33,5 +35,16 @@ public class ReviewBoardServiceImpl implements ReviewBoardService{
 		
 		return reviewBoardMapper.getContent(bno);
 	}
+
+	@Override
+	public ArrayList<ReplyVO> replyList(Criteria cri) {
+		
+		return reviewBoardMapper.replyList(cri);
+	}
+
+
+	
+
+	
 
 }

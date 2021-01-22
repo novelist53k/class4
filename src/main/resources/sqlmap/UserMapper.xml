@@ -18,7 +18,7 @@
   	</update>
   	
   	<select id="Login" resultType="UserVO">
-  		select * from users where userId = #{userId} and userPw=#{userPw}
+  		select * from users where userId = #{userId} and userPw =#{userPw}
   	</select>
 	
 	<insert id="genreList" >
@@ -30,5 +30,16 @@
 	<insert id="directorList" >
 		insert into userDirector (udno, udId, director) values(userDirector_seq.nextval,#{userId},#{director})
 	</insert>
+	
+ 	<select id="checkPw" resultType="int">
+ 		select count(*) as result from users where userId = #{userId} and userPw = #{checkPw}
+	</select>
+	
+	<delete id="delUser">
+		delete from users where userId = #{userId}
+		delete from userGenre where ugId = #{userId}
+		delete from userActor where uaId = #{userId}
+		delete from userDirector where udId = #{userId}
+	</delete>
 	
 </mapper>

@@ -34,6 +34,8 @@ public class UserVO {
 	private String path;
 	private String fileRealName;
 	
+	private String checkPw;
+	
 	
 	
 

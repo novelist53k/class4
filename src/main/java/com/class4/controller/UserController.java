@@ -62,7 +62,7 @@ public class UserController {
 			
 			return 0;
 		}else {
-			session.setAttribute("userVO", result);
+			session.setAttribute("login", result);
 			return 1;
 		}
 		
@@ -111,7 +111,7 @@ public class UserController {
 			
 			//저장할 폴더
 			String path = "D:\\course\\workspace\\class4\\src\\main\\webapp\\resources\\img\\profile\\"+fileLoca;
-			
+			String sqlPath = "\\movie\\resources\\img\\profile\\"+fileLoca;
 			File folder = new File(path);
 			if(!folder.exists()) {
 				folder.mkdir();
@@ -127,7 +127,7 @@ public class UserController {
 			//업로드
 			File saveFile = new File(path + "\\" + fileRealName);
 			file.transferTo(saveFile);
-			userVO.setPath(path);
+			userVO.setPath(sqlPath);
 			userVO.setFileRealName(fileRealName);
 			boolean result = userService.uploadProfile(userVO);
 			if(result) {
@@ -148,6 +148,27 @@ public class UserController {
 			
 			e.printStackTrace();
 			return "fail";
+		}
+		
+		
+		
+		
+	}
+	@RequestMapping(value="delUser", method=RequestMethod.POST)
+	public int delUser(@RequestParam( value ="checkPw") String checkPw,HttpSession session) {
+		UserVO vo = (UserVO)session.getAttribute("login");
+		System.out.println(checkPw+"입력한 비번");
+		System.out.println(vo.getUserPw()+"현재 로그인한 비번");
+		
+		int userPw = userService.checkPw(checkPw,vo);
+		System.out.println(userPw+"컨트롤러 : 유저비번 비번 확인");
+		
+		if(userPw == 1) {
+			userService.delUser(vo);
+			return 0;
+			
+		}else {
+			return 1;
 		}
 		
 		

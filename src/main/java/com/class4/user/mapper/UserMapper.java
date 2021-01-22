@@ -11,5 +11,7 @@ public interface UserMapper {
 	public int actorList(UserVO vo);
 	public int directorList(UserVO vo);
 	public boolean uploadProfile(UserVO userVO);
+	public int delUser(UserVO vo);
+	public int checkPw(String vo, UserVO checkPw);
 	
 }

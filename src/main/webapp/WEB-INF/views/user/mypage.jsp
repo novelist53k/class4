@@ -364,12 +364,12 @@
       <form action="#" class="joinForm" method="POST">
         <br>
         	<label for="id" class="joinLabel">ID</label><br>
-       		<input type="text" class="joinId" name="id" id="id" value="${userVO.userId }" readonly><br>
+       		<input type="text" class="joinId" name="id" id="id" value="${login.userId }" readonly><br>
         	
         	<div class="profile" >
         		<div>
         			
-        			<img alt="" src="${pageContext.request.contextPath}/resources/img/profile/${userVO.userId }/${userVO.fileRealName }">
+        			<img alt="" src="${pageContext.request.contextPath}/resources/img/profile/${login.userId }/${login.fileRealName }">
         			<input type="file" name="file" id="file">
         		</div>
         			<button type="button" class="upload btn btn-default" id="upload" name="upload">확인</button>
@@ -383,17 +383,17 @@
         <label for="pwCheck" class="joinLabel">PASSWORD 확인</label><br>
         <input type="password" class="pwCheck" name="pwCheck" id="pwCheck" ><br>
         <label for="pwCheck" class="joinLabel">이름</label><br>
-        <input type="text" class="pwCheck" id="userName" name="userName" value="${userVO.userName}" >            
+        <input type="text" class="pwCheck" id="userName" name="userName" value="${login.userName}" >            
         <br>
         <label for="gender" class="joinLabel">성별</label>
         <c:choose>
-        <c:when test="${userVO.userGender eq 'man' }">
+        <c:when test="${login.userGender eq 'man' }">
         <select name="gender" id="gender" class="gender">
 	      <option value="man" selected>남자</option>
           <option value="woman">여자</option>
         </select>
         </c:when>
-        <c:when test="${userVO.userGender eq 'woman' }">
+        <c:when test="${login.userGender eq 'woman' }">
         <select name="gender" id="gender" class="gender">
 	      <option value="man" >남자</option>
           <option value="woman" selected>여자</option>
@@ -412,27 +412,27 @@
         </select>
         <br>
         <label for="email" class="joinLabel">EMAIL</label><br>
-        <input type="text" class="email1" name="email1" value="${userVO.userEmail1 }"> @ 
+        <input type="text" class="email1" name="email1" value="${login.userEmail1 }"> @ 
        
        
         <select id="email2" class="email2"  onchange="email(this)">          
-          <option ${userVO.userEmail2 =='google.com'?'selected':'' }value="gmail.com" >gmail.com</option>
-          <option ${userVO.userEmail2 =='naver.com'?'selected':'' } value="naver.com" >naver.com</option>
-          <option ${userVO.userEmail2 =='hanmail.net'?'selected':'' } value="hanmail.net" >hanmail.net</option>
-          <option >${userVO.userEmail2 !=('google.com'&&'naver.com'&&'hanmail.net')?'selected':'' }</option>         
+          <option ${login.userEmail2 =='google.com'?'selected':'' }value="gmail.com" >gmail.com</option>
+          <option ${login.userEmail2 =='naver.com'?'selected':'' } value="naver.com" >naver.com</option>
+          <option ${login.userEmail2 =='hanmail.net'?'selected':'' } value="hanmail.net" >hanmail.net</option>
+          <option >${login.userEmail2 !=('google.com'&&'naver.com'&&'hanmail.net')?'selected':'' }</option>         
         </select>
        
        
        
         <br>
           <label for="joinLabel addr-num">주소</label>
-          <input type="text" class="postNum" id="addrZipNum" placeholder="${userVO.addrZipNum }" readonly>
+          <input type="text" class="postNum" id="addrZipNum" placeholder="${login.addrZipNum }" readonly>
           <button type="button" class="btn btn-primary addrBtn" onclick="goPopup()">주소찾기</button>
         <div class="form-group">
-          <input type="text" class="form-control" id="addrBasic" placeholder=${userVO.addrBasic }>
+          <input type="text" class="form-control" id="addrBasic" placeholder=${login.addrBasic }>
         </div>
         <div class="form-group">
-            <input type="text" class="form-control" id="addrDetail" placeholder="${userVO.addrDetail }">
+            <input type="text" class="form-control" id="addrDetail" placeholder="${login.addrDetail }">
         </div>
         <br>
         <div class="actorSection">
@@ -492,7 +492,7 @@
     </div>
     <div id="menu2" class="tab-pane fade">
       <br>
-      <Button class="delUser btn-danger" id="delUser" data-toggle="modal" data-target="#myModal1">회원탈퇴</BUtton>
+      
     </div>
     <div id="menu3" class="tab-pane fade">
       <br>
@@ -513,13 +513,15 @@
                             <h4 class="modal-title"></h4>
                         </div>
                         <div class="modal-body">
+                            <form action="delUser" method="post">
+                            비밀번호 확인 <input type="text" class="checkPw" id="checkPw" name="checkPw">
                             
-                            비밀번호 확인 <input type="text" class="loginPw" id="loginPw">
+                            <button type="submit" class="btn btn-primary" id="delcheck" name="delcheck" data-dismiss="modal">확인</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+                            </form>
                         </div>
                         <div class="modal-footer">
                         	
-                            <button type="button" class="btn btn-primary" id="loginBtn" data-dismiss="modal">확인</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
                         </div>
                     </div>
                 </div>
@@ -529,14 +531,41 @@
 
 </section>
 <script>
-
+	/* $("#delcheck").click(function(){
+		var checkPw = $("#checkPw").val()
+		console.log("확인누름")
+		console.log(checkPw)
+		
+		$.ajax({
+			type : "POST",
+  			url : "delUser",
+  			data : JSON.stringify({"checkPw": checkPw}),
+  			contentType : "application/json; charset=utf-8",
+  			success : function(data){
+  				console.log(data)
+  				if(data == 0){
+  					   					
+  					alert("정상적으로 탈퇴 됐습니다.")
+  					location.href="/user/join";
+  					
+  				}else{
+  					alert("잘못 입력되었습니다.")
+  					$("#checkPw").val(" ")
+  					return;
+  				}
+  			},
+  			error : function(status, error){}	
+			
+			
+		})
+	}) */
 
 	
 	$("#upload").click(function(){
 		console.log("업로드 클릭")
 	
 		var file = $("#file").val();
-		var user = "${sessionScope.userVO.userId}";
+		var user = "${sessionScope.login.userId}";
 		console.log(user);
 		
 		var file = file.substring(file.lastIndexOf('.')+1, file.length).toLowerCase();
@@ -570,6 +599,7 @@
 				alert("업로드 실패")
 			}
 		})
+		
 	})
 
 

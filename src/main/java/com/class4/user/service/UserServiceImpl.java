@@ -53,6 +53,27 @@ public class UserServiceImpl implements UserService{
 		return userMapper.uploadProfile(userVO);
 	}
 
+	@Override
+	
+	public int delUser(UserVO vo) {
+		
+		return userMapper.delUser(vo);
+	}
+
+	@Override
+	public int checkPw(String checkPw, UserVO vo) {
+		System.out.println(userMapper.checkPw(checkPw,vo) + "유저 서비스 임플");
+		System.out.println(vo.getUserId());
+		return userMapper.checkPw(checkPw,vo);
+	}
+
+	
+	
+	
+	
+
+	
+
 	
 
 }

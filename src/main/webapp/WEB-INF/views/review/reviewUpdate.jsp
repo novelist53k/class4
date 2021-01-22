@@ -79,11 +79,11 @@ ul,ol{
         </div>    
         <div class = "review-content">
           <p>제목 : 무슨 내용인지 모르겠음</p>
-          <p>내용 : 제 취향은 아닌듯 합니다.</p>
+          <p>내용 : 내용 없음.</p>
           <p>작성자 : 콩나드라</p>
           평점 : <p class = "point glyphicon glyphicon glyphicon-star" aria-hidden="true" style="color: rgb(233, 49, 49);"></p>
           <p class = "score" style="display: inline-block;">5</p>
-          <p>작성일 : 2020-12-10</p>
+          <p>작성일 : 2021-12-10</p>
         </div>
     </div>
     

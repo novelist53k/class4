@@ -338,6 +338,9 @@
     
     .upload{
     width:150px;}
+    .genreLike{
+    	display:box;
+    }
 
 
 </style>
@@ -361,7 +364,7 @@
 
   <div class="tab-content">
     <div id="myInfo" class="myInfo tab-pane fade in active">
-      <form action="#" class="joinForm" method="POST">
+      <form action="update" class="joinForm" method="POST">
         <br>
         	<label for="id" class="joinLabel">ID</label><br>
        		<input type="text" class="joinId" name="id" id="id" value="${login.userId }" readonly><br>
@@ -383,7 +386,7 @@
         <label for="pwCheck" class="joinLabel">PASSWORD 확인</label><br>
         <input type="password" class="pwCheck" name="pwCheck" id="pwCheck" ><br>
         <label for="pwCheck" class="joinLabel">이름</label><br>
-        <input type="text" class="pwCheck" id="userName" name="userName" value="${login.userName}" >            
+        <input type="text" class="pwCheck" id="userName" name="userName" placeholder="${login.userName}" >            
         <br>
         <label for="gender" class="joinLabel">성별</label>
         <c:choose>
@@ -402,12 +405,10 @@
         </c:choose>
         <label for="gender" class="joinLabel"> 나이</label>
         <select name="age" id="age" class="age">
-        <script>
-          for(i=7; i<100;i++){
-          	document.write("<option value='"+i+"' readonly>"+i+"</option>")
-          
-          }
-        </script>
+        <c:forEach begin="7" end="100" var="i">
+             	<option ${i==login.userAge?'selected':'' } >${i}
+                                   
+             </c:forEach>
         
         </select>
         <br>
@@ -437,7 +438,12 @@
         <br>
         <div class="actorSection">
           <label for="likeActor" class="joinLabel pwlabel">관심있는 배우</label><br>
-                   	
+                          
+             <c:forEach var="vo" items="${userActorInfo.actorlist }">
+             	<input class="likeActor" id="likeActor" name="likeActor" placeholder="${vo.actor }" readonly>
+                                   
+             </c:forEach>                         
+                                   	
           
         </div>
         
@@ -449,23 +455,55 @@
         <br>
         <div class="diretorSection">
         <label for="likeDirector" class="joinLabel pwlabel">관심있는 감독</label><br>
+        	 <c:forEach var="vo" items="${userDirectorInfo.directorlist }">
+             	<input class="likeDirector" id="likeDirector" name="likeDirector" placeholder="${vo.director }" readonly>
+                                   
+             </c:forEach>
       </div>
         <button type="button" class="add btn-primary" onclick="addDirector()">+</button>
         <button type="button" class="minus btn-primary" onclick="minusDirector()">-</button>
         <div class="genre">
+    	    <c:set var="i" value="0" />
+
+			<c:set var="j" value="4" />
+
+
+
+			
           <label class="joinLabel">선호하는 장르</label><br>
-           <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="1"/> 애니메이션</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="2"/> 드라마</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="3"/> 가족</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="4"/> 미스테리</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="5"/> 범죄</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="6"/> 다큐멘터리</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="7"/> 스릴러</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="8"/> 공포</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="9"/> 판타지</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="10"/> 액션</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="11"/> 로맨스</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="12"/> SF</label>
+          <c:forEach var="vo" items="${userGenreInfo.usergenrelist}">
+                  <input class="likeGenre" id="likeGenre" name="likeGenre" placeholder="${vo.gno }">
+        	</c:forEach>
+           <table>
+           <colgroup>
+
+       		<col width="150px" />
+			<col width="150px" />
+        	<col width="150px" />
+
+    		</colgroup>
+           <tbody>
+           
+        	<c:forEach var="vo1" items="${genre}">
+            <c:if test="${i%j == 0 }">
+                <tr>
+            </c:if>                  
+	        	<td> <label><input type="checkbox" class="genreLike" id="genreLike" name="genreLike" value="${vo1.gno }" > ${vo1.genre }</label></td>                    
+            <c:if test="${i%j == j-1 }">
+                </tr>
+            </c:if>
+            <c:set var="i" value="${i+1 }" />
+        </c:forEach>
+
+    </tbody>
+
+
+
+
+           
+           
+           </table>    
+           	  
         
         </div>
         <br>
@@ -516,7 +554,7 @@
                             <form action="delUser" method="post">
                             비밀번호 확인 <input type="text" class="checkPw" id="checkPw" name="checkPw">
                             
-                            <button type="submit" class="btn btn-primary" id="delcheck" name="delcheck" data-dismiss="modal">확인</button>
+                            <button type="submit" class="btn btn-primary" id="delcheck" name="delcheck">확인</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
                             </form>
                         </div>

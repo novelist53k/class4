@@ -1,7 +1,13 @@
 package com.class4.user.service;
 
-import com.class4.command.UserVO;
-import com.class4.command.UserlistVO;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
+import com.class4.command.user.GenreListVO;
+import com.class4.command.user.UserVO;
+
 
 public interface UserService {
 	
@@ -18,9 +24,17 @@ public interface UserService {
 
 	public boolean uploadProfile(UserVO userVO);
 
-	public int delUser(UserVO vo);
+	public void delUser(String userId);
 
-	public int checkPw(String checkPw, UserVO vo);
+	public int update(UserVO vo);
+
+	public UserVO getActorInfo(String userId);
+
+	public UserVO getGenreInfo(String userId);
+
+	public UserVO getDirectorInfo(String userId);
+
+	public List<Map<Integer, String>> genrelist();
 	
 
 

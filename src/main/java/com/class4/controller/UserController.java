@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -20,9 +21,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-
-import com.class4.command.UserVO;
-import com.class4.command.UserlistVO;
+import com.class4.command.user.GenreListVO;
+import com.class4.command.user.UserActorListVO;
+import com.class4.command.user.UserVO;
 import com.class4.user.service.UserService;
 
 @Controller
@@ -40,7 +41,19 @@ public class UserController {
 	
 		
 	@RequestMapping("/mypage")
-	public String mypage() {
+	public String mypage(HttpSession session, Model model) {
+		UserVO vo =(UserVO)session.getAttribute("login");
+		String userId = vo.getUserId();
+		
+		//1:N관계 맵핑으로 결과를 처리
+		UserVO userActorInfo = userService.getActorInfo(userId);
+		UserVO userGenreInfo = userService.getGenreInfo(userId);
+		UserVO userDirectorInfo = userService.getDirectorInfo(userId);
+		List<Map<Integer, String>> genre = userService.genrelist();
+		model.addAttribute("userActorInfo",userActorInfo);
+		model.addAttribute("userGenreInfo",userGenreInfo);
+		model.addAttribute("userDirectorInfo",userDirectorInfo);
+		model.addAttribute("genre",genre);
 		return "user/mypage";
 	}
 	@ResponseBody
@@ -63,6 +76,7 @@ public class UserController {
 			return 0;
 		}else {
 			session.setAttribute("login", result);
+			
 			return 1;
 		}
 		
@@ -155,26 +169,53 @@ public class UserController {
 		
 	}
 	@RequestMapping(value="delUser", method=RequestMethod.POST)
-	public int delUser(@RequestParam( value ="checkPw") String checkPw,HttpSession session) {
+	public String delUser(@RequestParam( value ="checkPw") String checkPw, HttpSession session) {
 		UserVO vo = (UserVO)session.getAttribute("login");
+		System.out.println(vo.getUserId());
 		System.out.println(checkPw+"입력한 비번");
 		System.out.println(vo.getUserPw()+"현재 로그인한 비번");
+		String userId = vo.getUserId();
 		
-		int userPw = userService.checkPw(checkPw,vo);
-		System.out.println(userPw+"컨트롤러 : 유저비번 비번 확인");
+		System.out.println(vo.getUserPw()+"컨트롤러 : 유저비번 비번 확인");
 		
-		if(userPw == 1) {
-			userService.delUser(vo);
-			return 0;
+		if(vo.getUserPw().equals(checkPw)) {
+			userService.delUser(userId);
 			
+			return "/user/join";
 		}else {
-			return 1;
+			
+			return "/user/mypage";
 		}
 		
 		
 		
 		
 	}
-	
+	@RequestMapping(value="update", method=RequestMethod.POST)
+	public String update(UserVO vo) {
+		userService.update(vo);
+		
+		for (int i = 0; i < vo.getGenreLike().length; i++) {			
+			vo.setGenre(vo.getGenreLike()[i]);
+			userService.genreList(vo);			
+		}		
+		for (int i = 0; i < vo.getLikeActor().length; i++) {
+			vo.setActor(vo.getLikeActor()[i]);
+			userService.actorList(vo);
+		}
+		for (int i = 0; i < vo.getLikeDirector().length; i++) {
+			vo.setDirector(vo.getLikeDirector()[i]);
+			userService.directorList(vo);
+		}
+		
+		return "a";
+	}
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
+		
+		
+		session.invalidate();
+		return "movie";
+	}
 	
 }

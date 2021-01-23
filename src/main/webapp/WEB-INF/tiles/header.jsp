@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+ <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	<style>
 		.loginPw, .loginId{
       display: inline-block;
@@ -31,6 +32,7 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <!-- 메뉴 -->
                     <ul class="nav navbar-nav">
+
                         <li><a href="${pageContext.request.contextPath }" class="menu">메인</a></li>
                         <li><a href="${pageContext.request.contextPath }/movie/movieCurrent" class="menu">영화</a></li>
                         <li><a href="${pageContext.request.contextPath }/review/reviewList" class="menu">리뷰</a></li>
@@ -51,9 +53,16 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">회원 <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
+                        <c:choose>
+                    		<c:when test="${login eq NULL }">
                                     <li><a href="${pageContext.request.contextPath }/user/join">회원가입</a></li>
-                                    <li><a href="#" data-toggle="modal" data-target="#myModal">Login</a></li>
+                                    <li><a href="#" data-toggle="modal" data-target="#myModal">Login</a></li>                    	
+                    		</c:when>
+                    		<c:otherwise>
                                   	<li><a href="${pageContext.request.contextPath }/user/mypage">마이페이지</a></li>
+	                    			<li><a href="logout">로그아웃</a></li>
+                    		</c:otherwise>
+                    	</c:choose>
                                 </ul>                      
                             </li>
                         </ul>
@@ -96,13 +105,14 @@
     		console.log(userPw);
     		$.ajax({
     			type : "POST",
-    			url : "login",
+    			url : "${pageContext.request.contextPath }/user/login",
     			data : JSON.stringify({"userId":userId,"userPw":userPw}),
     			contentType : "application/json; charset=utf-8",
     			success : function(data){
     					if(data===1){
     						console.log("로그인");
-    						location.href="${pageContext.request.contextPath }/user/mypage";
+    						alert("로그인 성공");
+    						location.href="${pageContext.request.contextPath }/user/join";
     					}else{
     						alert("없는 회원입니다")
     					}

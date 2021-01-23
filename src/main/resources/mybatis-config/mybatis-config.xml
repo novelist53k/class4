@@ -6,9 +6,13 @@
 <!-- mapper에서 사용할 단축일므을 typeAliases에 기술합니다. -->
 <configuration>
  	<typeAliases>
-		<typeAlias type="com.class4.command.MovieInfoVO" alias="MovieInfoVO"/>
-		<typeAlias type="com.class4.command.UserVO" alias="UserVO"/>
+		<typeAlias type="com.class4.command.MovieInfoVO" alias="MovieInfoVO"/>		
 		<typeAlias type="com.class4.command.ReviewBoardVO" alias="ReviewBoardVO"/>
 		<typeAlias type="com.class4.command.ReplyVO" alias="ReplyVO"/>
+		<typeAlias type="com.class4.command.user.UserVO" alias="UserVO"/>
+		<typeAlias type="com.class4.command.user.UserActorListVO" alias="UserActorListVO"/>
+		<typeAlias type="com.class4.command.user.UserGenreListVO" alias="UserGenreListVO"/>
+		<typeAlias type="com.class4.command.user.UserDirectorListVO" alias="UserDirectorListVO"/>
+		<typeAlias type="com.class4.command.user.GenreListVO" alias="GenreListVO"/>
  	</typeAliases>   
 </configuration>

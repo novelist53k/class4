@@ -30,16 +30,71 @@
 	<insert id="directorList" >
 		insert into userDirector (udno, udId, director) values(userDirector_seq.nextval,#{userId},#{director})
 	</insert>
-	
- 	<select id="checkPw" resultType="int">
- 		select count(*) as result from users where userId = #{userId} and userPw = #{checkPw}
-	</select>
+	<select id="getActorInfo" resultMap="usersInfo">
+  		select userid,username,userGender,userAge,useremail1,useremail2,addrbasic,addrdetail,u.addrzipnum, a.uaid,a.uano,a.actor from users u left outer JOIN USERACTOR a on u.userId = a.uaid where userId = #{userId}
+  	</select>
+  	<select id="getGenreInfo" resultMap="usersInfo">
+  		select userid,username,userGender,userAge,useremail1,useremail2,addrbasic,addrdetail,u.addrzipnum, g.ugid,g.gno,g.ugno from users u left outer JOIN USERGENRE g on u.userId = g.ugid where userId = #{userId}
+  	</select>
+  	<select id="getDirectorInfo" resultMap="usersInfo">
+  		select userid,username,userGender,userAge,useremail1,useremail2,addrbasic,addrdetail,u.addrzipnum, d.udid,d.udno,d.director from users u left outer JOIN USERDIRECTOR d on u.userId = d.udid where userId = #{userId}
+  	</select>
+  	<select id="genrelist" resultMap="genreList">
+  		select * from genre
+  	</select>
+  	
+  	<!-- type속성에는 실제클래스의 경로, id속성에는 위에서 지정한 resultMap의 이름 -->
+  	<!-- property속성에는 VO객체의 변수명, column속성에는  -->
+  	<resultMap type="UserVO" id="usersInfo">
+  		<result property="userId" column="USERID"/>
+  		<result property="userName" column="USERNAME"/>
+  		<result property="userGender" column="USERGENDER"/>
+  		<result property="userAge" column="USERAGE"/>
+  		<result property="userEmail1" column="USEREMAIL1"/>
+  		<result property="userEmail2" column="USEREMAIL2"/>
+  		<result property="addrBasic" column="ADDRBASIC"/>
+  		<result property="addrDetail" column="ADDRDETAIL"/>
+  		<result property="addrZipNum" column="ADDRZIPNUM"/>
+  		<collection property="actorlist" resultMap="userActorList"/>
+  		<collection property="usergenrelist" resultMap="userGenreList"/>
+  		<collection property="directorlist" resultMap="userDirectorList"/>
+  	</resultMap>
+  	<resultMap type="UserActorListVO" id="userActorList">
+  		<result property="uano" column="UANO"/>
+  		<result property="uaId" column="UAID"/>
+  		<result property="actor" column="ACTOR"/> 	
+  	</resultMap>  
+  	<resultMap type="UserGenreListVO" id="userGenreList">
+  		<result property="ugno" column="UGNO"/>
+  		<result property="ugId" column="UGID"/>
+  		<result property="gno" column="GNO"/>		
+  	</resultMap>  	
+	<resultMap type="UserDirectorListVO" id="userDirectorList">
+  		<result property="udno" column="UDNO"/>
+  		<result property="udid" column="UDID"/>
+  		<result property="director" column="DIRECTOR"/> 	
+  	</resultMap> 
+  	<resultMap type="map" id="genreList">
+  		<result property="gno" column="GNO"/>
+  		<result property="genre" column="GENRE"/>
+  	</resultMap>
+ 	
 	
 	<delete id="delUser">
-		delete from users where userId = #{userId}
-		delete from userGenre where ugId = #{userId}
-		delete from userActor where uaId = #{userId}
-		delete from userDirector where udId = #{userId}
+		delete from users where userId = #{userId}		
 	</delete>
-	
+	<delete id="delUD">
+		delete from userDirector where udid = #{userId}
+	</delete>
+	<delete id="delUA">
+		delete from userActor where uaid = #{userId}
+	</delete>
+	<delete id="delUG">
+		delete from userGenre where ugid = #{userId}
+	</delete>
+	<update id="update">
+		update users set userId=#{userId},userPw=#{userPw},userName=#{userName},userGender=#{userGender},
+		userAge=#{userAge},	userEmail1 = #{userEmail1},userEmail2=#{userEmail2},
+		addrBasic=#{addrBasic},addrDetail=#{addrDetail},addrZipNum=#{addrZipNum}
+	</update>
 </mapper>

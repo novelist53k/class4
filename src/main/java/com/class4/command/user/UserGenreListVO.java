@@ -1,5 +1,6 @@
-package com.class4.command;
+package com.class4.command.user;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -9,8 +10,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserlistVO {
-	private List<String> actorList;
-	private List<String> directorList;
-	private List<String> genreList;
+public class UserGenreListVO {
+	
+	private int ugno;
+	private String ugId;
+	private int gno;
+	
+	
+	
 }

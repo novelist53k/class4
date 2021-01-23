@@ -13,11 +13,9 @@
 				from(select * from REVIEW
 		
 		]]>
-		
-			<if test="searchType=='genre' ">where genre like '%'||#{searchName}||'%'</if>
-		    <if test="searchType=='title' ">where title like '%'||#{searchName}||'%'</if>
-          	<if test="searchType=='director' ">where director like '%'||#{searchName}||'%'</if>
-            <if test="searchType=='actor' ">where actor like '%'||#{searchName}||'%' or content like '%'||#{searchName}||'%' </if>
+		    <if test="searchType=='title' ">where movieTitle like '%'||#{searchName}||'%'</if>
+          	<if test="searchType=='writer' ">where writer like '%'||#{searchName}||'%'</if>
+	        <if test="searchType=='total' ">where movieTitle like '%'||#{searchName}||'%' or writer like '%'||#{searchName}||'%' </if>
 	        <if test="searchType== null or searchType == '' ">where 1 = 1</if>
 		    
 		<![CDATA[
@@ -30,15 +28,18 @@
    <select id="getTotal" resultType="int">
 		select count(*) as total 
 		from REVIEW
-		<if test="searchType=='title' ">where title like '%'||#{searchName}||'%'</if>
+		<if test="searchType=='title' ">where movieTitle like '%'||#{searchName}||'%'</if>
 		<if test="searchType=='writer' ">where writer like '%'||#{searchName}||'%'</if>
-		<if test="searchType=='content' ">where content like '%'||#{searchName}||'%'</if>
-		<if test="searchType=='titcont' ">where title like '%'||#{searchName}||'%' or content like '%'||#{searchName}||'%' </if>
+		<if test="searchType=='total' ">where movieTitle like '%'||#{searchName}||'%' or writer like '%'||#{searchName}||'%' </if>
 		<if test="searchType== null or searchType == '' ">where 1 = 1</if>
 	</select>
 	
 	<select id="getContent" resultType="reviewBoardVO">
-		select * from review where bno = #{bno};
+		select * from review where bno = #{bno}
+	</select>
+	
+	<select id="getRepl" resultType="ReplyVO">
+		select * from reply where rno = #{rno}
 	</select>
 	
  

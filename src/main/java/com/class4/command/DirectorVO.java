@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DirectorVO {
 	
-	private int dco;
+	private String dco;
 	private String directorName;
 	
 }

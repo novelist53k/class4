@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GenreVO {
-	
-	private int gno;
+
 	private String genre;
 }

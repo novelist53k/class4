@@ -11,7 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.class4.command.CurrentFilmVO;
+import com.class4.command.MovieInfoVO;
 import com.class4.home.service.HomeService;
 
 @Controller
@@ -29,16 +29,16 @@ public class HomeController {
 		// 로그인 여부 확인
 		
 		// 비로그인시 최신작, 개봉예정작을 model 객체로 attribute
-		ArrayList<CurrentFilmVO> main = homeService.getRecentlyList();
+		ArrayList<MovieInfoVO> main = homeService.getRecentlyList();
 		model.addAttribute("mainRecentlyMovie", main);
 		
 		
 		
 		
 		// 로그인 시 사용자가 설정한 선호 장르, 감독, 배우에 따른 영화를 model 객체로 attribute
-		ArrayList<CurrentFilmVO> user_genre = homeService.getUserLikeGenre();
-		ArrayList<CurrentFilmVO> user_director = homeService.getUserLikeDirector();
-		ArrayList<CurrentFilmVO> user_actor = homeService.getUserLikeActor();
+		ArrayList<MovieInfoVO> user_genre = homeService.getUserLikeGenre();
+		ArrayList<MovieInfoVO> user_director = homeService.getUserLikeDirector();
+		ArrayList<MovieInfoVO> user_actor = homeService.getUserLikeActor();
 		
 		
 		// 검색기록 쿠키에 따른 텍스트마이닝

@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ActorVO {
 	
-	private int aco;
+	private String aco;
 	private String actorName;
 }

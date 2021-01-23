@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 public class MovieGenreVO {
 
 	private int mgno;
-	private int mno;
-	private int gno;
+	private String mno;
+	private String genre;
 }

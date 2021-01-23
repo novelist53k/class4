@@ -11,6 +11,6 @@ public class UserGenreVO {
 	
 	private int ugno;
 	private String ugId;
-	private int gno;
+	private String genre;
 	
 }

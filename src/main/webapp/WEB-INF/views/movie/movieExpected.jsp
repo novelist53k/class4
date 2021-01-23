@@ -35,8 +35,7 @@
                          <em class="ico_movie ico_allrating">${vo.grade }</em><br>
                        <a href="#" class="name_movie" style="text-decoration: none; color :black; font-weight: 700">${vo.title }</a>
                     </div>
-                        <span class="info_state"><fmt:formatDate value="${vo.regdate }" pattern="yyyy년MM월dd일"/> <b>개봉</b></span>
-                        
+						<span class="info_state">${vo.regdate }<b>개봉</b></span>                        
                     </div>
                 </li>
                </c:forEach>

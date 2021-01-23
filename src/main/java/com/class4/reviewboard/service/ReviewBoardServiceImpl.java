@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.class4.command.ReplyVO;
-import com.class4.command.reviewBoardVO;
+import com.class4.command.ReviewBoardVO;
 import com.class4.common.util.Criteria;
 import com.class4.reviewboard.mapper.ReviewBoardMapper;
 
@@ -18,7 +18,7 @@ public class ReviewBoardServiceImpl implements ReviewBoardService{
 	private ReviewBoardMapper reviewBoardMapper;
 	
 	@Override
-	public ArrayList<reviewBoardVO> getList(Criteria cri) {
+	public ArrayList<ReviewBoardVO> getList(Criteria cri) {
 		
 		return reviewBoardMapper.getList(cri);
 	}
@@ -31,7 +31,7 @@ public class ReviewBoardServiceImpl implements ReviewBoardService{
 	}
 
 	@Override
-	public reviewBoardVO getContent(int bno) {
+	public ReviewBoardVO getContent(int bno) {
 		
 		return reviewBoardMapper.getContent(bno);
 	}

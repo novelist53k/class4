@@ -5,20 +5,77 @@
 
 <mapper namespace="com.class4.movieList.mapper.MovieListMapper">
 
-	<select id="cMovieList" resultType="CurrentFilmVO">
+	<select id="cMovieList" resultType="MovieInfoVO">
 		<![CDATA[  
 		select *
 		from(select rownum as rn,
    				 a.*
 				from(select * 
-    				from cmovie
-    				order by cmno asc) a)
+    				from movie
+    				where opendt >= (sysdate-30)
+    				order by mno asc) a)
 			where rn > (#{pageNum}-1) * #{amount} and rn <= #{pageNum} * #{amount}
 			]]>
 	
 	</select>
 	
-	<select id="getTotal" resultType="int">
-		select count(*) from cmovie
+	<select id="eMovieList" resultType="MovieInfoVO">
+		<![CDATA[  
+		select *
+		from(select rownum as rn,
+   				 a.*
+				from(select * 
+    				from movie
+    				where release = #{eMovie}
+    				order by mno asc) a)
+			where rn > (#{pageNum}-1) * #{amount} and rn <= #{pageNum} * #{amount}
+			]]>
+	
 	</select>
+	
+	<select id="getTotalC" resultType="int">
+		select count(*) from movie where release = #{cMovie}
+		
+	</select>
+
+
+	<select id="getTotalE" resultType="int">
+		select count(*) from movie where release = #{eMovie}
+	</select>
+	
+	<update id="update">
+		update [테이블] set subhead = #{subhead}, content=#{content}, poster=#{poster}, trailer = #{trailer}
+		where title = #{title}
+	</update>
+	
+	
+	
+	<select id="getCodeList" resultType="String">
+		SELECT movieCd FROM movie
+	</select>
+	
+	<insert id="testInsert">
+		INSERT INTO movie(movieCd, title, ftitle, grade, openDt) VALUES(#{movieCd}, #{title}, #{ftitle}, #{grade}, #{openDt})
+	</insert>
+	
+	<select id="getActorCodeList" resultType="String">
+		SELECT ano FROM actor
+	</select>
+	
+	<select id="getDirectorCodeList" resultType="String">
+		SELECT dno FROM director
+	</select>
+	
+	<insert id="testActorInsert">
+		INSERT INTO actor(ano, actorName) VALUES(#{ano}, #{actorName})
+	</insert>
+	
+	<insert id="testDirectorInsert">
+		INSERT INTO director(dno, directorName) VALUES(#{dno}, #{directorName})
+	</insert>
+	
+	
+	
+	
+	
 </mapper>

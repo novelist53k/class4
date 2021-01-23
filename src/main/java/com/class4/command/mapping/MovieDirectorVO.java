@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 public class MovieDirectorVO {
 
 	private int mdno;
-	private int mno;
-	private int dno;
+	private String mno;
+	private String dno;
 }

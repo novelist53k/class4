@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.class4.command.ReplyVO;
-import com.class4.command.reviewBoardVO;
+import com.class4.command.ReviewBoardVO;
 import com.class4.common.util.Criteria;
 import com.class4.common.util.PageVO;
 import com.class4.reviewboard.service.ReviewBoardService;
@@ -29,7 +29,7 @@ public class ReviewController {
 	public String reviewList(Model model, Criteria cri) {
 		//화면으로 넘어갈 때 글정보를 가지고 갈수 있도록 처리 getList()로 조회한 결과를 리스트화면에 출력.
 		//3. 검색과 페이지
-		ArrayList<reviewBoardVO> list = reviewBoardService.getList(cri);
+		ArrayList<ReviewBoardVO> list = reviewBoardService.getList(cri);
 		
 		int total = reviewBoardService.getTotal(cri);
 		PageVO pageVO = new PageVO(cri, total);
@@ -39,17 +39,8 @@ public class ReviewController {
 		//화면으로 전달
 		model.addAttribute("list", list);
 		model.addAttribute("pageVO", pageVO);
-
 		
-		return "review/reviewList";
-	}
-	
-	@RequestMapping("/reviewList")
-	public String replyList(Model model, Criteria cri) {
 		
-		ArrayList<ReplyVO> listR = reviewBoardService.replyList(cri);	
-		//화면으로 전달
-		model.addAttribute("list", listR);
 
 		
 		return "review/reviewList";
@@ -72,8 +63,18 @@ public class ReviewController {
 	public void reviewContent(@RequestParam("bno") int bno, @RequestParam("rno") int rno, Model model) {
 		
 		//화면으로 넘어갈때 bno기반의 데이터를 가지고 상세화면으로 가도록 getContent()로 처리
-		reviewBoardVO vo = reviewBoardService.getContent(bno);
+		ReviewBoardVO vo = reviewBoardService.getContent(bno);
 		model.addAttribute("vo", vo); //bno게시글에 대한 정보
+		
+		/*
+		replylist는 bno를 매개변수로 where 절에서 해당 bno에 대한 list를 반환받는 형식입니다.
+		/reviewList에 매핑되게 잡아놓으면 같은 주소로 매핑 두 개 되서 오류나서 옮겼습니다
+		여기에서 처리하시면 됩니다.
+		
+		ArrayList<ReplyVO> listR = reviewBoardService.replyList(cri);	
+		//화면으로 전달
+		model.addAttribute("list", listR);
+		*/
 		
 	}
 	

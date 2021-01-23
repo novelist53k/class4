@@ -5,12 +5,12 @@
 
 <mapper namespace="com.class4.home.mapper.HomeMapper">
 	
-	<select id="getRecentlyList" resultType="CurrentFilmVO">
+	<select id="getRecentlyList" resultType="MovieInfoVO">
 		SELECT * 
 		FROM (SELECT a.*, ROWNUM AS rn
 		      FROM (SELECT *
 		            FROM movie
-		            ORDER BY regdate DESC) a)
+		            ORDER BY openDt DESC) a)
 		<![CDATA[
 		WHERE rn <= 18
 		]]>

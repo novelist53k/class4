@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class MovieActorVO {
 	
 	private int mano;
-	private int mno;
-	private int ano;
+	private String mno;
+	private String ano;
 	
 }

@@ -11,5 +11,5 @@ public class UserActorVO {
 
 	private int uano;
 	private String uaId;
-	private int ano;
+	private String ano;
 }

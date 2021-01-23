@@ -11,6 +11,6 @@ public class UserDirectorVO {
 	
 	private int udno;
 	private String udId;
-	private int dno;
+	private String dno;
 	
 }

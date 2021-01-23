@@ -31,6 +31,10 @@ public class UserVO {
 	private int[] genreLike;
 	private String[] likeActor;
 	private String[] likeDirector;
+	private String path;
+	private String fileRealName;
+	
+	private String checkPw;
 	
 	
 	

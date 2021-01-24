@@ -13,6 +13,6 @@
 		<typeAlias type="com.class4.command.user.UserActorListVO" alias="UserActorListVO"/>
 		<typeAlias type="com.class4.command.user.UserGenreListVO" alias="UserGenreListVO"/>
 		<typeAlias type="com.class4.command.user.UserDirectorListVO" alias="UserDirectorListVO"/>
-		<typeAlias type="com.class4.command.user.GenreListVO" alias="GenreListVO"/>
+		
  	</typeAliases>   
 </configuration>

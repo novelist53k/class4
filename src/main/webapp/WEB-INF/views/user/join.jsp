@@ -69,7 +69,7 @@
     .checkBtn{
       position: relative;
       right: -252px;
-      top: -34px;
+      top: -60px;
       height: 34px;
     }
     .joinLabel{

@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.class4.command.user.GenreListVO;
+
 import com.class4.command.user.UserVO;
 import com.class4.user.mapper.UserMapper;
 
@@ -98,11 +98,7 @@ public class UserServiceImpl implements UserService{
 		return userMapper.getDirectorInfo(userId);
 	}
 
-	@Override
-	public List<Map<Integer, String>> genrelist() {
-		
-		return userMapper.genrelist();
-	}
+	
 
 	
 

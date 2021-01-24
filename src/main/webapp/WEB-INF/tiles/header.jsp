@@ -3,7 +3,7 @@
      <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	<style>
-		.loginPw, .loginId{
+		.userId, .userPw{
       display: inline-block;
       width: 275px;
       height: 34px;
@@ -81,12 +81,11 @@
                             <h4 class="modal-title">로그인</h4>
                         </div>
                         <div class="modal-body">
-                            ID  :<input type="text" id="loginId" name="userId" class="userId"><br>
-                            PW :<input type="text" id="loginPw" name="userPw" class="userPw">
+                            <label>아이디</label><br><input type="text" id="loginId" name="userId" class="userId"><br>
+                            <label>비밀번호</label><br><input type="text" id="loginPw" name="userPw" class="userPw">
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Join</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal" id="login" name="login">Login</button>
+                        <div class="modal-footer">                            
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" id="login" name="login">Login</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         </div>
                         <p></p>

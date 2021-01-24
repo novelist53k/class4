@@ -5,7 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import com.class4.command.user.GenreListVO;
+
 import com.class4.command.user.UserVO;
 
 
@@ -34,7 +34,7 @@ public interface UserService {
 
 	public UserVO getDirectorInfo(String userId);
 
-	public List<Map<Integer, String>> genrelist();
+	
 	
 
 

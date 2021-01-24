@@ -381,43 +381,32 @@
         
         
         
-        <label for="password" class="joinLabel pwlabel">PASSWORD</label><br>
-        <input type="password" class="password" name="password" id="password"><br>
-        <label for="pwCheck" class="joinLabel">PASSWORD 확인</label><br>
-        <input type="password" class="pwCheck" name="pwCheck" id="pwCheck" ><br>
+       
         <label for="pwCheck" class="joinLabel">이름</label><br>
-        <input type="text" class="pwCheck" id="userName" name="userName" placeholder="${login.userName}" >            
+        <input type="text" class="pwCheck" id="userName" name="userName" value="${login.userName}" readonly>            
         <br>
         <label for="gender" class="joinLabel">성별</label>
-        <c:choose>
-        <c:when test="${login.userGender eq 'man' }">
+                
         <select name="gender" id="gender" class="gender">
-	      <option value="man" selected>남자</option>
-          <option value="woman">여자</option>
-        </select>
-        </c:when>
-        <c:when test="${login.userGender eq 'woman' }">
-        <select name="gender" id="gender" class="gender">
-	      <option value="man" >남자</option>
-          <option value="woman" selected>여자</option>
-        </select>
-        </c:when> 
-        </c:choose>
+	      <option value="man" ${login.userGender eq 'man'?'selected':'' }>남자</option>
+          <option value="woman" ${login.userGender eq 'woman'?'selected':'' }>여자</option>
+        </select>  
+        
         <label for="gender" class="joinLabel"> 나이</label>
         <select name="age" id="age" class="age">
         <c:forEach begin="7" end="100" var="i">
-             	<option ${i==login.userAge?'selected':'' } >${i}
+             	<option value="${i==login.userAge?'selected':'' }" >${i}
                                    
              </c:forEach>
         
         </select>
         <br>
         <label for="email" class="joinLabel">EMAIL</label><br>
-        <input type="text" class="email1" name="email1" value="${login.userEmail1 }"> @ 
+        <input type="text" class="email1" name="email1" value="${login.userEmail1 }" readonly> @ 
        
        
-        <select id="email2" class="email2"  onchange="email(this)">          
-          <option ${login.userEmail2 =='google.com'?'selected':'' }value="gmail.com" >gmail.com</option>
+        <select id="email2" class="email2"  onchange="email(this)" >          
+          <option ${login.userEmail2 =='google.com'?'selected':'' } value="gmail.com" >gmail.com</option>
           <option ${login.userEmail2 =='naver.com'?'selected':'' } value="naver.com" >naver.com</option>
           <option ${login.userEmail2 =='hanmail.net'?'selected':'' } value="hanmail.net" >hanmail.net</option>
           <option >${login.userEmail2 !=('google.com'&&'naver.com'&&'hanmail.net')?'selected':'' }</option>         
@@ -427,20 +416,20 @@
        
         <br>
           <label for="joinLabel addr-num">주소</label>
-          <input type="text" class="postNum" id="addrZipNum" placeholder="${login.addrZipNum }" readonly>
+          <input type="text" class="postNum" id="addrZipNum" value="${login.addrZipNum }" readonly>
           <button type="button" class="btn btn-primary addrBtn" onclick="goPopup()">주소찾기</button>
         <div class="form-group">
-          <input type="text" class="form-control" id="addrBasic" placeholder=${login.addrBasic }>
+          <input type="text" class="form-control" id="addrBasic" value=${login.addrBasic }>
         </div>
         <div class="form-group">
-            <input type="text" class="form-control" id="addrDetail" placeholder="${login.addrDetail }">
+            <input type="text" class="form-control" id="addrDetail" value="${login.addrDetail }">
         </div>
         <br>
         <div class="actorSection">
           <label for="likeActor" class="joinLabel pwlabel">관심있는 배우</label><br>
                           
              <c:forEach var="vo" items="${userActorInfo.actorlist }">
-             	<input class="likeActor" id="likeActor" name="likeActor" placeholder="${vo.actor }" readonly>
+             	<input class="likeActor" id="likeActor" name="likeActor" value="${vo.actor }" readonly>
                                    
              </c:forEach>                         
                                    	
@@ -449,19 +438,17 @@
         
         
         
-        <button type="button" class="add btn-primary" onclick="addActor()">+</button>
-        <button type="button" class="minus btn-primary" onclick="minusActor()">-</button>
+       
         <br>
         <br>
         <div class="diretorSection">
         <label for="likeDirector" class="joinLabel pwlabel">관심있는 감독</label><br>
         	 <c:forEach var="vo" items="${userDirectorInfo.directorlist }">
-             	<input class="likeDirector" id="likeDirector" name="likeDirector" placeholder="${vo.director }" readonly>
+             	<input class="likeDirector" id="likeDirector" name="likeDirector" value="${vo.director }" readonly>
                                    
              </c:forEach>
       </div>
-        <button type="button" class="add btn-primary" onclick="addDirector()">+</button>
-        <button type="button" class="minus btn-primary" onclick="minusDirector()">-</button>
+       
         <div class="genre">
     	    <c:set var="i" value="0" />
 
@@ -472,7 +459,7 @@
 			
           <label class="joinLabel">선호하는 장르</label><br>
           <c:forEach var="vo" items="${userGenreInfo.usergenrelist}">
-                  <input class="likeGenre" id="likeGenre" name="likeGenre" placeholder="${vo.gno }">
+                  <input class="likeGenre" id="likeGenre" name="likeGenre" value="${vo.gno }">
         	</c:forEach>
            <table>
            <colgroup>
@@ -484,11 +471,11 @@
     		</colgroup>
            <tbody>
            
-        	<c:forEach var="vo1" items="${genre}">
+        	<c:forEach var="vo1" items="${userGenreInfo.usergenrelist}">
             <c:if test="${i%j == 0 }">
                 <tr>
             </c:if>                  
-	        	<td> <label><input type="checkbox" class="genreLike" id="genreLike" name="genreLike" value="${vo1.gno }" > ${vo1.genre }</label></td>                    
+	        	<td> <label><input type="checkbox" class="genreLike" id="genreLike" name="genreLike" value="${vo1.gno }" > ${vo1.ugno }</label></td>                    
             <c:if test="${i%j == j-1 }">
                 </tr>
             </c:if>
@@ -509,7 +496,7 @@
         <br>
                 
         <button type="submit" class="btn joinbtn " style="padding: 15px;">수정</button>
-        <button type="button" class="btn btn-default" style="padding: 15px;" onclick="location=''">취소</button>
+        
       </form>
     </div>
     <div id="menu1" class="tab-pane fade">

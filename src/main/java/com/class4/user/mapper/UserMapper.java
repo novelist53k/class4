@@ -5,7 +5,7 @@ package com.class4.user.mapper;
 import java.util.List;
 import java.util.Map;
 
-import com.class4.command.user.GenreListVO;
+
 import com.class4.command.user.UserVO;
 
 
@@ -26,6 +26,6 @@ public interface UserMapper {
 	public UserVO getActorInfo(String userId);
 	public UserVO getGenreInfo(String userId);
 	public UserVO getDirectorInfo(String userId);
-	public List<Map<Integer, String>> genrelist();
+	
 	
 }

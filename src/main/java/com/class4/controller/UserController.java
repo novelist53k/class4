@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.class4.command.user.GenreListVO;
+
 import com.class4.command.user.UserActorListVO;
 import com.class4.command.user.UserVO;
 import com.class4.user.service.UserService;
@@ -49,11 +49,11 @@ public class UserController {
 		UserVO userActorInfo = userService.getActorInfo(userId);
 		UserVO userGenreInfo = userService.getGenreInfo(userId);
 		UserVO userDirectorInfo = userService.getDirectorInfo(userId);
-		List<Map<Integer, String>> genre = userService.genrelist();
+		
 		model.addAttribute("userActorInfo",userActorInfo);
 		model.addAttribute("userGenreInfo",userGenreInfo);
 		model.addAttribute("userDirectorInfo",userDirectorInfo);
-		model.addAttribute("genre",genre);
+		
 		return "user/mypage";
 	}
 	@ResponseBody
@@ -191,25 +191,18 @@ public class UserController {
 		
 		
 	}
-	@RequestMapping(value="update", method=RequestMethod.POST)
-	public String update(UserVO vo) {
-		userService.update(vo);
-		
-		for (int i = 0; i < vo.getGenreLike().length; i++) {			
-			vo.setGenre(vo.getGenreLike()[i]);
-			userService.genreList(vo);			
-		}		
-		for (int i = 0; i < vo.getLikeActor().length; i++) {
-			vo.setActor(vo.getLikeActor()[i]);
-			userService.actorList(vo);
-		}
-		for (int i = 0; i < vo.getLikeDirector().length; i++) {
-			vo.setDirector(vo.getLikeDirector()[i]);
-			userService.directorList(vo);
-		}
-		
-		return "a";
+	@RequestMapping("/update")
+	public String update() {
+				
+		return "user/update";
 	}
+	@RequestMapping("/modify")
+	public String modify(UserVO vo) {
+			System.out.println(vo.toString());
+			userService.update(vo);
+		return "user/mypage";
+	}
+	
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 		

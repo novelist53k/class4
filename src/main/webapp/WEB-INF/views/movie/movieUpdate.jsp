@@ -61,14 +61,23 @@
             </tr>
             
             
-        </table>    
-        <button type="button" style="width: 80px; height: 30px;" class="upbtn">수정하기</button>
+        </table>       
+        <button type="button" style="width: 80px; height: 30px;" class="btn3">등록하기</button>
+        <button type="button" style="width: 80px; height: 30px;" class="upbtn">수2정하기</button>
 
         <br><br><br><br>
     </form>
     </section>
            
      <script>
+     	
+     	var btn3 = document.querySelector(".btn3");
+     	btn3.onclick = function(){
+     		location.href = "movieRegist"
+     	
+     		
+     	}
+     
      	var upbtn = document.querySelector(".upbtn");
      	
      	upbtn.onclick = function(){

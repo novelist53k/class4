@@ -101,6 +101,10 @@ header .icon-container{
           overflow: hidden;
           text-overflow: ellipsis;
         }
+        .list_movie .wrap_movie .info_tit .name_movie{
+        	white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;}
         #tab-menu{
           width: 100%;
           height: 70px;
@@ -346,19 +350,14 @@ header .icon-container{
     }
 
 
-/* 영화 등록, 수정 페이지 */
+/* 영화 수정 페이지 */
 .movie_regist_update_area .registForm{
     background: linear-gradient(45deg, rgb(241, 241, 241), rgb(110, 109, 109));
 }
 .movie_regist_update_area table{
     width: 80%;
 }
-.movie_regist_update_area .registForm{
-    width: 60%;
-    margin: 0 auto;
-    border: 1px solid;
-    text-align: center;
-}
+
 .movie_regist_update_area .registForm h2{
     float: left;
 }
@@ -377,4 +376,26 @@ header .icon-container{
 }
 .movie_regist_update_area .summary{
     height: 400px;
+}
+
+/* 영화 등록 페이지 */
+.movie_regist .registForm{
+    background: linear-gradient(45deg, rgb(241, 241, 241), rgb(110, 109, 109));
+}
+.movie_regist .registForm{
+    width: 80%;
+    margin: 0 auto;
+}
+.movie_regist .registForm h2{
+    float: left;
+}
+.movie_regist input{
+    border-radius: 7px;
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.movie_regist .td1{
+	width : 10%;
 }

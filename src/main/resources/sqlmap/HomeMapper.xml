@@ -45,18 +45,30 @@
 		SELECT ano FROM UserActor WHERE uaid = #{id}
 	</select>
 	
-	<!--  -->
-	<select id="codeListByActor" resultType="string">
+	<!-- 유저가 선호하는 배우 코드로 영화 코드 가져오기 -->
+	<select id="getCodeListByActor" resultType="string">
 		SELECT mno FROM MovieActor WHERE ano = #{ano}
 	</select>
 	
 	<!-- 유저가 선호하는 감독들의 영화 코드 가져오기 -->
 	<select id="getDirectorCodeList" resultType="String">
-		SELECT ano FROM UserActor WHERE uaid = #{id}
+		SELECT dno FROM UserDirector WHERE udid = #{id}
 	</select>
 	
+	<!-- 감독의 영화 코드 가져오기 -->
+	<select id="getCodeListByDirector" resultType="string">
+		SELECT mno FROM MovieDirector WHERE dno = #{dno}
+	</select>
 	
+	<!-- 유저가 선호하는 장르 가져오기 -->
+	<select id="getGenreCodeList" resultType="string">
+		SELECT genre FROM UserGenre WHERE ugid = #{id}
+	</select>
 	
+	<!-- 유저가 선호하는 장르로 영화 코드 가져오기 -->
+	<select id="getCodeListByGenre" resultType="string">
+		SELECT mno FROM MovieGenre WHERE genre = #{genre}
+	</select>
 	
 	
 	

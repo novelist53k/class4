@@ -41,42 +41,32 @@ public class HomeServiceImpl implements HomeService {
 	
 	
 	// 로그인
-	// 유저가 선호하는 장르의 영화 가져오기
+
+
+	// 유저가 선호하는 배우가 출연한 영화리스트를 가져오는 함수
 	@Override
-	public HashMap<String, ArrayList<MovieInfoVO>> getUserLikeList(String id) {
-		HashMap<String, ArrayList<MovieInfoVO>> userLikeList = new HashMap<String, ArrayList<MovieInfoVO>>();
+	public ArrayList<MovieInfoVO> getUserActorML(String id) {
 		Random ran = new Random();
-		
-		// 테스트용 임시 변수
-		id = "qwer";
 		
 		// 유저가 선호하는 배우, 감독, 장르별 영화들을 담을 변수
 		ArrayList<MovieInfoVO> userLikeActorList = new ArrayList<MovieInfoVO>();
-		ArrayList<MovieInfoVO> userLikeDirectorList = new ArrayList<MovieInfoVO>();
-		ArrayList<MovieInfoVO> userLikeGenreList = new ArrayList<MovieInfoVO>();
 		
-		
-		
-		
-		
-		// 유저가 선호하는 배우가 출연한 영화의 코드 가져오기
-		ArrayList<String> actorCodeList = mapper.getActorCodeList(id);
-		
-		ArrayList<String> codeListByActor = new ArrayList<String>();
+
+		// ======================================================
+		// 유저가 선호하는 배우에 따른 영화 가져오기
+		ArrayList<String> actorCodeList = mapper.getActorCodeList(id);	// 유저가 선호하는 배우의 코드 리스트
+		ArrayList<String> codeListByActor = new ArrayList<String>();	// 유저가 선호하는 배우의 코드로 영화 코드를 가져와 저장하기 위한 리스트
 		
 		for(String a : actorCodeList) {
-			codeListByActor.addAll(mapper.getCodeListByActor(a));
+			codeListByActor.addAll(mapper.getCodeListByActor(a));	// 배우 코드로 영화 코드를 받아 리스트에 추가
 		}
-		// 중복 제거
-		HashSet<String> codeSetByActor = new HashSet<String>(codeListByActor);
-		codeListByActor = new ArrayList<String>(codeListByActor);
+		HashSet<String> codeSetByActor = new HashSet<String>(codeListByActor);	// 영화 코드 중복 제거
+		codeListByActor = new ArrayList<String>(codeSetByActor);
 		
+		int[] randomIdx = new int[movieMaxCnt];	// 영화 코드 개수가 슬라이드 내 최대 영화 개수 초과시 영화 코드를 랜덤으로 가져오기 위한 인덱스 번호 변수
 		
-		
-		int[] randomIdx = new int[movieMaxCnt];
-		
-		// 선호하는 배우가 출연한 영화코드 개수가 movieMaxCnt 초과시 가져온 영화코드 중 movieMaxCnt개 만큼 랜덤 처리
 		if(codeListByActor.size() > movieMaxCnt) {
+			// 영화코드 개수가 movieMaxCnt 초과시 가져온 영화코드의 인덱스 번호를 랜덤으로 저장
 			for(int i = 0; i < movieMaxCnt; ++i) {
 				randomIdx[i] = ran.nextInt(codeListByActor.size());
 				for(int j = 0; j < i; ++j) {
@@ -87,38 +77,144 @@ public class HomeServiceImpl implements HomeService {
 				}
 			}
 			
+			// 랜덤으로 저장한 인덱스 번호로 영화 가져오기
 			for(int i = 0; i < randomIdx.length; ++i) {
-				mapper.getMovie(codeListByActor.get(i));
+				userLikeActorList.add(mapper.getMovie(codeListByActor.get(i)));
 			}
 		}
 		else {
-			// 배우가 출연한 영화 코드로 영화 목록 가져오기
+			// 영화코드 개수가movieMaxCnt이하일시 배우가 출연한 영화 코드로 영화 목록 가져오기
 			for(String s : codeListByActor) {
-				mapper.getMovie(s);
+				userLikeActorList.add(mapper.getMovie(s));
+			}		
+		}
+		return userLikeActorList;
+	}
+
+
+	// 유저가 선호하는 감독의 영화리스트를 가져오는 함수
+	@Override
+	public ArrayList<MovieInfoVO> getUserDirectorML(String id) {
+		ArrayList<MovieInfoVO> userLikeDirectorList = new ArrayList<MovieInfoVO>();
+		Random ran = new Random();
+		
+		// 유저가 선호하는 감독에 따른 영화 가져오기
+		ArrayList<String> directorCodeList = mapper.getDirectorCodeList(id);	// 유저가 선호하는 감독의 코드 리스트
+		ArrayList<String> codeListByDirector = new ArrayList<String>();			// 유저가 선호하는 감독의 코드로 영화 코드를 가져와 저장하기 위한 리스트
+		
+		for(String d : directorCodeList) {
+			codeListByDirector.addAll(mapper.getCodeListByDirector(d));	// 감독 코드로 영화 코드를 받아 리스트에 추가
+		}
+		// 중복 제거
+		HashSet<String> codeSetByDirector = new HashSet<String>(codeListByDirector);	// 영화 코드 중복 제거
+		codeListByDirector = new ArrayList<String>(codeSetByDirector);
+		
+		
+		
+		int[] randomIdx = new int[movieMaxCnt];	// 영화 코드 개수가 슬라이드 내 최대 영화 개수 초과시 영화 코드를 랜덤으로 가져오기 위한 인덱스 번호 변수
+		
+		if(codeListByDirector.size() > movieMaxCnt) {
+			// 영화코드 개수가 movieMaxCnt 초과시 가져온 영화코드의 인덱스 번호를 랜덤으로 저장
+			for(int i = 0; i < movieMaxCnt; ++i) {
+				randomIdx[i] = ran.nextInt(codeListByDirector.size());
+				for(int j = 0; j < i; ++j) {
+					if(randomIdx[i] == randomIdx[j]) {	// 중복방지
+						--i;
+						break;
+					}
+				}
+			}
+			
+			// 랜덤으로 저장한 인덱스 번호로 영화 가져오기
+			for(int i = 0; i < randomIdx.length; ++i) {
+				userLikeDirectorList.add(mapper.getMovie(codeListByDirector.get(i)));
+			}
+		}
+		else {
+			// 영화코드 개수가movieMaxCnt이하일시 감독의 영화 코드로 영화 목록 가져오기
+			for(String d : codeListByDirector) {
+				userLikeDirectorList.add(mapper.getMovie(d));
+			}		
+		}
+		return userLikeDirectorList;
+	}
+	
+	
+	
+	
+	
+	
+	
+	// 유저가 선호하는 장르에 따른 영화리스트를 가져오는 함수
+	@Override
+	public ArrayList<MovieInfoVO> getUserGenreML(String id) {
+		ArrayList<MovieInfoVO> userLikeGenreList = new ArrayList<MovieInfoVO>();
+		Random ran = new Random();
+		id = "qwer"; // 테스트용 변수 삭제 예정
+		
+		// 유저가 선호하는 장르에 따른 영화 가져오기
+		ArrayList<String> genreCodeList = mapper.getGenreCodeList(id);	// 유저가 선호하는 장르 리스트
+		ArrayList<String> codeListByGenre = new ArrayList<String>();	// 유저가 선호하는 장르로 영화 코드를 가져와 저장하기 위한 리스트
+		
+		for(String g : genreCodeList) {
+			codeListByGenre.addAll(mapper.getCodeListByActor(g));	// 장르로 영화 코드를 받아 리스트에 추가
+		}
+		// 중복 제거
+		HashSet<String> codeSetByGenre = new HashSet<String>(codeListByGenre);	// 영화 코드 중복 제거
+		codeListByGenre = new ArrayList<String>(codeSetByGenre);
+		
+		
+		
+		int[] randomIdx = new int[movieMaxCnt];	// 영화 코드 개수가 슬라이드 내 최대 영화 개수 초과시 영화 코드를 랜덤으로 가져오기 위한 인덱스 번호 변수
+		
+		if(codeListByGenre.size() > movieMaxCnt) {
+			// 영화코드 개수가 movieMaxCnt 초과시 가져온 영화코드의 인덱스 번호를 랜덤으로 저장
+			for(int i = 0; i < movieMaxCnt; ++i) {
+				randomIdx[i] = ran.nextInt(codeListByGenre.size());
+				for(int j = 0; j < i; ++j) {
+					if(randomIdx[i] == randomIdx[j]) {	// 중복방지
+						--i;
+						break;
+					}
+				}
+			}
+			
+			// 랜덤으로 저장한 인덱스 번호로 영화 가져오기
+			for(int i = 0; i < randomIdx.length; ++i) {
+				userLikeGenreList.add(mapper.getMovie(codeListByGenre.get(i)));
+			}
+		}
+		else {
+			// 영화코드 개수가movieMaxCnt이하일시 장르별 영화 코드로 영화 목록 가져오기
+			for(String g : codeListByGenre) {
+				userLikeGenreList.add(mapper.getMovie(g));
 			}		
 		}
 		
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		return userLikeList;
+		return userLikeGenreList;
 	}
-
+	
+	// 나이별 선호 영화 가져오기
+	@Override
+	public ArrayList<MovieInfoVO> getUserByAgeML(String age) {
+		ArrayList<MovieInfoVO> userByAgeML = new ArrayList<MovieInfoVO>();
+		return userByAgeML;
+	}
+	
+	// 성별별 선호 영화 가져오기
+	@Override
+	public ArrayList<MovieInfoVO> getUserByGenderML(String gender) {
+		ArrayList<MovieInfoVO> userByGenderML = new ArrayList<MovieInfoVO>();
+		return userByGenderML;
+	}
+	
+	
+	
+	
+	
+	
 	
 	// 영화 검색
 	@Override
@@ -266,6 +362,18 @@ public class HomeServiceImpl implements HomeService {
 		
 		return searchHistoryMovieList;
 	}
+
+
+
+	
+
+
+
+	
+
+
+
+	
 
 
 

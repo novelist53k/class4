@@ -21,15 +21,20 @@ public interface HomeMapper {
 	// 유저가 선호하는 배우의 코드 가져오기
 	public ArrayList<String> getActorCodeList(String id);
 	
-	// 유저가 선호하는 배우코드로 영화 코드 가져오가
+	// 유저가 선호하는 배우 코드로 영화 코드 가져오가
 	public ArrayList<String> getCodeListByActor(String ano);
-	
 
 	// 유저가 선호하는 감독의 영화 코드 가져오기
 	public ArrayList<String> getDirectorCodeList(String id);
-
-	// 유저가 선호하는 감독으로 영화 가져오기
-	// public ArrayList<MovieInfoVO> getUserLikeDirector();
+	
+	// 유저가 선호하는 감독 코드로 영화 코드 가져오기
+	public ArrayList<String> getCodeListByDirector(String dno);
+	
+	// 유저가 선호하는 장르 가져오기
+	public ArrayList<String> getGenreCodeList(String id);
+	
+	// 유저가 선호하는 장르로 영화 코드 가져오기
+	public ArrayList<String> getCodeListByGenre(String genre);
 	
 	
 	// 검색

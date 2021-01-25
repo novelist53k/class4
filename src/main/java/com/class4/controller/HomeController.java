@@ -1,15 +1,10 @@
 package com.class4.controller;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,10 +12,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.class4.command.MovieInfoVO;
+import com.class4.command.user.UserVO;
 import com.class4.home.service.HomeService;
 
 @Controller
@@ -34,30 +35,72 @@ public class HomeController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model, HttpServletRequest request, String id) {
-		
-		// 로그인 여부 확인
-		
-		// 비로그인시 최신작, 개봉예정작을 model 객체로 attribute
+
+		// 최신작, 개봉예정작을 model 객체로 attribute
 		HashMap<String, ArrayList<MovieInfoVO>> mainMovieList = homeService.getMainMovieList();
 		model.addAttribute("mainRecentlyList", mainMovieList.get("recent"));
 		model.addAttribute("mainCommingSoonList", mainMovieList.get("commingSoon"));
-		
-		
-		
-		
-		// 로그인 시 사용자가 설정한 선호 배우, 감독, 장르에 따른 영화를 model 객체로 attribute
-		HashMap<String, ArrayList<MovieInfoVO>> userLikeList = homeService.getUserLikeList(id);
-		// 선호하는 배우 attribute
-		model.addAttribute("userLikeActorList", userLikeList.get("userActor"));
-		// 선호하는 감독 attribute
-		model.addAttribute("userLikeDirectorList", userLikeList.get("userDirector"));
-		// 선호하는 장르 attribute
-		model.addAttribute("userLikeGenreList", userLikeList.get("userGenre"));
 
 		return "main";
 	}
 	
 	
+	// 유저가 선호하는 배우의 출연작 가져오기
+	@GetMapping("/userLikeActor/{id}")
+	@ResponseBody
+	public ArrayList<MovieInfoVO> userLikeActor(@PathVariable String id) {
+		ArrayList<MovieInfoVO> userLikeActorList = homeService.getUserActorML(id);
+		System.out.println(userLikeActorList);
+		System.out.println(userLikeActorList.size());
+		return userLikeActorList;
+	}
+	
+	// 유저가 선호하는 감독의 영화 가져오기
+	@GetMapping("/userLikeDirector/{id}")
+	@ResponseBody
+	public ArrayList<MovieInfoVO> userLikeDirector(@PathVariable String id) {
+		ArrayList<MovieInfoVO> userLikeGenreList = homeService.getUserGenreML(id);
+		System.out.println(userLikeGenreList);
+		System.out.println(userLikeGenreList.size());
+		return userLikeGenreList;
+	}
+	
+	// 나이별 선호 영화 가져오기
+	@GetMapping("/userLikeByAge/{age}")
+	@ResponseBody
+	public ArrayList<MovieInfoVO> userLikeByAge(@PathVariable String age) {
+		ArrayList<MovieInfoVO> userLikeByAgeList = homeService.getUserByAgeML(age);
+		System.out.println(userLikeByAgeList);
+		System.out.println(userLikeByAgeList.size());
+		return userLikeByAgeList;
+	}
+	
+	
+	// 나이별 선호 영화 가져오기
+	@GetMapping("/userLikeByGender/{gender}")
+	@ResponseBody
+	public ArrayList<MovieInfoVO> userLikeByGender(@PathVariable String gender) {
+		ArrayList<MovieInfoVO> userLikeByGenderList = homeService.getUserByAgeML(gender);
+		System.out.println(userLikeByGenderList);
+		System.out.println(userLikeByGenderList.size());
+		return userLikeByGenderList;
+	}	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// 검색
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public String search(String keyword, Model model) {
 		
@@ -82,6 +125,11 @@ public class HomeController {
 		
 		return "movieSearch";
 	}
+	
+	
+	
+	
+	
 	
 	
 	

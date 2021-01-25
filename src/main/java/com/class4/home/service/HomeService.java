@@ -14,8 +14,23 @@ public interface HomeService {
 	
 	
 	// 로그인
-	// 유저가 선호하는 장르, 배우, 감독의 영화 가져오기
-	public HashMap<String, ArrayList<MovieInfoVO>> getUserLikeList(String id);
+	
+	// 유저가 선호하는 배우의 출연작 가져오기
+	public ArrayList<MovieInfoVO> getUserActorML(String id);
+	
+	// 유저가 선호하는 감독의 영화 가져오기
+	public ArrayList<MovieInfoVO> getUserDirectorML(String id);
+	
+	// 유저가 선호하는 장르의 영화 가져오기
+	public ArrayList<MovieInfoVO> getUserGenreML(String id);
+	
+	// 나이별 선호 영화 가져오기
+	public ArrayList<MovieInfoVO> getUserByAgeML(String age);
+	
+	// 성별별 선호 영화 가져오기
+	public ArrayList<MovieInfoVO> getUserByGenderML(String gender);
+	
+	
 	
 	
 	// 검색 기록으로 영화 가져오기

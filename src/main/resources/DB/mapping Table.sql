@@ -12,7 +12,9 @@ create SEQUENCE userGenre_seq increment by 1 start with 1 nocache;
 create table userActor(
     uano NUMBER(10),
     uaId varchar2(50) not null,
-    ano varchar2(50) not null
+    ano varchar2(50) not null,
+    uaAge DATE,
+    uaGender VARCHAR2(50)
 );
 alter table userActor add CONSTRAINTS ua_pk PRIMARY KEY (uano);
 create SEQUENCE userActor_seq increment by 1 start with 1 nocache;
@@ -22,7 +24,9 @@ create SEQUENCE userActor_seq increment by 1 start with 1 nocache;
 create table userDirector(
     udno NUMBER(10),
     udId varchar2(50) not null,
-    director varchar2(50) not null
+    dno varchar2(50) not null,
+    udAge DATE,
+    udGender VARCHAR2(50);
 );
 alter table userDirector add CONSTRAINTS ud_pk PRIMARY KEY (udno);
 create SEQUENCE userDirector_seq increment by 1 start with 1 nocache;

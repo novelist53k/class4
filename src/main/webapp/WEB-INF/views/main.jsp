@@ -9,7 +9,7 @@
             <hr>
         </div>
         
-        <!-- 비로그인 시-->
+        <!-- 최신작 -->
         <div class="slider_area_no_login">
             <h3 style="text-align:center; margin-top:10px; color:white;">최신영화</h3>
             <div class="swiper-container">
@@ -29,28 +29,16 @@
                 <div class="swiper-pagination"></div>
             </div>
         </div>
+        <!-- 개봉예정작 -->
         <div class="slider_area_no_login">
             <h3 style="text-align:center; margin-top:10px; color:white;">개봉예정작</h3>
             <div class="swiper-container">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
+                    <c:forEach var="CommingSoonVO" items="${mainCommingSoonList}">
+                    	<div class="swiper-slide">
+                    		<img src="${pageContext.request.contextPath }/resources/img/current/${CommingSoonVO.poster}" class = "img_g">
+                    	</div>
+                	</c:forEach>
                 </div>
             
                 <!-- 네비게이션 -->
@@ -62,104 +50,76 @@
             </div>
         </div>
 
-        <!-- 로그인 시-->
-        <div class="slider_area_login">
-            <h3 style="text-align:center; margin-top:10px; color:white;">장르별 추천영화</h3>
-            <div class="swiper-container">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                </div>
-            
-                <!-- 네비게이션 -->
-                <div class="swiper-button-next"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
-                <div class="swiper-button-prev"></div><!-- 이전 버튼 -->
-            
-                <!-- 페이징 -->
-                <div class="swiper-pagination"></div>
-            </div>
-        </div>
-        <div class="slider_area_login">
-            <h3 style="text-align:center; margin-top:10px; color:white;">감독별 추천영화</h3>
-            <div class="swiper-container">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                </div>
-            
-                <!-- 네비게이션 -->
-                <div class="swiper-button-next"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
-                <div class="swiper-button-prev"></div><!-- 이전 버튼 -->
-            
-                <!-- 페이징 -->
-                <div class="swiper-pagination"></div>
-            </div>
-        </div>
-
-        <div class="slider_area_login">
-            <h3 style="text-align:center; margin-top:10px; color:white;">배우별 추천영화</h3>
-            <div class="swiper-container">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                    <div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/poster.jpg"></div>
-                </div>
-            
-                <!-- 네비게이션 -->
-                <div class="swiper-button-next"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
-                <div class="swiper-button-prev"></div><!-- 이전 버튼 -->
-            
-                <!-- 페이징 -->
-                <div class="swiper-pagination"></div>
-            </div>
-        </div>
+        <!-- 로그인 시만 보임-->
+        <!-- 선호하는 배우가 출연한 영화, 선호하는 배우 미선택시 안 보이게 -->
+        <c:if test="${UserLikeActorList.size() != 0 }">
+	        <div class="slider_area_login">
+	            <h3 style="text-align:center; margin-top:10px; color:white;">""님이 선호하는 배우가 출연한 영화</h3>
+	            <div class="swiper-container">
+	                <div class="swiper-wrapper">
+	                    <c:forEach var="UserLikeActorVO" items="${userLikeActorList}">
+	                    	<div class="swiper-slide">
+	                    		<img src="${pageContext.request.contextPath }/resources/img/current/${UserLikeActorVO.poster}" class = "img_g">
+	                    	</div>
+	                	</c:forEach>
+	                </div>
+	            
+	                <!-- 네비게이션 -->
+	                <div class="swiper-button-next"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
+	                <div class="swiper-button-prev"></div><!-- 이전 버튼 -->
+	            
+	                <!-- 페이징 -->
+	                <div class="swiper-pagination"></div>
+	            </div>
+	        </div>
+        </c:if>
+        
+        <!-- 선호하는 감독의 영화, 선호하는 감독 미선택시 안 보이게 -->
+        <c:if test="${UserLikeDirectorList.size() != 0 }">
+	        <div class="slider_area_login">
+	            <h3 style="text-align:center; margin-top:10px; color:white;">""님이 선호하는 배우가 출연한 영화</h3>
+	            <div class="swiper-container">
+	                <div class="swiper-wrapper">
+	                    <c:forEach var="userLikeDirectorVO" items="${UserLikeDirectorList}">
+	                    	<div class="swiper-slide">
+	                    		<img src="${pageContext.request.contextPath }/resources/img/current/${UserLikeDirectorVO.poster}" class = "img_g">
+	                    	</div>
+	                	</c:forEach>
+	                </div>
+	            
+	                <!-- 네비게이션 -->
+	                <div class="swiper-button-next"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
+	                <div class="swiper-button-prev"></div><!-- 이전 버튼 -->
+	            
+	                <!-- 페이징 -->
+	                <div class="swiper-pagination"></div>
+	            </div>
+	        </div>
+        </c:if>
+        
+        <!-- 선호하는 장르의 영화, 선호하는 장르 미선택시 안 보이게 -->
+        <c:if test="${mainCommingSoonList.size() != 0 }">
+	        <div class="slider_area_login">
+	            <h3 style="text-align:center; margin-top:10px; color:white;">""님이 선호하는 배우가 출연한 영화</h3>
+	            <div class="swiper-container">
+	                <div class="swiper-wrapper">
+	                    <c:forEach var="userLikeGenreVO" items="${userLikeGenreList}">
+	                    	<div class="swiper-slide">
+	                    		<img src="${pageContext.request.contextPath}/resources/img/current/${userLikeGenreVO.poster}" class = "img_g">
+	                    	</div>
+	                	</c:forEach>
+	                </div>
+	            
+	                <!-- 네비게이션 -->
+	                <div class="swiper-button-next"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
+	                <div class="swiper-button-prev"></div><!-- 이전 버튼 -->
+	            
+	                <!-- 페이징 -->
+	                <div class="swiper-pagination"></div>
+	            </div>
+	        </div>
+        </c:if>
+        
 		<hr>
     </section>
     

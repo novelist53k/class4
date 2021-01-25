@@ -5,15 +5,100 @@
 
 <mapper namespace="com.class4.home.mapper.HomeMapper">
 	
+	<!-- 최신작 가져오기 -->
 	<select id="getRecentlyList" resultType="MovieInfoVO">
 		SELECT * 
 		FROM (SELECT a.*, ROWNUM AS rn
 		      FROM (SELECT *
 		            FROM movie
+		            <![CDATA[
+		            WHERE openDt < SYSDATE
+		            ]]>
 		            ORDER BY openDt DESC) a)
 		<![CDATA[
-		WHERE rn <= 18
+		WHERE rn <= #{movieMaxCnt}
 		]]>
 	</select>
+	
+	<!-- 개봉예정작 가져오기 -->
+	<select id="getCommingSoonList" resultType="movieInfoVO">
+		SELECT *
+		FROM (SELECT a.*, ROWNUM AS rn
+			  FROM (SELECT *
+			  		FROM movie
+			  		<![CDATA[
+			  		WHERE openDt > SYSDATE			  		
+			  		]]>
+			  		ORDER BY openDt DESC) a)
+		<![CDATA[
+		WHERE rn <= #{movieMaxCnt}
+		]]>
+	</select>
+	
+	<!-- 영화 코드로 영화 가져오기 -->
+	<select id="getMovie" resultType="movieInfoVO">
+		SELECT * FROM movie WHERE movieCd = #{movieCd}
+	</select>
+	
+	<!-- 유저가 선호하는 배우들의 코드 가져오기 -->
+	<select id="getActorCodeList" resultType="string">
+		SELECT ano FROM UserActor WHERE uaid = #{id}
+	</select>
+	
+	<!--  -->
+	<select id="codeListByActor" resultType="string">
+		SELECT mno FROM MovieActor WHERE ano = #{ano}
+	</select>
+	
+	<!-- 유저가 선호하는 감독들의 영화 코드 가져오기 -->
+	<select id="getDirectorCodeList" resultType="String">
+		SELECT ano FROM UserActor WHERE uaid = #{id}
+	</select>
+	
+	
+	
+	
+	
+	
+	<!-- 영화 제목 검색 -->
+	<select id="searchMovie" resultType="movieInfoVO">
+		SELECT *
+		FROM movie
+		WHERE title LIKE '%' || #{keyword} || '%'
+		OR ftitle LIKE '%' || #{keyword} || '%'
+	</select>
+	
+	<!-- 사용자 검색기록 가져오기 -->
+	<select id="getSearchHistory" resultType="String">
+		SELECT keyword
+		FROM SearchHistory
+		WHERE searchUserId = #{id}
+	</select>
+	
+	<!-- 사용자 검색 횟수 가져오기 -->
+	<select id="getSearchCnt" resultType="int">
+		SELECT COUNT(*)
+		FROM SearchHistory
+		WHERE searchUserId = #{id}
+	</select>
+	
+	<!-- 사용자 검색기록 최대 보관 개수 초과시 앞에서부터 수정 -->
+	<update id="replaceSearchHistory">
+		UPDATE SearchHistory
+		SET keyword = #{keyword}
+		WHERE searchUserId = #{id}
+	</update>
+	
+	<!-- 사용자 검색기록 추가 -->
+	<select id="addSearchHistory">
+		INSERT INTO SearchHistory
+		WHERE searchUserid = #{id}
+	</select>
+	
+	
+	
+	
+	
+	
 	
 </mapper>

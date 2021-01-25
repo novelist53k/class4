@@ -12,6 +12,7 @@ import java.util.LinkedHashMap;
 import org.junit.Test;
 
 import com.class4.command.MovieInfoVO;
+import com.class4.command.mapping.MovieGenreVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.or.kobis.kobisopenapi.consumer.rest.KobisOpenAPIRestService;
@@ -98,6 +99,7 @@ public class test {
 				LinkedHashMap<String, Object> movieInfo = (LinkedHashMap<String, Object>) movieInfoResult.get("movieInfo");
 				System.out.println(movieInfo);
 				
+				// api 정보로 MovieInfoVO 객체 생성
 				MovieInfoVO movie = new MovieInfoVO();
 				String mno = movieInfo.get("movieCd").toString();
 				movie.setMovieCd(mno);
@@ -123,11 +125,30 @@ public class test {
 			    movie.setOpenDt(openDt);
 			    
 			    
+			    // 영화의 장르명 추출
 			    ArrayList<Object> genres = (ArrayList<Object>) movieInfo.get("genres");
-			    for(int k = 0; k < genres.size(); ++k) {
-			    	LinkedHashMap<String, Object> genreMap = (LinkedHashMap<String, Object>) genres.get(k);
-			    	genreMap.get("genreNm");
+			    ArrayList<String> genreList = new ArrayList<String>();
+			    for(int j = 0; j < genres.size(); ++j) {
+			    	LinkedHashMap<String, Object> genreMap = (LinkedHashMap<String, Object>) genres.get(j);
+			    	genreList.add(genreMap.get("genreNm").toString());
 			    }
+			    
+			    // Genre 테이블에 없는 장르면 추가 있으면 아래로
+			    
+			    
+			    
+			    for(int j = 0; j < genreList.size(); ++j) {
+			    	MovieGenreVO mgVO = new MovieGenreVO(1, movieCdList.get(i), genreList.get(j));
+			    	// MovieGenre 테이블에서 mno와 genre가 동시에 같지 않다면 추가
+			    	
+			    }
+			    
+			    
+			    
+			    
+			    
+			    
+			    
 			}
 			
 			

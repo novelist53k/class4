@@ -38,11 +38,11 @@
                         <li><a href="#" class="menu">다운로드</a></li>
                     </ul>
                   
-                    <form class="navbar-form navbar-right" role="search">
+                    <form name="movieSearchForm" action="${pageContext.request.contextPath}/search" class="navbar-form navbar-right" role="search">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Search">
+                            <input type="text" name="keyword" class="form-control" placeholder="Search">
                             <div class="icon-container">
-                                <span type="button" class="glyphicon glyphicon-search" aria-hidden="true"></span>
+	                        	<span id="searchMovieBtn" class="glyphicon glyphicon-search" aria-hidden="true"></span>                            	
                             </div>
                         </div>
       
@@ -111,7 +111,12 @@
     			},
     			error : function(status, error){}	
     		})
-    	})
-    
+    	});
+    	
+    	$("#searchMovieBtn").click(function() {
+    		// console.dir(document.movieSearchForm);
+    		document.movieSearchForm.submit();
+    	});
+    	
     </script>
     	

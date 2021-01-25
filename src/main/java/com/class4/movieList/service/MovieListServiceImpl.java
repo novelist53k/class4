@@ -59,7 +59,7 @@ public class MovieListServiceImpl implements MovieListService{
 
 
 	@Override
-	public ArrayList<MovieInfoVO> getMovieInfo(String cd) {
+	public MovieInfoVO getMovieInfo(String cd) {
 		
 		return movieListMapper.getMovieInfo(cd);
 	}

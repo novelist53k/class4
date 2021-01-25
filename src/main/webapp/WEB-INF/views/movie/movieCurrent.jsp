@@ -20,7 +20,14 @@
                 <li>
                     <div class="info_movie">
                         <span class="thumb_movie">
-                            <img src="${pageContext.request.contextPath }/resources/img/current/${vo.poster}" class = "img_g">
+                        	<c:choose>
+                        	<c:when test="${vo.grade eq '청소년관람불가' && vo.poster eq null}">
+                            <img src="${pageContext.request.contextPath }/resources/img/poster/a.jpg" class = "img_g">
+                            </c:when>
+                            <c:otherwise>
+                            <img src="${pageContext.request.contextPath }/resources/img/poster/${vo.poster}" class = "img_g">
+                            </c:otherwise>
+                            </c:choose>
                         </span>
                         <div class="wrap_desc">
                             <div class="desc_movie">
@@ -36,7 +43,7 @@
                          <em class="ico_movie ico_allrating">${vo.grade }</em><br>
                        <a href="#" class="name_movie" style="text-decoration: none; color :black; font-weight: 700">${vo.title }</a>
                     </div>
-                        <span class="info_state">${vo.upload }<b>개봉</b></span>
+                        <span class="info_state"><fmt:formatDate value="${vo.openDt }" pattern="yyyy/MM/dd"/><b>개봉</b></span>
                     </div>
                 </li>
                </c:forEach>
@@ -79,6 +86,9 @@
      
 	
     <script>
+
+    	
+    
 	//페이징
    	var pagination = document.querySelector(".pagination");
    	pagination.onclick = function(){
@@ -96,4 +106,6 @@
    		leftbox.style.border = "1px solid #23527c";
    		curm.style.color = "#23527c";
    		curm.style.fontWeight = "bold"; 
+   		
+ 
    	</script>

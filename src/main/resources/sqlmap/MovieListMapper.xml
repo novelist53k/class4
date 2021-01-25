@@ -5,42 +5,59 @@
 
 <mapper namespace="com.class4.movieList.mapper.MovieListMapper">
 
-	<select id="cMovieList" resultType="MovieInfoVO">
+	<select id="cMovieList" resultType="MovieListVO">
 		<![CDATA[  
 		select *
 		from(select rownum as rn,
-   				 a.*
-				from(select * 
-    				from movie
-    				where opendt >= (sysdate-30)
-    				order by mno asc) a)
+   				 c.*
+				from(select a.*,
+      				 b.subhead,
+       				 b.content,
+       				 b.poster,
+                     b.trailer
+    				    from movie a
+						left join moviesub b
+						on a.title = b.title
+						where a.opendt > sysdate-30 and a.opendt <= sysdate
+						order by opendt) c 
+						)
 			where rn > (#{pageNum}-1) * #{amount} and rn <= #{pageNum} * #{amount}
 			]]>
 	
 	</select>
 	
-	<select id="eMovieList" resultType="MovieInfoVO">
+	<select id="eMovieList" resultType="MovieListVO">
 		<![CDATA[  
 		select *
 		from(select rownum as rn,
-   				 a.*
-				from(select * 
-    				from movie
-    				where release = #{eMovie}
-    				order by mno asc) a)
+   				 c.*
+				from(select a.*,
+      				 b.subhead,
+       				 b.content,
+       				 b.poster,
+                     b.trailer
+    				    from movie a
+						left join moviesub b
+						on a.title = b.title
+						where a.opendt > sysdate
+						order by opendt) c 
+						)
 			where rn > (#{pageNum}-1) * #{amount} and rn <= #{pageNum} * #{amount}
 			]]>
 	
 	</select>
 	
 	<select id="getTotalC" resultType="int">
-		select count(*) from movie where release = #{cMovie}
+	<![CDATA[
+	select count(*) from movie where opendt > sysdate-30 and opendt <= sysdate
+	]]>  
+		
 		
 	</select>
 
 
 	<select id="getTotalE" resultType="int">
-		select count(*) from movie where release = #{eMovie}
+		select count(*) from movie where opendt > sysdate
 	</select>
 	
 	<update id="update">
@@ -48,15 +65,14 @@
 		where title = #{title}
 	</update>
 	
-	
+	<insert id="regist">
+		INSERT INTO movie(movieCd, title, ftitle, grade, openDt) VALUES(#{movieCd}, #{title}, #{ftitle}, #{grade}, #{openDt})
+	</insert>
 	
 	<select id="getCodeList" resultType="String">
 		SELECT movieCd FROM movie
 	</select>
 	
-	<insert id="testInsert">
-		INSERT INTO movie(movieCd, title, ftitle, grade, openDt) VALUES(#{movieCd}, #{title}, #{ftitle}, #{grade}, #{openDt})
-	</insert>
 	
 	<select id="getActorCodeList" resultType="String">
 		SELECT ano FROM actor

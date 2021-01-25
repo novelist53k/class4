@@ -68,7 +68,7 @@ public class test {
 			movieMap.get("movieList");
 			LinkedHashMap<String, Object> map = (LinkedHashMap<String, Object>) movieMap.get("movieListResult");
 			ArrayList<Object> movieList = (ArrayList<Object>) map.get("movieList");
-			System.out.println(movieList.toString());
+			//System.out.println(movieList.toString());
 			
 			// 영화 코드를 저장할 리스트 생성
 			ArrayList<String> movieCdList = new ArrayList<String>();
@@ -84,7 +84,7 @@ public class test {
 				movieCdList.add(movieCd);
 				
 			}
-			System.out.println("영화 코드 : " + movieCdList.toString());
+			//System.out.println("영화 코드 : " + movieCdList.toString());
 			
 			
 			// 
@@ -96,7 +96,7 @@ public class test {
 				HashMap<String, Object> movieInfoHashMap = mapper.readValue(strMovieInfo, HashMap.class);
 				LinkedHashMap<String, Object> movieInfoResult = (LinkedHashMap<String, Object>) movieInfoHashMap.get("movieInfoResult");
 				LinkedHashMap<String, Object> movieInfo = (LinkedHashMap<String, Object>) movieInfoResult.get("movieInfo");
-				System.out.println(movieInfo);
+				//System.out.println(movieInfo);
 				
 				MovieInfoVO movie = new MovieInfoVO();
 				String mno = movieInfo.get("movieCd").toString();
@@ -115,7 +115,7 @@ public class test {
 				
 				String strDate = movieInfo.get("openDt").toString();
 				String strDateFormat = strDate.substring(6) + "/" + strDate.substring(4,6) + "/" + strDate.substring(0, 4);
-				System.out.println(strDateFormat);
+				//System.out.println(strDateFormat);
 				
 				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 			    Date date = dateFormat.parse(strDateFormat);

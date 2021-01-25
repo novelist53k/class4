@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.class4.command.ActorVO;
 import com.class4.command.DirectorVO;
+import com.class4.command.ReviewBoardVO;
 import com.class4.command.user.UserVO;
 import com.class4.user.mapper.UserMapper;
 
@@ -118,6 +119,13 @@ public class UserServiceImpl implements UserService{
 	public List<DirectorVO> directorList(DirectorVO director) {
 		// TODO Auto-generated method stub
 		return userMapper.directorName(director);
+	}
+
+	
+	@Override
+	public UserVO getReview(String user) {
+		// TODO Auto-generated method stub
+		return userMapper.getReview(user);
 	}
 
 	

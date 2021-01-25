@@ -62,6 +62,7 @@
   		<collection property="actorlist" resultMap="userActorList"/>
   		<collection property="usergenrelist" resultMap="userGenreList"/>
   		<collection property="directorlist" resultMap="userDirectorList"/>
+  		<collection property="userReview" resultMap="userReviewList"/>
   	</resultMap>
   	<resultMap type="UserActorListVO" id="userActorList">
   		<result property="uano" column="UANO"/>
@@ -78,7 +79,14 @@
   		<result property="udid" column="UDID"/>
   		<result property="director" column="DIRECTOR"/> 	
   	</resultMap> 
-  	
+  	<resultMap type="ReviewBoardVO" id="userReviewList">
+  		<result property="bno" column="BNO"/>
+  		<result property="mno" column="MNO"/>
+  		<result property="writer" column="WRITER"/>
+  		<result property="movieTitle" column="MOVIETITLE"/>
+  		<result property="content" column="CONTENT"/>  		
+  		<result property="updateDate" column="UPDATEDATE"/>	
+  	</resultMap> 
 	
 	<delete id="delUser">
 		delete from users where userId = #{userId}		
@@ -98,6 +106,8 @@
 		addrBasic=#{addrBasic},addrDetail=#{addrDetail},addrZipNum=#{addrZipNum} where userId = #{userId}
 	</update>
 	
-	<select id="Myreview"></select>
+	<select id="getReview">
+		select * from users u left outer join review r on u.userId = r.writer where r.writer = #{userId}
+	</select>
 	
 </mapper>

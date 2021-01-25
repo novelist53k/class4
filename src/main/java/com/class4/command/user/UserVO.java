@@ -4,6 +4,8 @@ import java.security.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.class4.command.ReviewBoardVO;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -40,6 +42,7 @@ public class UserVO {
 		private ArrayList<UserActorListVO> actorlist;
 		private ArrayList<UserDirectorListVO> directorlist;
 		private ArrayList<UserGenreListVO> usergenrelist;
+		private ArrayList<ReviewBoardVO> userReview;
 		@Override
 		public String toString() {
 			return "UserVO [userId=" + userId + ", userPw=" + userPw + ", userName=" + userName + ", userEmail1="

@@ -506,7 +506,7 @@
           <div class="reviewPoster"><img src="img/1.jpg" class="poster"></div>
           <div class="reviewBox">
             <div class="reviewBoxin">
-              <div class="myrvTitle">제목: <a href="">하.. 속옷갈아 입었네요</a></div>
+              <div class="myrvTitle">제목: <a href="">${userReview.title }</a></div>
               <div class="myrvScore">평점: </div>
               <div class="myrvRegdate">2020-01-11</div>
           </div>

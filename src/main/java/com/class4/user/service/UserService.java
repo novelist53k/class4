@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import com.class4.command.ActorVO;
 import com.class4.command.DirectorVO;
+import com.class4.command.ReviewBoardVO;
 import com.class4.command.user.UserVO;
 
 
@@ -41,6 +42,10 @@ public interface UserService {
 	public List<ActorVO> actorList(ActorVO actorvo);
 
 	public List<DirectorVO> directorList(DirectorVO director);
+
+	public UserVO getReview(String user);
+
+	
 
 	
 	

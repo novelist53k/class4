@@ -77,7 +77,7 @@
       max-width: 100%;
       font-weight: 700;      
     }
-    .actorName, .likeDirector{
+    .likeActor, .likeDirector{
       display: block;
       position: relative;
       width: 47%;
@@ -360,6 +360,7 @@ $("#checkBtn").click(function(){
 
 })
 var count =0;
+var count1 =0;
 var actorName =null;
 var directorName = null;
   
@@ -415,7 +416,7 @@ var directorName = null;
 	});
   }
   function autocomplete1(a){
-	  count = $(".likeDirector").length-1;
+	  count1 = $(".likeDirector").length-1;
   $(".likeDirector").autocomplete({
 		 
 		 source : function( request, response ) {
@@ -423,7 +424,7 @@ var directorName = null;
               type: 'POST',
               url: "autocomplete1",
               dataType: 'json',
-              data: "directorName="+$(".likeDirector")[count].value,
+              data: "directorName="+$(".likeDirector")[count1].value,
               success: function(data) {
                   var result = data;
                   response(result);     

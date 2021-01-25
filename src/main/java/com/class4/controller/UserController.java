@@ -32,6 +32,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.class4.command.ActorVO;
 import com.class4.command.DirectorVO;
+import com.class4.command.ReviewBoardVO;
 import com.class4.command.user.UserActorListVO;
 import com.class4.command.user.UserVO;
 import com.class4.user.service.UserService;
@@ -63,6 +64,8 @@ public class UserController {
 		model.addAttribute("userActorInfo",userActorInfo);
 		model.addAttribute("userGenreInfo",userGenreInfo);
 		model.addAttribute("userDirectorInfo",userDirectorInfo);
+		UserVO usereview = userService.getReview(userId);
+		model.addAttribute("userReview",usereview);
 		
 		return "user/mypage";
 	}
@@ -212,6 +215,7 @@ public class UserController {
 			
 			session.setAttribute("login", userService.update(vo));
 			
+			
 		return "redirect:/user/mypage";
 	}
 	
@@ -264,9 +268,8 @@ public class UserController {
 		 System.out.println(array.toString());		 
 		 list.clear();
 		 
-		 
-		 
-		 
+		 		 
 	}
+	
 	
 }

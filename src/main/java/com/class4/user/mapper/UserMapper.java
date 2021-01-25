@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.class4.command.ActorVO;
 import com.class4.command.DirectorVO;
+import com.class4.command.ReviewBoardVO;
 import com.class4.command.user.UserVO;
 
 
@@ -31,6 +32,8 @@ public interface UserMapper {
 	public ArrayList<String> listAll2(String result);
 	public List<ActorVO> actorName(ActorVO actorvo);
 	public List<DirectorVO> directorName(DirectorVO director);
+	
+	public UserVO getReview(String user);
 	
 	
 }

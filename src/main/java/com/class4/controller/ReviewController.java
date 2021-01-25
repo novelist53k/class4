@@ -59,8 +59,8 @@ public class ReviewController {
 	}
 	
 	//상세화면
-	@RequestMapping(value= {"/reviewContent"}, method = RequestMethod.GET)
-	public void reviewContent(@RequestParam("bno") int bno, @RequestParam("rno") int rno, Model model) {
+	@RequestMapping(value= {"/reviewContent","/reviewUpdate"}, method = RequestMethod.GET)
+	public void reviewContent(@RequestParam("bno") int bno, Model model) {
 		
 		//화면으로 넘어갈때 bno기반의 데이터를 가지고 상세화면으로 가도록 getContent()로 처리
 		ReviewBoardVO vo = reviewBoardService.getContent(bno);

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>    
 <style>
 	<link rel ="stylesheet " href ="../resource /css /bootstrap.min.css ">
 	
@@ -15,6 +17,14 @@
 
 ul,ol{
     list-style: none;
+}
+
+section {
+
+    padding: 20px 60px;
+    width: 996px;
+    height: 700px;
+    margin: 0 auto;
 }
 /* 리뷰 상세 */
 
@@ -65,34 +75,59 @@ ul,ol{
     width: 600px;
     margin: 5px auto;
 }
+
+.review_bno{
+    position: absolute;
+    top: 0;
+    left: 0;
+    color:white;
+}
+
+.day{
+	position: absolute;
+	top : 130px;
+}
+
+
 </style>
 
 
 
 <section>
-    <lable style="font-size: 40px; font-weight: bold;">영화 리뷰 수정 페이지</lable>
+    <label style="font-size: 40px; font-weight: bold;">영화 리뷰 수정 페이지</label>
     <hr style="border-bottom: 3px solid black; margin: 10px 0;">
-    <div class = wrap>
-        <div class = "movie-img">
-            <img src="${pageContext.request.contextPath }/resources/img/movie_image.jpg" alt="영화포스터">
-            
-        </div>    
-        <div class = "review-content">
-          <p>제목 : 무슨 내용인지 모르겠음</p>
-          <p>내용 : 내용 없음.</p>
-          <p>작성자 : 콩나드라</p>
-          평점 : <p class = "point glyphicon glyphicon glyphicon-star" aria-hidden="true" style="color: rgb(233, 49, 49);"></p>
-          <p class = "score" style="display: inline-block;">5</p>
-          <p>작성일 : 2021-12-10</p>
-        </div>
-    </div>
-    
-    <div class="content form-group">
-        <label>내용</label>
-        <textarea class="content form-control" rows="10" name='content' ></textarea>
-        <div class="btns" style="text-align: right;">
-            <button type = "submit" class = "list-modify">수정</button>
-            <button class = "list-delete">취소</button>
-        </div>    
-    </div>
+    <form action="update" method = "post" name = "update">
+	    <div class = wrap>
+	    	<span class="review_bno">${vo.bno }</span>
+	        <div class = "movie-img">
+	            <img src="${pageContext.request.contextPath }/resources/img/movie_image.jpg" alt="영화포스터">
+	            
+	        </div>    
+	        <div class = "review-content">
+	          <label>${vo.movieTitle }</label>
+	          <p class = "point glyphicon glyphicon glyphicon-star" aria-hidden="true" style="color: rgb(233, 49, 49);"></p>
+	          <p class = "score" style="display: inline-block;">5</p>
+	          <p>${vo.writer}</p>
+	          <div class = "day">	        		 
+	           		<fmt:formatDate value="${vo.regDate }" pattern="yyyy-MM-dd HH:ss"/>
+	        	</div>
+	        </div>
+	    </div>
+	    
+	    <div class="content form-group">
+	        <label>내용</label>
+	        <textarea class="content form-control" rows="10" name='content' >${vo.content }</textarea>
+	        <div class="btns" style="text-align: right;">
+	            <button type = "submit" class = "list-modify">수정</button>
+	            <button class = "list-delete" onclick="location.href = 'reviewLisst'">취소</button>
+	        </div>    
+	    </div>
+    </form>
 </section>
+
+
+<script type="text/javascript">
+
+</script>
+
+

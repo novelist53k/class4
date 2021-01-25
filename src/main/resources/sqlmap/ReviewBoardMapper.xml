@@ -36,12 +36,19 @@
 	
 	<select id="getContent" resultType="ReviewBoardVO">
 		select * from review where bno = #{bno}
-	</select>
+	</select> 
 	
-	<select id="getRepl" resultType="ReplyVO">
-		select * from reply where rno = #{rno}
-	</select>
 	
- 
+	<update id="update">
+		update review
+		set content = #{content}
+		where bno = #{bno}
+	
+	</update>
+	
+	<delete id="delete">
+		delete from review where bno = #{bno}
+	</delete>
+	
   
 </mapper>

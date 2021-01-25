@@ -52,9 +52,10 @@
 
         <!-- 로그인 시만 보임-->
         <!-- 선호하는 배우가 출연한 영화, 선호하는 배우 미선택시 안 보이게 -->
+        <c:if test="${login !=null }">
         <c:if test="${UserLikeActorList.size() != 0 }">
 	        <div class="slider_area_login">
-	            <h3 style="text-align:center; margin-top:10px; color:white;">""님이 선호하는 배우가 출연한 영화</h3>
+	            <h3 style="text-align:center; margin-top:10px; color:white;">${login.userName }님이 선호하는 배우가 출연한 영화</h3>
 	            <div class="swiper-container">
 	                <div class="swiper-wrapper">
 	                    <c:forEach var="UserLikeActorVO" items="${userLikeActorList}">
@@ -73,11 +74,13 @@
 	            </div>
 	        </div>
         </c:if>
+        </c:if>
         
         <!-- 선호하는 감독의 영화, 선호하는 감독 미선택시 안 보이게 -->
+        <c:if test="${login !=null }">
         <c:if test="${UserLikeDirectorList.size() != 0 }">
 	        <div class="slider_area_login">
-	            <h3 style="text-align:center; margin-top:10px; color:white;">""님이 선호하는 배우가 출연한 영화</h3>
+	            <h3 style="text-align:center; margin-top:10px; color:white;">${login.userName }님이 선호하는 배우가 출연한 영화</h3>
 	            <div class="swiper-container">
 	                <div class="swiper-wrapper">
 	                    <c:forEach var="userLikeDirectorVO" items="${UserLikeDirectorList}">
@@ -96,6 +99,7 @@
 	            </div>
 	        </div>
         </c:if>
+         </c:if>
         
         <!-- 선호하는 장르의 영화, 선호하는 장르 미선택시 안 보이게 -->
         <c:if test="${mainCommingSoonList.size() != 0 }">
@@ -124,6 +128,7 @@
     </section>
     
     <script>
+    
     	new Swiper('.swiper-container', {
 
 	        slidesPerView : 6, // 동시에 보여줄 슬라이드 갯수

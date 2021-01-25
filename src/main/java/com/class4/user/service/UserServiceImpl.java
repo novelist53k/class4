@@ -1,5 +1,6 @@
 package com.class4.user.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -8,7 +9,9 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
+import com.class4.command.ActorVO;
+import com.class4.command.DirectorVO;
+import com.class4.command.ReviewBoardVO;
 import com.class4.command.user.UserVO;
 import com.class4.user.mapper.UserMapper;
 
@@ -96,6 +99,33 @@ public class UserServiceImpl implements UserService{
 	public UserVO getDirectorInfo(String userId) {
 		// TODO Auto-generated method stub
 		return userMapper.getDirectorInfo(userId);
+	}
+
+	
+
+	@Override
+	public List<ActorVO> actorList(ActorVO actorvo) {
+		// TODO Auto-generated method stub
+		return userMapper.actorName(actorvo);
+	}
+
+	@Override
+	public ArrayList<String> listAll2(String result) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DirectorVO> directorList(DirectorVO director) {
+		// TODO Auto-generated method stub
+		return userMapper.directorName(director);
+	}
+
+	
+	@Override
+	public UserVO getReview(String user) {
+		// TODO Auto-generated method stub
+		return userMapper.getReview(user);
 	}
 
 	

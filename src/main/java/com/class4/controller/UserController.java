@@ -2,17 +2,26 @@ package com.class4.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,7 +30,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-
+import com.class4.command.ActorVO;
+import com.class4.command.DirectorVO;
+import com.class4.command.ReviewBoardVO;
 import com.class4.command.user.UserActorListVO;
 import com.class4.command.user.UserVO;
 import com.class4.user.service.UserService;
@@ -53,6 +64,8 @@ public class UserController {
 		model.addAttribute("userActorInfo",userActorInfo);
 		model.addAttribute("userGenreInfo",userGenreInfo);
 		model.addAttribute("userDirectorInfo",userDirectorInfo);
+		UserVO usereview = userService.getReview(userId);
+		model.addAttribute("userReview",usereview);
 		
 		return "user/mypage";
 	}
@@ -197,18 +210,66 @@ public class UserController {
 		return "user/update";
 	}
 	@RequestMapping("/modify")
-	public String modify(UserVO vo) {
+	public String modify(UserVO vo, HttpSession session) {
 			System.out.println(vo.toString());
-			userService.update(vo);
-		return "user/mypage";
+			
+			session.setAttribute("login", userService.update(vo));
+			
+			
+		return "redirect:/user/mypage";
 	}
 	
 	@RequestMapping("/logout")
-	public String logout(HttpSession session) {
+	public String logout(HttpSession session, Model model) {
 		
 		
 		session.invalidate();
-		return "movie";
+		
+		return "redirect:/";
 	}
+	
+	@RequestMapping(value = "/autocomplete", method = RequestMethod.POST)
+	public void autoSearch(ModelMap model, HttpServletRequest request,			
+			 HttpServletResponse response, UserVO vo,ActorVO actorvo) throws IOException {
+		
+		 request.setCharacterEncoding("UTF-8");
+		
+		 List<ActorVO> list = userService.actorList(actorvo);
+		 JSONArray array = new JSONArray();
+		 for(int i= 0; i<list.size(); i++) {
+			 array.add(list.get(i).getActorName());
+		}
+		 System.out.println(array.toString());
+		 PrintWriter out = response.getWriter();
+		 out.print(array.toString());
+		
+		 
+		 
+		 
+		 
+	}
+	@RequestMapping(value = "/autocomplete1", method = RequestMethod.POST)
+	public void autoSearch1(ModelMap model, HttpServletRequest request,			
+			 HttpServletResponse response, UserVO vo,DirectorVO director) throws IOException {
+		
+		 request.setCharacterEncoding("UTF-8");
+		
+		 List<DirectorVO> list = userService.directorList(director);
+		 JSONArray array = new JSONArray();
+		 for(int i= 0; i<list.size(); i++) {
+			 array.add(list.get(i).getDirectorName());
+		}
+		 System.out.println(array.toString());
+		 PrintWriter out = response.getWriter();
+		 out.print(array.toString());
+		 out.flush();		 
+		 out.close();
+		 array.clear();
+		 System.out.println(array.toString());		 
+		 list.clear();
+		 
+		 		 
+	}
+	
 	
 }

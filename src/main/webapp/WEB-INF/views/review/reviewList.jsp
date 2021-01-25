@@ -338,6 +338,18 @@ section {
 				
 				document.pageForm.submit();
 			}
+            
+            window.onload = function() {
+   			 if(history.state === '' ) return;
+   			 
+   			 var msg = "${msg}"; //컨트롤러에서 넘어온 메시지
+   			 if(msg !== '') {
+   				 alert(msg);
+   				 //브라우저의 기록을 새롭게 변경(데이터, 페이지제목, 변경할주소)
+   				 //이렇게 변경된 기록정보는 history.state 객체를 통해서 확인이 가능합니다.
+   				 history.replaceState('', null, null); 
+   			 }
+   		}
        
        
        

@@ -96,7 +96,8 @@ section {
 <section>
     <label style="font-size: 40px; font-weight: bold;">영화 리뷰 수정 페이지</label>
     <hr style="border-bottom: 3px solid black; margin: 10px 0;">
-    <form action="update" method = "post" name = "update">
+    
+    <form action="reviewModify" method = "post" name = "reviewModify">
 	    <div class = wrap>
 	    	<span class="review_bno">${vo.bno }</span>
 	        <div class = "movie-img">
@@ -118,16 +119,36 @@ section {
 	        <label>내용</label>
 	        <textarea class="content form-control" rows="10" name='content' >${vo.content }</textarea>
 	        <div class="btns" style="text-align: right;">
-	            <button type = "submit" class = "list-modify">수정</button>
-	            <button class = "list-delete" onclick="location.href = 'reviewLisst'">취소</button>
+	            <button type = "submit" class="list-modify" id="modifyBtn">수정</button>
+	            <button class = "list-cancel" id="cancelBtn">취소</button>
 	        </div>    
 	    </div>
     </form>
 </section>
+	
 
 
-<script type="text/javascript">
-
+<script>
+	/* 수정 버튼 */
+	var modifyBtn = document.getElementById("modifyBtn");
+	modifyBtn.onclick = function () {	
+		if(document.reivewModify.content.value === ''){
+			console.log(document.reivewModify.content.value);
+			alert("내용을 입력해 주세요.");
+			return;
+		}else{
+			document.reviewModify.action = 'reviewModify';
+			document.reviewModify.submit();
+		}
+	}
+	
+	var cancelBtn = document.getElementById("cancelBtn");
+	cancelBtn.onclick = function () {
+		location.href = 'reviewList';
+	}
+	
+	
+	
 </script>
 
 

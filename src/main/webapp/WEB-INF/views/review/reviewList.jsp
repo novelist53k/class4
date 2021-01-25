@@ -272,35 +272,6 @@ section {
                     </div>
                 </li>
                 </c:forEach>
-                <%-- <li class="review_comment">
-                	<span class="review_bno">2</span>
-                    <div class="box_profile">
-                        <span class="profile_img">
-                            <img src="${pageContext.request.contextPath }/resources/img/default_profile.gif" alt="프로필 이미지">
-                        </span>
-                        <span class="profile_mask">
-                            <img src="${pageContext.request.contextPath }/resources/img/bg_photocircle.png" alt="원형 프레임">
-                        </span>
-                    </div>
-                    <div class="box_contents">
-                        <ul class="writer_info">
-                            <li class = "movie_title">
-                                <label>영화제목</label>
-                                <span class = "point glyphicon glyphicon glyphicon-star" aria-hidden="true" style="color: rgb(233, 49, 49);"></span>
-                                <span class = "score">5</span><br>
-                            </li>
-                            <li class="writer_name">
-                                <p>김민건</p>
-                            </li>
-                            <li class="writer_etc">
-                                <span class = "day">2021.01.07</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="box-comment">
-                        <a href="#"><p>볼때마다 느낌과 감동이 새롭네요. 이전에 볼때는 아주 잘 만든 공상과학영화라며 감상했는데, 오늘 보니 현재 코로나시대여서 그런지 현실감이 더욱 와닿고 곧 닥칠 미래인것처럼 다기옵니다.</p></a>
-                    </div>
-                </li> --%>
             </ul>
          </div>
                   

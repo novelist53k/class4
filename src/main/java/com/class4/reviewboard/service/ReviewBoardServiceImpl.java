@@ -36,12 +36,6 @@ public class ReviewBoardServiceImpl implements ReviewBoardService{
 		return reviewBoardMapper.getContent(bno);
 	}
 
-	@Override
-	public ArrayList<ReplyVO> replyList(Criteria cri) {
-		
-		return reviewBoardMapper.replyList(cri);
-	}
-
 
 	
 

@@ -17,6 +17,7 @@ public interface MovieListService {
 	
 	public void regist(MovieInfoVO vo);
 	public ArrayList<String> getCodeList();
+	public ArrayList<MovieInfoVO> getMovieInfo(String cd);
 //	public ArrayList<String> getActorCodeList();
 //	public ArrayList<String> getDirectorCodeList();
 //	public void testActorInsert(ActorVO vo);

@@ -185,7 +185,7 @@ public class MovieController {
 				e.printStackTrace();
 				
 			}
-			  
+			RA.addFlashAttribute("msg", "정상처리되었습니다"); 
 			return "main";
 				
 			
@@ -223,8 +223,16 @@ public class MovieController {
 		
 		return "movie/movieExpected";
 	}
+	
+	//영화 정보페이지
 	@RequestMapping("/movieContent")
-	public String movieContent() {
+	public String movieContent(MovieInfoVO vo, Model model) {
+		System.out.println(1);
+		String cd = vo.getMovieCd();
+		ArrayList<MovieInfoVO> list = movieListService.getMovieInfo(cd);
+		model.addAttribute("list", list);
+		System.out.println(list.get(0).getPoster());
+		
 		return "movie/movieContent";
 	}
 	

@@ -15,4 +15,5 @@ public class RegistVO {
 	private String openStartDt;
 	private String openEndDt;
 	
+	
 }

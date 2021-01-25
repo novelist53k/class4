@@ -8,7 +8,7 @@
 
         <div class="mid1">
           <div class="photo-box">
-            <img src="${pageContext.request.contextPath }/resources/img/wonder.png" style="width: 200px; height: 306px;">
+            <img src="${pageContext.request.contextPath }/resources/img/poster/${list[0].poster}" style="width: 200px; height: 306px;">
           </div>
         </div>
 

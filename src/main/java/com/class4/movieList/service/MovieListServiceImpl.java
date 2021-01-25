@@ -55,6 +55,14 @@ public class MovieListServiceImpl implements MovieListService{
 	public ArrayList<String> getCodeList() {
 		return movieListMapper.getCodeList();
 	}
+
+
+
+	@Override
+	public ArrayList<MovieInfoVO> getMovieInfo(String cd) {
+		
+		return movieListMapper.getMovieInfo(cd);
+	}
 	
 //	@Override
 //	public ArrayList<String> getPeopleCodeList() {

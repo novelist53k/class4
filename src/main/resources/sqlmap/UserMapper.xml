@@ -22,7 +22,7 @@
   	</select>
 	
 	<insert id="genreList" >
-		insert into userGenre (ugno,ugId, gno) values(userGenre_seq.nextval,#{userId},#{genre})
+		insert into userGenre (ugno,ugId, genre) values(userGenre_seq.nextval,#{userId},#{genre})
 	</insert>
 	<insert id="actorList" >
 		insert into userActor (uano, uaId, actor) values(userActor_seq.nextval,#{userId},#{actor})
@@ -34,10 +34,16 @@
   		select userid,username,userGender,userAge,useremail1,useremail2,addrbasic,addrdetail,u.addrzipnum, a.uaid,a.uano,a.actor from users u left outer JOIN USERACTOR a on u.userId = a.uaid where userId = #{userId}
   	</select>
   	<select id="getGenreInfo" resultMap="usersInfo">
-  		select userid,username,userGender,userAge,useremail1,useremail2,addrbasic,addrdetail,u.addrzipnum, g.ugid,g.gno,g.ugno from users u left outer JOIN USERGENRE g on u.userId = g.ugid where userId = #{userId}
+  		select userid,username,userGender,userAge,useremail1,useremail2,addrbasic,addrdetail,u.addrzipnum, g.ugid,g.genre,g.ugno from users u left outer JOIN USERGENRE g on u.userId = g.ugid where userId = #{userId}
   	</select>
   	<select id="getDirectorInfo" resultMap="usersInfo">
   		select userid,username,userGender,userAge,useremail1,useremail2,addrbasic,addrdetail,u.addrzipnum, d.udid,d.udno,d.director from users u left outer JOIN USERDIRECTOR d on u.userId = d.udid where userId = #{userId}
+  	</select>
+  	<select id="actorName" resultType="ActorVO">
+  		select * from actor where actorName like #{actorName} || '%'
+  	</select>
+  	<select id="directorName" resultType="DirectorVO">
+  		select * from director where directorName like #{directorName} || '%'
   	</select>
   	
   	

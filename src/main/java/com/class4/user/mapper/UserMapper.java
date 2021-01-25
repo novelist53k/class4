@@ -2,10 +2,12 @@ package com.class4.user.mapper;
 
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-
+import com.class4.command.ActorVO;
+import com.class4.command.DirectorVO;
 import com.class4.command.user.UserVO;
 
 
@@ -26,6 +28,9 @@ public interface UserMapper {
 	public UserVO getActorInfo(String userId);
 	public UserVO getGenreInfo(String userId);
 	public UserVO getDirectorInfo(String userId);
+	public ArrayList<String> listAll2(String result);
+	public List<ActorVO> actorName(ActorVO actorvo);
+	public List<DirectorVO> directorName(DirectorVO director);
 	
 	
 }

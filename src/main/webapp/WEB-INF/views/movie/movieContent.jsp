@@ -1,21 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
   <section class="movie_content_area">
+ <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+ <% pageContext.setAttribute("replaceChar", "\n"); %>
 
     <div class="container">
       <div class="outter">
 
         <div class="mid1">
           <div class="photo-box">
-            <img src="${pageContext.request.contextPath }/resources/img/wonder.png" style="width: 200px; height: 306px;">
+            <img src="${pageContext.request.contextPath }/resources/img/poster/${info.poster}" style="width: 200px; height: 306px;">
           </div>
         </div>
 
         <div class="mid2">
           <div class="info-box">
             <span class="mov-title">
-            <b>원더우먼</b>
+           	<b>${info.title }</b>
              <!-- 관리자 아이디로 로그인시에만 보이게 하기 -->
             <div class="btn-box">
               <input type="button" value="수정">
@@ -23,7 +25,7 @@
             </div>
             </span>
             <div class="mov-sec">
-              <span class="mov-ftitle"><h4>Wonder Woman</h4></span>
+              <span class="mov-ftitle"><h4>${info.ftitle }</h4></span>
               <div class="star-box">
                 <span class="star-icon">평점
                   <span class="glyphicon glyphicon glyphicon-star" aria-hidden="true" style="color: rgb(233, 49, 49);"></span>
@@ -33,8 +35,8 @@
             </div>
             <span class="mov-genre">액션/어드벤처</span>
             <div class="date-grade">
-              <span class="mov-date">2021.01.03</span>
-              <span class="mov-grade">전체관람가</span>
+              <span class="mov-date"><fmt:formatDate value="${info.openDt }" pattern="yyyy년 MM월 dd일"/> 개봉</span>
+              <span class="mov-grade">${info.grade }</span>
             </div>
             <div class="mov-maker"> 
               <!-- 네이버 포털 검색 -->
@@ -78,13 +80,9 @@
         <div id="info" class="tab-pane fade in active">
           <h3 style="font-weight: bold;">줄거리</h3>
           <div class="content-box">
-            <b class="title">세상이 기다린 히어로, 희망이 되다!</b> <br>
-            <p>
-            1984년 모든 것이 활기찬 시대, 다이애나 프린스는 고고학자로서 인간들 사이에서 조용히 살고 있다.
-            단지 원더 우먼으로서 위기에 처한 사람을 구할 때만 빼고는. 그런 다이애나 앞에 거짓말처럼 죽었던 스티브 트레버가 나타나고, 거부할 수 없는 적마저 함께 찾아오는데…
-            지나친 풍요로움이 과잉이 되어 또 다시 위협받는 인류, 위태로운 세상에 오직 원더 우먼만이 희망이다! 그 어떤 적도 피하지 않는다!
-            </p>
-
+            <b class="title">${info.subhead }</b> <br>
+            <p> ${fn:replace(info.content, replaceChar, "<br/>") }</p>
+            
           </div>
 
         </div>
@@ -93,9 +91,10 @@
           <br><br><br>
           <div class="videobox">
             <!-- 예고편 소스코드 videobox안에 값 넣기-->
-            <iframe width="900" height="580" src="https://www.youtube.com/embed/AAPAGnERPjw" frameborder="0"
+            ${info.trailer }
+            <!-- <iframe width="900" height="580" src="https://www.youtube.com/embed/AAPAGnERPjw" frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen></iframe>
+              allowfullscreen></iframe> -->
           </div>
         </div>
         <div id="menu2" autoplay class="tab-pane fade">

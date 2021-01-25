@@ -351,7 +351,7 @@
   <div class="semi-back">
   <div class="mypage-back">
   <h2>마이페이지</h2>
-  <p>---님 환영합니다</p>
+  <p>${login.userName }님 환영합니다</p>
   <br>
   <br>
 

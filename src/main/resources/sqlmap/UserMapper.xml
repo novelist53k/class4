@@ -91,4 +91,7 @@
 		userAge=#{userAge},	userEmail1 = #{userEmail1},userEmail2=#{userEmail2},
 		addrBasic=#{addrBasic},addrDetail=#{addrDetail},addrZipNum=#{addrZipNum} where userId = #{userId}
 	</update>
+	
+	<select id="Myreview"></select>
+	
 </mapper>

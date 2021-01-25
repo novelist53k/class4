@@ -197,18 +197,21 @@ public class UserController {
 		return "user/update";
 	}
 	@RequestMapping("/modify")
-	public String modify(UserVO vo) {
+	public String modify(UserVO vo, HttpSession session) {
 			System.out.println(vo.toString());
-			userService.update(vo);
-		return "user/mypage";
+			
+			session.setAttribute("login", userService.update(vo));
+			
+		return "redirect:/user/mypage";
 	}
 	
 	@RequestMapping("/logout")
-	public String logout(HttpSession session) {
+	public String logout(HttpSession session, Model model) {
 		
 		
 		session.invalidate();
-		return "movie";
+		
+		return "redirect:/";
 	}
 	
 }

@@ -35,7 +35,7 @@
 </head>
 <body>
 	
-	<!-- base 레이아웃을 가지는 타일즈 템플릿(공통부분) -->
+	
 	
 	<tiles:insertAttribute name="header" />
 	<tiles:insertAttribute name="body" />

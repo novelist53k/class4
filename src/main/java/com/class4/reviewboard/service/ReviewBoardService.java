@@ -11,7 +11,6 @@ public interface ReviewBoardService {
 	
 	//추상메서드 //페이징조회
 	public ArrayList<ReviewBoardVO> getList(Criteria cri);
-	public ArrayList<ReplyVO> replyList(Criteria cri);
 	public int getTotal(Criteria cri);
 	public ReviewBoardVO getContent(int bno);
 	

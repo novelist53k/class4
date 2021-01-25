@@ -42,7 +42,7 @@ section {
 
 .movie-img img{
     width: 100%;
-    height: 100%;
+    height: 88%;
 }
 
 .review-content {
@@ -78,11 +78,16 @@ section {
     color: whitesmoke;
 }
 
-.day{
-	position: absolute;
-	top : 130px;
+
+.re-content textarea{
+	height: 80px;
 }
 
+/* .day{
+	position: absolute;
+	top : 0px;
+}
+ */
 /* 댓글 프로필 이미지 */
 
 .profile-img img{
@@ -105,10 +110,11 @@ section {
     position: relative;
     margin-top: 20px;
 }
-reply_rno{
+.reply_rno{
 	position: absolute;
-	top : 0;
-	left : 0;
+	top: 0;
+	left: 0;
+	color: white; 
 }
 
 .reply-btn{
@@ -126,51 +132,51 @@ reply_rno{
 <section>
     <lable style="font-size: 40px; font-weight: bold;">영화 리뷰 상세페이지</lable>
     <hr style="border-bottom: 3px solid black; margin: 10px 0;">
-    <div class = wrap>
-    	<span class="review_bno">${vo.bno }</span>
-        <div class = "movie-img">
-            <img src="${pageContext.request.contextPath}/resources/img/movie_image.jpg" alt="영화포스터">
-        </div>    
-        <div class = "review-content">
-        	<label>${vo.movieTitle }</label>
-            <p class = "point glyphicon glyphicon glyphicon-star" aria-hidden="true" style="color: rgb(233, 49, 49);"></p>
-            <p class = "score" style="display: inline-block;">5</p>
-            <p>${vo.writer }</p>
-			<div class = "day">	        		 
-           		<fmt:formatDate value="${vo.regDate }" pattern="yyyy-MM-dd HH:ss"/>
-        	</div>
+
+	    <div class = wrap>
+	    	<span class="review_bno">${vo.bno }</span>
+	        <div class = "movie-img">
+	            <img src="${pageContext.request.contextPath}/resources/img/movie_image.jpg" alt="영화포스터">
+	        </div>    
+	        <div class = "review-content">
+	        	<label>${vo.movieTitle }</label>
+	            <p class = "point glyphicon glyphicon glyphicon-star" aria-hidden="true" style="color: rgb(233, 49, 49);"></p>
+	            <p class = "score" style="display: inline-block;">5</p>
+	            <p>${vo.writer }</p>
+			
+			   <div class="content form-group">
+			       <label>내용</label>
+			       <div class = re-content>
+			       		<textarea class="form-control" rows="10" name="content">${vo.content }</textarea>
+			       </div>
+			       <div class="btns" style="text-align: right; margin-top: 5px;">
+			           <button class = "list-btn" onclick="location.href='reviewList'">목록</button>
+			           <button type = "submit" class = "list-modify" onclick="location.href='reviewUpdate?bno=${vo.bno}'">수정</button>
+			           <button class = "list-delete">삭제</button>
+			       </div>    
+			   </div>
+	        </div>
+	    </div>
+	
+    
+    <label>댓글</label>
+    <div class="reply-wrap">
+    	<span class="reply_rno">1</span>
+        <div class="profile-img">
+            <img src="${pageContext.request.contextPath}/resources/img/default_profile.gif" alt="profile">
+        </div>
+        <div class="reply-content">
+            <textarea class="form-control" rows="2" id="reply" readonly>내용</textarea>
+        </div>
+        <div class="reply-btn">
+            <button type = "submit" class = "list-modify">수정</button>
+            <button class = "list-delete">삭제</button>
         </div>
     </div>
 
-    <div class="content form-group">
-        <label>내용</label>
-        <textarea class="form-control" rows="10" name="content">${vo.content }</textarea>
-        <div class="btns" style="text-align: right; margin-top: 5px;">
-            <button class = "list-btn" onclick="location.href='reviewList'">목록</button>
-            <button type = "submit" class = "list-modify" onclick="location.herf='reviewUpdate?bno=${vo.bno}&writer=${vo.writer }'">수정</button>
-            <button class = "list-delete">삭제</button>
-        </div>    
-        <label>댓글</label>
-        <div class="reply-wrap">
-        	<c:forEach var="ReplyVO" items="${listR }">
-        	<span class="reply_rno">${ReplyVO.rno }</span>
-            <div class="profile-img">
-                <img src="${pageContext.request.contextPath}/resources/img/default_profile.gif" alt="profile">
-            </div>
-            <div class="reply-content">
-                <textarea class="form-control" rows="2" id="reply" readonly>${ReplyVO.content }</textarea>
-            </div>
-            <div class="reply-btn">
-                <button type = "submit" class = "list-modify">수정</button>
-                <button class = "list-delete">삭제</button>
-            </div>
-            </c:forEach>
-        </div>
 
-
-        <div class = "more-btn" >
-            <button type="button" id="more_repl" style="width: 100%; margin-top: 10px; background-color: rgb(37,37,37); color: white;" onclick="moreRepl()">댓글 더보기</button>
-        </div>
+    <div class = "more-btn" >
+        <button type="button" id="more_repl" style="width: 100%; margin-top: 10px; background-color: rgb(37,37,37); color: white;" onclick="moreRepl()">댓글 더보기</button>
     </div>
     
     <script>

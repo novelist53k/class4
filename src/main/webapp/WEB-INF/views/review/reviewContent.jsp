@@ -147,7 +147,7 @@ section {
 			   <div class="content form-group">
 			       <label>내용</label>
 			       <div class = re-content>
-			       		<textarea class="form-control" rows="10" name="content">${vo.content }</textarea>
+			       		<textarea class="form-control" rows="10" name="content" readonly="readonly">${vo.content }</textarea>
 			       </div>
 			       <div class="btns" style="text-align: right; margin-top: 5px;">
 			           <button class = "list-btn" onclick="location.href='reviewList'">목록</button>

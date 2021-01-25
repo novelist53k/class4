@@ -39,7 +39,7 @@
 	</select> 
 	
 	
-	<update id="update">
+	<update id="reviewModify">
 		update review
 		set content = #{content}
 		where bno = #{bno}

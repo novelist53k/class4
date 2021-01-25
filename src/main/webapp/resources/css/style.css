@@ -165,9 +165,14 @@ header .icon-container{
 
 
 /* 영화정보 */
+.mov-title> b{
+	font-size:25px;
+}
+
 .movie_content_area .container {
   width: 80%;
 }
+
 .movie_content_area .outter {
   overflow: hidden;
   float: left;
@@ -217,9 +222,11 @@ header .icon-container{
 }
 .movie_content_area .videobox {
   margin: 0 auto;
-  width: 900px;
-  height: 580px
+  width:80%;
+  height : auto;
+  
 }
+
 .movie_content_area .t {
   width: 80%;
   text-align: center;

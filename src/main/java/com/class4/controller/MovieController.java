@@ -163,16 +163,7 @@ public class MovieController {
 					DateFormat fm = new SimpleDateFormat("yyyy/MM/dd");
 					Date openDt = fm.parse(strDateFormat);
 					movie.setOpenDt(openDt);
-//					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-//				    Date date = dateFormat.parse(strDateFormat);
-//				    System.out.println(date.getTime());
-//				    Timestamp openDt = new Timestamp(date.getTime());
-//				    movie.setOpenDt(openDt);
-//					DateFormat sdft = new SimpleDateFormat("yyyy/MM/dd");
-//					Date openDt = sdft.parse(strDate);
-//					System.out.println(openDt);
-				    
-				    
+
 				  movieListService.regist(movie);
 				  
 				}
@@ -185,7 +176,7 @@ public class MovieController {
 				e.printStackTrace();
 				
 			}
-			  
+			RA.addFlashAttribute("msg", "정상처리되었습니다"); 
 			return "main";
 				
 			
@@ -223,8 +214,14 @@ public class MovieController {
 		
 		return "movie/movieExpected";
 	}
+	
+	//영화 정보페이지
 	@RequestMapping("/movieContent")
-	public String movieContent() {
+	public String movieContent(MovieInfoVO vo, Model model) {
+		String cd = vo.getMovieCd();
+		MovieInfoVO info = movieListService.getMovieInfo(cd);
+		model.addAttribute("info", info);
+		
 		return "movie/movieContent";
 	}
 	

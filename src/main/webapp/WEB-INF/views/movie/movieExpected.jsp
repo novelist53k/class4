@@ -24,6 +24,9 @@
                         	<c:when test="${vo.grade eq '청소년관람불가' && vo.poster eq null}">
                             <img src="${pageContext.request.contextPath }/resources/img/poster/a.jpg" class = "img_g">
                             </c:when>
+                            <c:when test="${vo.grade ne '청소년관람불가' && vo.poster eq null}">
+                            <img src="${pageContext.request.contextPath }/resources/img/poster/b.png" class = "img_g">
+                            </c:when>
                             <c:otherwise>
                             <img src="${pageContext.request.contextPath }/resources/img/poster/${vo.poster}" class = "img_g">
                             </c:otherwise>

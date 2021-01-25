@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -21,8 +22,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 
-import com.class4.command.UserVO;
-import com.class4.command.UserlistVO;
+import com.class4.command.user.UserActorListVO;
+import com.class4.command.user.UserVO;
 import com.class4.user.service.UserService;
 
 @Controller
@@ -40,7 +41,19 @@ public class UserController {
 	
 		
 	@RequestMapping("/mypage")
-	public String mypage() {
+	public String mypage(HttpSession session, Model model) {
+		UserVO vo =(UserVO)session.getAttribute("login");
+		String userId = vo.getUserId();
+		
+		//1:N관계 맵핑으로 결과를 처리
+		UserVO userActorInfo = userService.getActorInfo(userId);
+		UserVO userGenreInfo = userService.getGenreInfo(userId);
+		UserVO userDirectorInfo = userService.getDirectorInfo(userId);
+		
+		model.addAttribute("userActorInfo",userActorInfo);
+		model.addAttribute("userGenreInfo",userGenreInfo);
+		model.addAttribute("userDirectorInfo",userDirectorInfo);
+		
 		return "user/mypage";
 	}
 	@ResponseBody
@@ -63,6 +76,7 @@ public class UserController {
 			return 0;
 		}else {
 			session.setAttribute("login", result);
+			
 			return 1;
 		}
 		
@@ -155,26 +169,46 @@ public class UserController {
 		
 	}
 	@RequestMapping(value="delUser", method=RequestMethod.POST)
-	public int delUser(@RequestParam( value ="checkPw") String checkPw,HttpSession session) {
+	public String delUser(@RequestParam( value ="checkPw") String checkPw, HttpSession session) {
 		UserVO vo = (UserVO)session.getAttribute("login");
+		System.out.println(vo.getUserId());
 		System.out.println(checkPw+"입력한 비번");
 		System.out.println(vo.getUserPw()+"현재 로그인한 비번");
+		String userId = vo.getUserId();
 		
-		int userPw = userService.checkPw(checkPw,vo);
-		System.out.println(userPw+"컨트롤러 : 유저비번 비번 확인");
+		System.out.println(vo.getUserPw()+"컨트롤러 : 유저비번 비번 확인");
 		
-		if(userPw == 1) {
-			userService.delUser(vo);
-			return 0;
+		if(vo.getUserPw().equals(checkPw)) {
+			userService.delUser(userId);
 			
+			return "/user/join";
 		}else {
-			return 1;
+			
+			return "/user/mypage";
 		}
 		
 		
 		
 		
 	}
+	@RequestMapping("/update")
+	public String update() {
+				
+		return "user/update";
+	}
+	@RequestMapping("/modify")
+	public String modify(UserVO vo) {
+			System.out.println(vo.toString());
+			userService.update(vo);
+		return "user/mypage";
+	}
 	
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
+		
+		
+		session.invalidate();
+		return "movie";
+	}
 	
 }

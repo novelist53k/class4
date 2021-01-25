@@ -1,10 +1,15 @@
 package com.class4.user.service;
 
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.class4.command.UserVO;
-import com.class4.command.UserlistVO;
+
+import com.class4.command.user.UserVO;
 import com.class4.user.mapper.UserMapper;
 
 @Service("UserService")
@@ -55,17 +60,49 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	
-	public int delUser(UserVO vo) {
+	public void delUser(String userId) {
 		
-		return userMapper.delUser(vo);
+		
+		userMapper.delUD(userId);
+		userMapper.delUA(userId);
+		userMapper.delUG(userId);
+		userMapper.delUser(userId);
+		
+	
 	}
 
 	@Override
-	public int checkPw(String checkPw, UserVO vo) {
-		System.out.println(userMapper.checkPw(checkPw,vo) + "유저 서비스 임플");
-		System.out.println(vo.getUserId());
-		return userMapper.checkPw(checkPw,vo);
+	public int update(UserVO vo) {
+		userMapper.delUD(vo.getUserId());
+		userMapper.delUA(vo.getUserId());
+		userMapper.delUG(vo.getUserId());
+		userMapper.update(vo);
+		return 0;
 	}
+
+	@Override
+	public UserVO getActorInfo(String userId) {
+		// TODO Auto-generated method stub
+		return userMapper.getActorInfo(userId);
+	}
+
+	@Override
+	public UserVO getGenreInfo(String userId) {
+		// TODO Auto-generated method stub
+		return userMapper.getGenreInfo(userId);
+	}
+
+	@Override
+	public UserVO getDirectorInfo(String userId) {
+		// TODO Auto-generated method stub
+		return userMapper.getDirectorInfo(userId);
+	}
+
+	
+
+	
+
+	
 
 	
 	

@@ -1,7 +1,7 @@
-package com.class4.command;
+package com.class4.command.user;
 
 import java.security.Timestamp;
-
+import java.util.ArrayList;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -36,7 +36,18 @@ public class UserVO {
 	
 	private String checkPw;
 	
-	
+	//마이페이지 1:N맵핑
+		private ArrayList<UserActorListVO> actorlist;
+		private ArrayList<UserDirectorListVO> directorlist;
+		private ArrayList<UserGenreListVO> usergenrelist;
+		@Override
+		public String toString() {
+			return "UserVO [userId=" + userId + ", userPw=" + userPw + ", userName=" + userName + ", userEmail1="
+					+ userEmail1 + ", userEmail2=" + userEmail2 + ", userGender=" + userGender + ", userAge=" + userAge
+					+ ", addrBasic=" + addrBasic + ", addrDetail=" + addrDetail + ", addrZipNum=" + addrZipNum
+					+ ", regdate=" + regdate + ", path=" + path + ", fileRealName=" + fileRealName + "]";
+		}
+		
 	
 
 	

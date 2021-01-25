@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.class4.command.ReplyVO;
 import com.class4.command.ReviewBoardVO;
@@ -39,9 +40,6 @@ public class ReviewController {
 		//화면으로 전달
 		model.addAttribute("list", list);
 		model.addAttribute("pageVO", pageVO);
-		
-		
-
 		
 		return "review/reviewList";
 	}
@@ -78,15 +76,21 @@ public class ReviewController {
 		
 	}
 	
-	@RequestMapping("/reviewUpdate")
-	public String reviewUpdate() {
-		return "review/reviewUpdate";
+	@RequestMapping(value = "/reviewModify", method = RequestMethod.POST)
+	public String reviewUpdate(ReviewBoardVO vo, RedirectAttributes RA) {
+		
+		int result = reviewBoardService.reviewModify(vo);
+		
+		if(result == 1) {
+			RA.addFlashAttribute("msg", "수정이 완료 되었습니다.");
+		}else {
+			RA.addFlashAttribute("msg", "재수정 해주세요.");
+		}
+		
+		return "redirect:reviewList";
 	}
 	
-	@RequestMapping("/reviewUpdateForm")
-	public String reviewUpdateForm() {
-		return "review/reviewContent";
-	}
+	
 	
 	
 }

@@ -55,6 +55,17 @@
 		
 	</select>
 
+	<select id="getMovieInfo" resultType = "MovieInfoVO">
+select a.*,
+      b.subhead,
+  	  b.content,
+  	  b.poster,
+      b.trailer
+	from movie a
+		left join moviesub b
+		on a.title = b.title
+		where a.moviecd = #{cd}
+	</select>
 
 	<select id="getTotalE" resultType="int">
 		select count(*) from movie where opendt > sysdate

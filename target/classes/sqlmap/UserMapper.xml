@@ -22,7 +22,7 @@
   	</select>
 	
 	<insert id="genreList" >
-		insert into userGenre (ugno,ugId, gno) values(userGenre_seq.nextval,#{userId},#{genre})
+		insert into userGenre (ugno,ugId, genre) values(userGenre_seq.nextval,#{userId},#{genre})
 	</insert>
 	<insert id="actorList" >
 		insert into userActor (uano, uaId, actor) values(userActor_seq.nextval,#{userId},#{actor})
@@ -34,10 +34,16 @@
   		select userid,username,userGender,userAge,useremail1,useremail2,addrbasic,addrdetail,u.addrzipnum, a.uaid,a.uano,a.actor from users u left outer JOIN USERACTOR a on u.userId = a.uaid where userId = #{userId}
   	</select>
   	<select id="getGenreInfo" resultMap="usersInfo">
-  		select userid,username,userGender,userAge,useremail1,useremail2,addrbasic,addrdetail,u.addrzipnum, g.ugid,g.gno,g.ugno from users u left outer JOIN USERGENRE g on u.userId = g.ugid where userId = #{userId}
+  		select userid,username,userGender,userAge,useremail1,useremail2,addrbasic,addrdetail,u.addrzipnum, g.ugid,g.genre,g.ugno from users u left outer JOIN USERGENRE g on u.userId = g.ugid where userId = #{userId}
   	</select>
   	<select id="getDirectorInfo" resultMap="usersInfo">
   		select userid,username,userGender,userAge,useremail1,useremail2,addrbasic,addrdetail,u.addrzipnum, d.udid,d.udno,d.director from users u left outer JOIN USERDIRECTOR d on u.userId = d.udid where userId = #{userId}
+  	</select>
+  	<select id="actorName" resultType="ActorVO">
+  		select * from actor where actorName like #{actorName} || '%'
+  	</select>
+  	<select id="directorName" resultType="DirectorVO">
+  		select * from director where directorName like #{directorName} || '%'
   	</select>
   	
   	
@@ -56,6 +62,7 @@
   		<collection property="actorlist" resultMap="userActorList"/>
   		<collection property="usergenrelist" resultMap="userGenreList"/>
   		<collection property="directorlist" resultMap="userDirectorList"/>
+  		<collection property="userReview" resultMap="userReviewList"/>
   	</resultMap>
   	<resultMap type="UserActorListVO" id="userActorList">
   		<result property="uano" column="UANO"/>
@@ -72,7 +79,14 @@
   		<result property="udid" column="UDID"/>
   		<result property="director" column="DIRECTOR"/> 	
   	</resultMap> 
-  	
+  	<resultMap type="ReviewBoardVO" id="userReviewList">
+  		<result property="bno" column="BNO"/>
+  		<result property="mno" column="MNO"/>
+  		<result property="writer" column="WRITER"/>
+  		<result property="movieTitle" column="MOVIETITLE"/>
+  		<result property="content" column="CONTENT"/>  		
+  		<result property="updateDate" column="UPDATEDATE"/>	
+  	</resultMap> 
 	
 	<delete id="delUser">
 		delete from users where userId = #{userId}		
@@ -91,4 +105,9 @@
 		userAge=#{userAge},	userEmail1 = #{userEmail1},userEmail2=#{userEmail2},
 		addrBasic=#{addrBasic},addrDetail=#{addrDetail},addrZipNum=#{addrZipNum} where userId = #{userId}
 	</update>
+	
+	<select id="getReview">
+		select * from users u left outer join review r on u.userId = r.writer where r.writer = #{userId}
+	</select>
+	
 </mapper>

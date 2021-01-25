@@ -60,7 +60,7 @@
                     		</c:when>
                     		<c:otherwise>
                                   	<li><a href="${pageContext.request.contextPath }/user/mypage">마이페이지</a></li>
-	                    			<li><a href="logout">로그아웃</a></li>
+	                    			<li><a href="${pageContext.request.contextPath }/user/logout">로그아웃</a></li>
                     		</c:otherwise>
                     	</c:choose>
                                 </ul>                      
@@ -111,7 +111,7 @@
     					if(data===1){
     						console.log("로그인");
     						alert("로그인 성공");
-    						location.href="${pageContext.request.contextPath }/user/join";
+    						location.href="${pageContext.request.contextPath }";
     					}else{
     						alert("없는 회원입니다")
     					}

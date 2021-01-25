@@ -42,7 +42,7 @@
 	
 	<!-- 유저가 선호하는 배우들의 코드 가져오기 -->
 	<select id="getActorCodeList" resultType="string">
-		SELECT ano FROM UserActor WHERE uaid = #{id}
+		SELECT uano FROM UserActor WHERE uaid = #{id}
 	</select>
 	
 	<!-- 유저가 선호하는 배우 코드로 영화 코드 가져오기 -->

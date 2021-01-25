@@ -156,6 +156,11 @@
       margin-bottom:15px;
     }
     
+	.ui-autocomplete { 
+    overflow-y: scroll; 
+    overflow-x: hidden;}
+
+    
 </style>
 <section>
 
@@ -220,7 +225,7 @@
             <div class="actorSection">
               <label for="likeActor" class="joinLabel pwlabel">관심있는 배우</label><br>
             </div>
-            <button type="button" class="add btn-primary" onclick="addActor()">+</button>
+            <button type="button" class="add btn-primary" id="addActorBtn" onclick="addActor()">+</button>
             <button type="button" class="minus btn-primary" onclick="minusActor()">-</button>
             <br>
             <br>
@@ -354,29 +359,97 @@ $("#checkBtn").click(function(){
 
 
 })
+var count =0;
+var count1 =0;
+var actorName =null;
+var directorName = null;
   
 //선호 감독, 배우 +,- 버튼
   function addDirector(){
   var input = document.createElement("input")
   var add = document.querySelector(".diretorSection").appendChild(input)
   input.setAttribute('class','likeDirector')
-  input.setAttribute('id','likeDirector')
   input.setAttribute('name','likeDirector')
+  input.setAttribute('id','likeDirector')
+  input.setAttribute('placeholder','이름을 입력하세요')
+  directorName = $(".likeDirector").val();
+  autocomplete1(directorName);
+  
   }
   function addActor(){
   var input = document.createElement("input")
   var add = document.querySelector(".actorSection").appendChild(input)
-  input.setAttribute('class','likeActor')
-  input.setAttribute('id','likeActor')
+  input.setAttribute('class','likeActor')  
   input.setAttribute('name','likeActor')
+  input.setAttribute('id','likeActor')
+  input.setAttribute('placeholder','이름을 입력하세요') 
+  actorName = $(".likeActor").val();
+  autocomplete(actorName);   
+  }
+  
+  
+  function autocomplete(a){
+	  count = $(".likeActor").length-1;
+  $(".likeActor").autocomplete({
+		 
+		 source : function( request, response ) {
+       $.ajax({
+              type: 'POST',
+              url: "autocomplete",
+              dataType: 'json',
+              data: "actorName="+$(".likeActor")[count].value,
+              success: function(data) {
+                  var result = data;
+                  response(result);     
+  					
+                  
+                  
+              },
+              error : function(data) {
+              	
+              	
+              	console.log("에러발생");
+              }
+						
+					});
+       }				
+	});
+  }
+  function autocomplete1(a){
+	  count1 = $(".likeDirector").length-1;
+  $(".likeDirector").autocomplete({
+		 
+		 source : function( request, response ) {
+       $.ajax({
+              type: 'POST',
+              url: "autocomplete1",
+              dataType: 'json',
+              data: "directorName="+$(".likeDirector")[count1].value,
+              success: function(data) {
+                  var result = data;
+                  response(result);     
+  					
+                  
+                  
+              },
+              error : function(data) {
+              	
+              	
+              	console.log("에러발생");
+              }
+						
+					});
+       }				
+	});
   }
   function minusActor() {
     var inp = document.querySelector(".actorSection");
-    inp.removeChild(inp.children[2])
+    inp.removeChild(inp.children[inp.children.length-1])
+    
   }
   function minusDirector() {
     var inp = document.querySelector(".diretorSection");
-    inp.removeChild(inp.children[2])
+    inp.removeChild(inp.children[inp.children.length-1])
   }
 
 //주소찾기
@@ -389,6 +462,10 @@ $("#checkBtn").click(function(){
     		document.getElementById("addrDetail").value = addrDetail;
     		document.getElementById("addrZipNum").value = zipNo;
     	}
+   
+    	
 
+  
+	
 </script>
 

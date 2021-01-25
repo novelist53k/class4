@@ -74,7 +74,7 @@
         border-radius: 4px;
         padding: 0;
     }
-    .joinForm > .password, .pwCheck {
+    .joinForm > .userPw, .pwCheck {
       display: block;
       width: 55%;
       height: 34px;
@@ -358,28 +358,25 @@
 <div>
       <form action="modify" class="joinForm" method="POST">
         <br>
-        	<label for="id" class="joinLabel">ID</label><br>
-       		<input type="text" class="joinId" name="id" id="id" value="${login.userId }" readonly><br>
-       
-        
-        
-        
+        <label for="id" class="joinLabel">ID</label><br>
+       	<input type="text" class="joinId" name="userId" id="userId" value="${login.userId }" readonly><br>        
         <label for="password" class="joinLabel pwlabel">PASSWORD</label><br>
-        <input type="password" class="password" name="password" id="password"><br>
+        <input type="password" class="userPw" name="userPw" id="userPw">
+        <input type="hidden" class="userPw" name="userPw" id="userPw" value="${login.userPw }">
         <label for="pwCheck" class="joinLabel">PASSWORD 확인</label><br>
         <input type="password" class="pwCheck" name="pwCheck" id="pwCheck" ><br>
         <label for="pwCheck" class="joinLabel">이름</label><br>
-        <input type="text" class="pwCheck" id="userName" name="userName"  >            
+        <input type="text" class="pwCheck" id="userName" name="userName">            
         <br>
         <label for="gender" class="joinLabel">성별</label>
                 
-        <select name="gender" id="gender" class="gender">
+        <select name="userGender" id="userGender" class="gender">
 	      <option value="man" >남자</option>
           <option value="woman">여자</option>
         </select>  
         
         <label for="gender" class="joinLabel"> 나이</label>
-        <select name="age" id="age" class="age">
+        <select name="userAge" id="userAge" class="age">
         <c:forEach begin="7" end="100" var="i">
              	<option value="${i}" >${i}
                                    
@@ -388,10 +385,10 @@
         </select>
         <br>
         <label for="email" class="joinLabel">EMAIL</label><br>
-        <input type="text" class="email1" name="email1"> @ 
+        <input type="text" class="email1" name="userEmail1"> @ 
        
        
-        <select id="email2" class="email2"  onchange="email(this)">          
+        <select id="userEmail2" name="userEmail2" class="email2"  onchange="email(this)">          
           <option  value="gmail.com" >gmail.com</option>
           <option  value="naver.com" >naver.com</option>
           <option  value="hanmail.net" >hanmail.net</option>               
@@ -401,13 +398,13 @@
        
         <br>
           <label for="joinLabel addr-num">주소</label>
-          <input type="text" class="postNum" id="addrZipNum" >
+          <input type="text" class="postNum" id="addrZipNum" name="addrZipNum" >
           <button type="button" class="btn btn-primary addrBtn" onclick="goPopup()">주소찾기</button>
         <div class="form-group">
-          <input type="text" class="form-control" id="addrBasic" >
+          <input type="text" class="form-control" id="addrBasic" name="addrBasic">
         </div>
         <div class="form-group">
-            <input type="text" class="form-control" id="addrDetail" >
+            <input type="text" class="form-control" id="addrDetail" name="addrDetail">
         </div>
         <br>
         <div class="actorSection">
@@ -416,12 +413,8 @@
              <c:forEach var="vo" items="${userActorInfo.actorlist }">
              	<input class="likeActor" id="likeActor" name="likeActor" value="${vo.actor }" readonly>
                                    
-             </c:forEach>                         
-                                   	
-          
-        </div>
-        
-        
+             </c:forEach>     
+        </div>       
         
         <button type="button" class="add btn-primary" onclick="addActor()">+</button>
         <button type="button" class="minus btn-primary" onclick="minusActor()">-</button>
@@ -482,13 +475,13 @@
         </div>
         <br>
                 
-        <button type="submit" class="btn joinbtn " style="padding: 15px;">수정</button>
+        <button type="submit" class="btn joinbtn " style="padding: 15px;">확인</button>
         <button type="button" class="btn btn-default" style="padding: 15px;" onclick="location='mypage'">취소</button>
       </form>
     </div>
-
-
-
+</div>
+</div>
+</div>
 </section>
 <script>
 	/* $("#delcheck").click(function(){

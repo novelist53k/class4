@@ -351,7 +351,7 @@
   <div class="semi-back">
   <div class="mypage-back">
   <h2>마이페이지</h2>
-  <p>---님 환영합니다</p>
+  <p>${login.userName }님 환영합니다</p>
   <br>
   <br>
 
@@ -506,7 +506,7 @@
           <div class="reviewPoster"><img src="img/1.jpg" class="poster"></div>
           <div class="reviewBox">
             <div class="reviewBoxin">
-              <div class="myrvTitle">제목: <a href="">하.. 속옷갈아 입었네요</a></div>
+              <div class="myrvTitle">제목: <a href="">${userReview.title }</a></div>
               <div class="myrvScore">평점: </div>
               <div class="myrvRegdate">2020-01-11</div>
           </div>

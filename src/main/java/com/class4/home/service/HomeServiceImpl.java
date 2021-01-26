@@ -199,15 +199,199 @@ public class HomeServiceImpl implements HomeService {
 	// 나이별 선호 영화 가져오기
 	@Override
 	public ArrayList<MovieInfoVO> getUserByAgeML(String age) {
-		ArrayList<MovieInfoVO> userByAgeML = new ArrayList<MovieInfoVO>();
-		return userByAgeML;
+		ArrayList<MovieInfoVO> listByUserAge = new ArrayList<MovieInfoVO>();
+		RConnection rconn = null;
+		System.out.println(age);
+		
+		try {
+			rconn = new RConnection("127.0.0.1", 6311);
+			rconn.eval("library(rJava)");
+			rconn.eval("library(DBI)");
+			rconn.eval("library(RJDBC)");
+			rconn.eval("library(dplyr)");
+			System.out.println(1);
+			rconn.eval("drv <- JDBC('oracle.jdbc.OracleDriver', 'C:/jdbc/Oracle/ojdbc8.jar')");
+			rconn.eval("rconn <- dbConnect(drv, 'jdbc:oracle:thin:@localhost:1521/XEPDB1','CLASS4', 'CLASS4')");
+			System.out.println(2);
+			rconn.eval("ua <- dbGetQuery(rconn, 'ua_age <- dbGetQuery(rconn, 'select *" + 
+					"                             from userActor" + 
+					"                             WHERE (SYSDATE - uaage) >= " + age + " * 365 AND (SYSDATE - uaage) < " + (age + 10) + " * 365')')");
+			System.out.println(3);
+			rconn.eval("ua_age <- ua_age %>%" + 
+					"  group_by(ANO) %>%" + 
+					"  summarise(feq = n()) %>%" + 
+					"  arrange(desc(feq))");
+			System.out.println(4);
+			rconn.eval("ud_age <- dbGetQuery(rconn, 'select *" + 
+					"                             from userDirector" + 
+					"                             WHERE (SYSDATE - udage) >= " + age + " * 365 AND (SYSDATE - udage) < " + (age + 10) + " * 365')");
+			System.out.println(5);
+			rconn.eval("ud_age <- ud_age %>%" + 
+					"  group_by(DNO) %>%" + 
+					"  summarise(feq = n()) %>%" + 
+					"  arrange(desc(feq))");
+			System.out.println(6);
+			
+			RList rList = rconn.eval("ua <- as.data.frame(ua_age)").asList();
+			RList rList2 = rconn.eval("ud <- as.data.frame(ud_age)").asList();
+			
+			String[] codeArrayByActor = rList.at("ANO").asStrings();
+			String[] codeArrayByDirector = rList2.at("DNO").asStrings();
+			
+			System.out.println(Arrays.toString(codeArrayByActor));
+			System.out.println(Arrays.toString(codeArrayByDirector));
+
+			ArrayList<String> codeList = new ArrayList<String>();	// 영화 코드를 저장하기 위한 리스트
+			
+			// 배우 코드와 감독 코드로 영화코드를 가져와 리스트에 추가
+			for(String a : codeArrayByActor) {
+				codeList.addAll(mapper.getCodeListByActor(a));
+			}
+			for(String d : codeArrayByDirector) {
+				codeList.addAll(mapper.getCodeListByDirector(d));
+			}
+			
+			HashSet<String> codeSet = new HashSet<String>(codeList);	// 영화 코드 중복 제거
+			codeList = new ArrayList<String>(codeSet);
+			
+			Random ran = new Random();
+			int[] randomIdx = new int[movieMaxCnt];	// 영화 코드 개수가 슬라이드 내 최대 영화 개수 초과시 영화 코드를 랜덤으로 가져오기 위한 인덱스 번호 변수
+			
+			if(codeList.size() > movieMaxCnt) {
+				// 영화코드 개수가 movieMaxCnt 초과시 가져온 영화코드의 인덱스 번호를 랜덤으로 저장
+				for(int i = 0; i < movieMaxCnt; ++i) {
+					randomIdx[i] = ran.nextInt(codeList.size());
+					for(int j = 0; j < i; ++j) {
+						if(randomIdx[i] == randomIdx[j]) {	// 중복방지
+							--i;
+							break;
+						}
+					}
+				}
+				
+				// 랜덤으로 저장한 인덱스 번호로 영화 가져오기
+				for(int i = 0; i < randomIdx.length; ++i) {
+					listByUserAge.add(mapper.getMovie(codeList.get(i)));
+				}
+			}
+			else {
+				// 영화코드 개수가movieMaxCnt이하일시 배우가 출연한 영화 코드로 영화 목록 가져오기
+				for(String s : codeList) {
+					listByUserAge.add(mapper.getMovie(s));
+				}		
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rconn.eval("dbDisconnect(rconn)");				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			} finally {
+				rconn.close();				
+			}
+			
+		}		
+		
+		return listByUserAge;
 	}
 	
 	// 성별별 선호 영화 가져오기
 	@Override
 	public ArrayList<MovieInfoVO> getUserByGenderML(String gender) {
-		ArrayList<MovieInfoVO> userByGenderML = new ArrayList<MovieInfoVO>();
-		return userByGenderML;
+		ArrayList<MovieInfoVO> listByUserGender = new ArrayList<MovieInfoVO>();
+		RConnection rconn = null;
+		System.out.println(gender);
+		
+		try {
+			rconn = new RConnection("127.0.0.1", 6311);
+			rconn.eval("library(rJava)");
+			rconn.eval("library(DBI)");
+			rconn.eval("library(RJDBC)");
+			rconn.eval("library(dplyr)");
+			
+			rconn.eval("drv <- JDBC('oracle.jdbc.OracleDriver', 'C:/jdbc/Oracle/ojdbc8.jar')");
+			rconn.eval("rconn <- dbConnect(drv, 'jdbc:oracle:thin:@localhost:1521/XEPDB1','CLASS4', 'CLASS4')");
+			
+			rconn.eval("ua <- dbGetQuery(rconn, 'SELECT * FROM userActor')");
+			rconn.eval("ua <- ua %>%" + 
+					"  filter(UAGENDER == '" + (gender.equals("남자") ? "남자" : "여자") + "') %>%" + 
+					"  group_by(ANO) %>%" + 
+					"  summarise(feq = n()) %>%" + 
+					"  arrange(desc(feq))");
+
+			rconn.eval("ud <- dbGetQuery(rconn, 'SELECT * FROM userDirector')");
+			rconn.eval("ud <- ud %>%" + 
+					"  filter(UDGENDER == '" + (gender.equals("남자") ? "남자" : "여자") + "') %>%" + 
+					"  group_by(DNO) %>%" + 
+					"  summarise(feq = n()) %>%" + 
+					"  arrange(desc(feq))");
+
+			
+			RList rList = rconn.eval("ua <- as.data.frame(ua)").asList();
+			RList rList2 = rconn.eval("ud <- as.data.frame(ud)").asList();
+			
+			String[] codeArrayByActor = rList.at("ANO").asStrings();
+			String[] codeArrayByDirector = rList2.at("DNO").asStrings();
+			
+			System.out.println(Arrays.toString(codeArrayByActor));
+			System.out.println(Arrays.toString(codeArrayByDirector));
+
+			ArrayList<String> codeList = new ArrayList<String>();	// 영화 코드를 저장하기 위한 리스트
+			
+			// 배우 코드와 감독 코드로 영화코드를 가져와 리스트에 추가
+			for(String a : codeArrayByActor) {
+				codeList.addAll(mapper.getCodeListByActor(a));
+			}
+			for(String d : codeArrayByDirector) {
+				codeList.addAll(mapper.getCodeListByDirector(d));
+			}
+			
+			HashSet<String> codeSet = new HashSet<String>(codeList);	// 영화 코드 중복 제거
+			codeList = new ArrayList<String>(codeSet);
+			
+			Random ran = new Random();
+			int[] randomIdx = new int[movieMaxCnt];	// 영화 코드 개수가 슬라이드 내 최대 영화 개수 초과시 영화 코드를 랜덤으로 가져오기 위한 인덱스 번호 변수
+			
+			if(codeList.size() > movieMaxCnt) {
+				// 영화코드 개수가 movieMaxCnt 초과시 가져온 영화코드의 인덱스 번호를 랜덤으로 저장
+				for(int i = 0; i < movieMaxCnt; ++i) {
+					randomIdx[i] = ran.nextInt(codeList.size());
+					for(int j = 0; j < i; ++j) {
+						if(randomIdx[i] == randomIdx[j]) {	// 중복방지
+							--i;
+							break;
+						}
+					}
+				}
+				
+				// 랜덤으로 저장한 인덱스 번호로 영화 가져오기
+				for(int i = 0; i < randomIdx.length; ++i) {
+					listByUserGender.add(mapper.getMovie(codeList.get(i)));
+				}
+			}
+			else {
+				// 영화코드 개수가movieMaxCnt이하일시 배우가 출연한 영화 코드로 영화 목록 가져오기
+				for(String s : codeList) {
+					listByUserGender.add(mapper.getMovie(s));
+				}		
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rconn.eval("dbDisconnect(rconn)");				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			} finally {
+				rconn.close();				
+			}
+			
+		}
+		
+		return listByUserGender;
 	}
 	
 	
@@ -315,11 +499,10 @@ public class HomeServiceImpl implements HomeService {
 			
 			RList rList = rconn.eval("keyword").asList();
 			String[] word = rList.at("word").asStrings();
-			int[] feq = rList.at("feq").asIntegers();
 			System.out.println(Arrays.toString(word));	// 많이 사용된 단어 순서대로 출력
 			
 			Random ran = new Random();
-			int randomCnt = word.length > 10 ? 10 : word.length;	// 검색어 랜덤 추출에 사용할 단어 개수
+			int randomCnt = word.length > 7 ? 7 : word.length;	// 검색어 랜덤 추출에 사용할 단어 개수
 			int wordCnt = word.length > 3 ? 3 : word.length;		// 검색에 사용할 단어 개수,
 			int randomIdx[] = new int[wordCnt];	// 검색어 선정에 사용할 랜덤 인덱스 번호
 			
@@ -334,9 +517,7 @@ public class HomeServiceImpl implements HomeService {
 				}
 			}
 			System.out.println(Arrays.toString(randomIdx));
-			
 
-			
 
 			for(int i = 0; i < randomIdx.length; ++i) {
 				System.out.println("검색어 : " + word[randomIdx[i]]);
@@ -345,10 +526,7 @@ public class HomeServiceImpl implements HomeService {
 					searchHistoryMovieList.add(m);
 				}
 			}
-			
-			
-			
-			
+
 			
 		} catch (Exception e) {
 			e.printStackTrace();

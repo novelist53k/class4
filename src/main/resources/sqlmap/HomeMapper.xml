@@ -69,6 +69,7 @@
 	<select id="getCodeListByGenre" resultType="string">
 		SELECT mno FROM MovieGenre WHERE genre = #{genre}
 	</select>
+
 	
 	
 	

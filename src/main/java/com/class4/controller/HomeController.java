@@ -59,6 +59,16 @@ public class HomeController {
 	@GetMapping("/userLikeDirector/{id}")
 	@ResponseBody
 	public ArrayList<MovieInfoVO> userLikeDirector(@PathVariable String id) {
+		ArrayList<MovieInfoVO> userLikeDirectorList = homeService.getUserDirectorML(id);
+		System.out.println(userLikeDirectorList);
+		System.out.println(userLikeDirectorList.size());
+		return userLikeDirectorList;
+	}
+	
+	// 유저가 선호하는 감독의 영화 가져오기
+	@GetMapping("/userLikeGenre/{id}")
+	@ResponseBody
+	public ArrayList<MovieInfoVO> userLikeGenre(@PathVariable String id) {
 		ArrayList<MovieInfoVO> userLikeGenreList = homeService.getUserGenreML(id);
 		System.out.println(userLikeGenreList);
 		System.out.println(userLikeGenreList.size());
@@ -76,11 +86,11 @@ public class HomeController {
 	}
 	
 	
-	// 나이별 선호 영화 가져오기
+	// 성별별 선호 영화 가져오기
 	@GetMapping("/userLikeByGender/{gender}")
 	@ResponseBody
 	public ArrayList<MovieInfoVO> userLikeByGender(@PathVariable String gender) {
-		ArrayList<MovieInfoVO> userLikeByGenderList = homeService.getUserByAgeML(gender);
+		ArrayList<MovieInfoVO> userLikeByGenderList = homeService.getUserByGenderML(gender);
 		System.out.println(userLikeByGenderList);
 		System.out.println(userLikeByGenderList.size());
 		return userLikeByGenderList;
@@ -107,7 +117,7 @@ public class HomeController {
 		ArrayList<MovieInfoVO> result = homeService.searchMovie(keyword);
 		// homeService.addSearchHistory(id, keyword);
 		
-		model.addAttribute("searchResult", result);
+		model.addAttribute("list", result);
 		
 		
 		

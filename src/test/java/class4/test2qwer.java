@@ -51,18 +51,19 @@ public class test2qwer {
 				// 인물코드, 이름
 				String peopleCd = peopleInfo.get("peopleCd").toString();
 				String peopleNm = peopleInfo.get("peopleNm").toString();
+				String peopleNmEn = peopleInfo.get("peopleNmEn").toString();
 				
 				// 배우면 ActorVO에, 감독이면 DirectorVO에 추가
 				if(peopleInfo.get("repRoleNm").equals("배우")) {
 					// Actor 테이블을 조회해서 이미 있는 peopleCd라면 추가하지 말고 출연, 감독한 영화로 이동
 					
-					ActorVO actorVO = new ActorVO(peopleCd, peopleNm);
+					ActorVO actorVO = new ActorVO(peopleCd, peopleNm, peopleNmEn);
 					System.out.println("배우 : " + actorVO.toString());
 				}
 				else if(peopleInfo.get("repRoleNm").equals("감독")) {
 					// Director 테이블을 조회해서 이미 있는 peopleCd라면 추가하지 말고 출연, 감독한 영화로 이동
 					
-					DirectorVO directorVO = new DirectorVO(peopleCd, peopleNm);
+					DirectorVO directorVO = new DirectorVO(peopleCd, peopleNm, peopleNmEn);
 					System.out.println("감독 : " + directorVO.toString());
 				}
 				else {

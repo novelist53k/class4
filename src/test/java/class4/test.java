@@ -47,7 +47,7 @@ public class test {
 			
 			// 영화리스트 호출에 필요한 인터페이스
 			String curPage = "1";
-			String itemPerPage = "2";	// 호출할 개수
+			String itemPerPage = "5";	// 호출할 개수
 			String movieNm = "";
 			String directorNm = "";
 			String openStartDt = "2021";
@@ -131,6 +131,7 @@ public class test {
 			    for(int j = 0; j < genres.size(); ++j) {
 			    	LinkedHashMap<String, Object> genreMap = (LinkedHashMap<String, Object>) genres.get(j);
 			    	genreList.add(genreMap.get("genreNm").toString());
+			    	System.out.println(genreMap.get("genreNm").toString());
 			    }
 			    
 			    // Genre 테이블에 없는 장르면 추가 있으면 아래로
@@ -140,9 +141,7 @@ public class test {
 			    for(int j = 0; j < genreList.size(); ++j) {
 			    	MovieGenreVO mgVO = new MovieGenreVO(1, movieCdList.get(i), genreList.get(j));
 			    	// MovieGenre 테이블에서 mno와 genre가 동시에 같지 않다면 추가
-			    	
 			    }
-			    
 			    
 			    
 			    

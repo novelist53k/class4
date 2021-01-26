@@ -20,6 +20,7 @@
                 	<c:forEach var="RecentVO" items="${mainRecentlyMovie}">
                     	<div class="swiper-slide">
                     		<img src="${pageContext.request.contextPath }/resources/img/current/${RecentVO.poster}" class = "img_g">
+                    		<p>영화제목</p>
                     	</div>
                 	</c:forEach>
                 </div>
@@ -32,9 +33,10 @@
                 <div class="swiper-pagination"></div>
             </div>
         </div>
+        
         <!-- 개봉예정작 -->
         <div class="slider_area_no_login">
-            <h3 class="sliderTitle"">개봉예정작</h3>
+            <h3 class="sliderTitle">개봉예정작</h3>
             <div class="swiper-container">
                 <div class="swiper-wrapper">
                     <c:forEach var="CommingSoonVO" items="${mainCommingSoonList}">
@@ -56,7 +58,6 @@
         <!-- 로그인 시만 보이되 테스트시에는 조건 적용 X-->
         
         <!-- 선호하는 배우가 출연한 영화, 선호하는 배우 미선택시 안 보이게 -->
-<<<<<<< HEAD
 	    <div id="actorSlider" class="slider_area_login">
 	    	<h3 id="userLikeActor" class="sliderTitle">""님이 선호하는 배우가 출연한 영화 ▼</h3>
 	    	<hr>
@@ -67,56 +68,6 @@
 	    	<h3 id="userLikeDirector" class="sliderTitle">""님이 선호하는 감독의 영화 ▼</h3>
 	    	<hr>
 	    </div>
-=======
-        <c:if test="${login !=null }">
-        <c:if test="${UserLikeActorList.size() != 0 }">
-	        <div class="slider_area_login">
-	            <h3 style="text-align:center; margin-top:10px; color:white;">${login.userName }님이 선호하는 배우가 출연한 영화</h3>
-	            <div class="swiper-container">
-	                <div class="swiper-wrapper">
-	                    <c:forEach var="UserLikeActorVO" items="${userLikeActorList}">
-	                    	<div class="swiper-slide">
-	                    		<img src="${pageContext.request.contextPath }/resources/img/current/${UserLikeActorVO.poster}" class = "img_g">
-	                    	</div>
-	                	</c:forEach>
-	                </div>
-	            
-	                <!-- 네비게이션 -->
-	                <div class="swiper-button-next"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
-	                <div class="swiper-button-prev"></div><!-- 이전 버튼 -->
-	            
-	                <!-- 페이징 -->
-	                <div class="swiper-pagination"></div>
-	            </div>
-	        </div>
-        </c:if>
-        </c:if>
-        
-        <!-- 선호하는 감독의 영화, 선호하는 감독 미선택시 안 보이게 -->
-        <c:if test="${login !=null }">
-        <c:if test="${UserLikeDirectorList.size() != 0 }">
-	        <div class="slider_area_login">
-	            <h3 style="text-align:center; margin-top:10px; color:white;">${login.userName }님이 선호하는 배우가 출연한 영화</h3>
-	            <div class="swiper-container">
-	                <div class="swiper-wrapper">
-	                    <c:forEach var="userLikeDirectorVO" items="${UserLikeDirectorList}">
-	                    	<div class="swiper-slide">
-	                    		<img src="${pageContext.request.contextPath }/resources/img/current/${UserLikeDirectorVO.poster}" class = "img_g">
-	                    	</div>
-	                	</c:forEach>
-	                </div>
-	            
-	                <!-- 네비게이션 -->
-	                <div class="swiper-button-next"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
-	                <div class="swiper-button-prev"></div><!-- 이전 버튼 -->
-	            
-	                <!-- 페이징 -->
-	                <div class="swiper-pagination"></div>
-	            </div>
-	        </div>
-        </c:if>
-         </c:if>
->>>>>>> 74cb2bfe76101f8b3ca95976ebcb38dcf7a7c42b
         
         <!-- 선호하는 장르의 영화, 선호하는 장르 미선택시 안 보이게 -->
 	    <div id="genreSlider" class="slider_area_login">
@@ -143,11 +94,6 @@
         	</h3>
         </div>
         
-        
-        
-        
-        
-		<hr>
     </section>
     
     
@@ -174,8 +120,10 @@
 	                str += '<div class="swiper-wrapper">';
 	             	// for(var i = 0; i < dataList.length; ++i) {
 		            for(var i = 0; i < 16; ++i) {
-			            str += '<div class="swiper-slide">'
-			            str += '<img src="${pageContext.request.contextPath}/resources/img/current/${userLikeActorVO.poster}" class = "img_g">'
+			            str += '<div class="swiper-slide">';
+			            str += '<a href="movie/movieContent?movieCd=${userLikeActorList.movieCd}"';
+			            str += '<img src="${pageContext.request.contextPath}/resources/img/current/${userLikeActorList.poster}" class = "img_g">';
+			            str += '</a>';
 			            str += '</div>';    	
 		            }
 	                str += '</div>';
@@ -217,9 +165,11 @@
 	                str += '<div class="swiper-wrapper">';
 	             	// for(var i = 0; i < dataList.length; ++i) {
 		            for(var i = 0; i < 16; ++i) {
-			            str += '<div class="swiper-slide">'
-			            str += '<img src="${pageContext.request.contextPath}/resources/img/current/${userLikeDirectorVO.poster}" class = "img_g">'
-			            str += '</div>';    	
+			            str += '<div class="swiper-slide">';
+			            str += '<a href="movie/movieContent?movieCd=${userLikeDirectorList.movieCd}"';
+			            str += '<img src="${pageContext.request.contextPath}/resources/img/current/${userLikeDirectorList.poster}" class = "img_g">';
+			            str += '</a>';
+			            str += '</div>';  	
 		            }
 	                str += '</div>';
 	                str += '<div class="swiper-button-next"></div>';
@@ -261,9 +211,11 @@
 		            
 		            // for(var i = 0; i < dataList.length; ++i) {
 		            for(var i = 0; i < 16; ++i) {
-			            str += '<div class="swiper-slide">'
-			            str += '<img src="${pageContext.request.contextPath}/resources/img/current/${userLikeGenreVO.poster}" class = "img_g">'
-			            str += '</div>';    	
+			            str += '<div class="swiper-slide">';
+			            str += '<a href="movie/movieContent?movieCd=${userLikeGenreList.movieCd}"';
+			            str += '<img src="${pageContext.request.contextPath}/resources/img/current/${userLikeGenreList.poster}" class = "img_g">';
+			            str += '</a>';
+			            str += '</div>';   	
 		            }
 		            str += '</div>';		            
 		            str += '<div class="swiper-button-next"></div>';
@@ -287,7 +239,6 @@
     
 		// 나이에 따른 영화 선호도
 		function getMovieListByAge(age) {
-			console.log(3);
 			console.log(age);
 			
 			$.getJSON(
@@ -309,9 +260,11 @@
 			            
 			            // for(var i = 0; i < dataList.length; ++i) {
 			            for(var i = 0; i < 16; ++i) {
-				            str += '<div class="swiper-slide">'
-				            str += '<img src="${pageContext.request.contextPath}/resources/img/current/${userLikeGenreVO.poster}" class = "img_g">'
-				            str += '</div>';
+				            str += '<div class="swiper-slide">';
+				            str += '<a href="movie/movieContent?movieCd=${userLikeByAgeList.movieCd}"';
+				            str += '<img src="${pageContext.request.contextPath}/resources/img/current/${userLikeByAgeList.poster}" class = "img_g">';
+				            str += '</a>';
+				            str += '</div>';  
 			            }
 			            str += '</div>';		            
 			            str += '<div class="swiper-button-next"></div>';
@@ -320,6 +273,10 @@
 			            str += '</div>';
 
 			            document.getElementById("ageSlider").innerHTML = str;
+			            
+			            document.getElementById("ageGroupLike").onclick = function() {
+			    	    	getMovieListByAge(event.target.id);
+			    	    };
 		        	}
 			);
 		}
@@ -336,7 +293,7 @@
 			console.log(gender);
 			
 			$.getJSON(
-					"userLikeGenre/" + gender,
+					"userLikeByGender/" + gender,
 					function(dataList) {
 						console.log(dataList);
 						console.log("성별");
@@ -353,8 +310,9 @@
 			            
 			            // for(var i = 0; i < dataList.length; ++i) {
 			            for(var i = 0; i < 16; ++i) {
-				            str += '<div class="swiper-slide">'
-				            str += '<img src="${pageContext.request.contextPath}/resources/img/current/${userLikeGenreVO.poster}" class = "img_g">'
+				            str += '<div class="swiper-slide">';
+				            str += '<a href="movie/movieContent?movieCd=${userLikeByGenderList.movieCd}"';
+				            str += '<img src="${pageContext.request.contextPath}/resources/img/current/${userLikeByGenderList.poster}" class = "img_g">';
 				            str += '</div>';
 			            }
 			            str += '</div>';		            
@@ -364,6 +322,10 @@
 			            str += '</div>';
 
 			            document.getElementById("genderSlider").innerHTML = str;
+			            
+			            document.getElementById("genderGroupLike").onclick = function() {
+			    	    	getMovieListByGender(event.target.id);
+			    	    };
 		        	}
 			);
 		}

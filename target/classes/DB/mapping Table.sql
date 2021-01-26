@@ -26,7 +26,7 @@ create table userDirector(
     udId varchar2(50) not null,
     dno varchar2(50) not null,
     udAge DATE,
-    udGender VARCHAR2(50);
+    udGender VARCHAR2(50)
 );
 alter table userDirector add CONSTRAINTS ud_pk PRIMARY KEY (udno);
 create SEQUENCE userDirector_seq increment by 1 start with 1 nocache;

@@ -62,7 +62,7 @@ public class test2 {
 				else if(peopleInfo.get("repRoleNm").equals("감독")) {
 					// Director 테이블을 조회해서 이미 있는 peopleCd라면 추가하지 말고 출연, 감독한 영화로 이동
 					
-					DirectorVO directorVO = new DirectorVO(peopleCd, peopleNm,);
+					DirectorVO directorVO = new DirectorVO(peopleCd, peopleNm);
 					System.out.println("감독 : " + directorVO.toString());
 				}
 				else {

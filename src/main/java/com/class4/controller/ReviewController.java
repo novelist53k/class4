@@ -77,9 +77,10 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value = "/reviewModify", method = RequestMethod.POST)
-	public String reviewUpdate(ReviewBoardVO vo, RedirectAttributes RA) {
+	public String reviewModify(ReviewBoardVO vo, RedirectAttributes RA) {
 		
-		int result = reviewBoardService.reviewModify(vo);
+		int result = reviewBoardService.modify(vo);
+		System.out.println(result);
 		
 		if(result == 1) {
 			RA.addFlashAttribute("msg", "수정이 완료 되었습니다.");

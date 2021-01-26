@@ -132,12 +132,12 @@ section {
 	/* 수정 버튼 */
 	var modifyBtn = document.getElementById("modifyBtn");
 	modifyBtn.onclick = function () {	
-		if(document.reivewModify.content.value === ''){
-			console.log(document.reivewModify.content.value);
+		if(document.reviewModify.content.value === ''){
 			alert("내용을 입력해 주세요.");
+			document.reviewModify.content.focus();
 			return;
 		}else{
-			document.reviewModify.action = 'reviewModify';
+			document.reviewModify.action = "reviewModify";
 			document.reviewModify.submit();
 		}
 	}

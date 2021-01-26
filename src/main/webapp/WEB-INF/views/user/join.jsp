@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+         <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+ <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <style>
 
  body{ position: relative; margin-bottom: 30px; }
@@ -52,9 +54,23 @@
       border-radius: 4px;
       margin-bottom: 25px;
     }
-    .userGender, .userAge{
+    .userGender{
       display: block;
       width: 250px;
+      height: 34px;
+      padding: 6px 12px;
+      font-size: 14px;
+      line-height: 1.42857143;
+      color: #555;
+      background-color: #fff;
+      background-image: none;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-bottom: 25px;
+    }
+    .userYear, .userMonth, .userDay{
+      display: inline;
+      width: 120px;
       height: 34px;
       padding: 6px 12px;
       font-size: 14px;
@@ -174,7 +190,7 @@
             <input type="text" class="joinId userId" name="userId" id="userId" placeholder="알파벳포함 4글자 이상">
             <button type="button" class="checkBtn btn-primary" id="checkBtn">중복체크</button>
             <p class="msgId" id="msgId" name="msgId"></p>               
-            <br>
+            
             <label for="password" class="joinLabel pwlabel" >PASSWORD(*)</label><br>
             <input type="password" class="userPw" id="userPw" name="userPw" placeholder="알파벳포함 8글자 이상 16글자 미만"> 
             <p class="msgPw" id="msgPw"></p>  
@@ -193,14 +209,21 @@
               <option value="man">남자</option>
               <option value="woman">여자</option>
             </select> 
-            <label for="gender" class="joinLabel"> 나이</label>
-            <select name="userAge" id="userAge" class="userAge">
-            <script>
-              for(i=7; i<100;i++){
-              document.write("<option value='"+i+" '>"+i+"</option>")
-              
-              }
-            </script>
+            <label for="gender" class="joinLabel"> 생년월일</label>
+            <select name="userYear" id="userYear" class="userYear">
+           		<c:forEach begin="1930" end="2015" var="i" >
+           		<option>${i }
+           		</c:forEach>
+           		</select> 
+           	<select name="userMonth" id="userMonth" class="userMonth">
+           	<c:forEach begin="1" end="12" var="i">
+           		<option>${i }
+           	</c:forEach>
+           	</select> 
+            <select name="userDay" id="userDay" class="userDay">
+           	<c:forEach begin="1" end="31" var="i">
+           		<option>${i }
+           	</c:forEach>
             
             </select>
             <br>
@@ -235,19 +258,18 @@
             <button type="button" class="add btn-primary" onclick="addDirector()">+</button>
             <button type="button" class="minus btn-primary" onclick="minusDirector()">-</button>
             <div class="genre">
-              <label class="joinLabel">선호하는 장르</label><br>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="1"/> 애니메이션</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="2"/> 드라마</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="3"/> 가족</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="4"/> 미스테리</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="5"/> 범죄</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="6"/> 다큐멘터리</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="7"/> 스릴러</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="8"/> 공포</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="9"/> 판타지</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="10"/> 액션</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="11"/> 로맨스</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genreLike" name="genreLike" value="12"/> SF</label>
+			  <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist" name="genrelist" value="애니메이션"/> 애니메이션</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist" name="genreList" value="드라마"/> 드라마</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist" name="genreList" value="가족"/> 가족</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist" name="genreList" value="미스테리"/> 미스테리</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist" name="genreList" value="범죄"/> 범죄</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist" name="genreList" value="다큐멘터리"/> 다큐멘터리</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist" name="genreList" value="스릴러"/> 스릴러</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist" name="genreList" value="공포"/> 공포</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist" name="genreList" value="판타지"/> 판타지</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist" name="genreList" value="액션"/> 액션</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist" name="genreList" value="로맨스"/> 로맨스</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist" name="genreList" value="SF"/> SF</label>
               
               
               
@@ -278,7 +300,7 @@
     var index = selected.selectedIndex;
     if(index ==4){
       $(".email2").replaceWith(function() {
-        return $('<input>',{type:'text', class:'email2', id:'userEmail2'})
+        return $('<input>',{type:'text', class:'email2', id:'userEmail2', name:'userEmail2'})
       })
     }
   }
@@ -373,12 +395,14 @@ var directorName = null;
   input.setAttribute('id','likeDirector')
   input.setAttribute('placeholder','이름을 입력하세요')
   directorName = $(".likeDirector").val();
-  autocomplete1(directorName);
+  input.setAttribute('value',autocomplete1(directorName));
+  
   
   }
   function addActor(){
   var input = document.createElement("input")
   var add = document.querySelector(".actorSection").appendChild(input)
+  
   input.setAttribute('class','likeActor')  
   input.setAttribute('name','likeActor')
   input.setAttribute('id','likeActor')
@@ -444,12 +468,14 @@ var directorName = null;
   }
   function minusActor() {
     var inp = document.querySelector(".actorSection");
-    inp.removeChild(inp.children[inp.children.length-1])
     
+    if(inp.children.length > 2){
+    	inp.removeChild(inp.children[inp.children.length-1])
+    }
   }
   function minusDirector() {
     var inp = document.querySelector(".diretorSection");
-    inp.removeChild(inp.children[inp.children.length-1])
+    if(inp.children.length > 2){inp.removeChild(inp.children[inp.children.length-1])}
   }
 
 //주소찾기

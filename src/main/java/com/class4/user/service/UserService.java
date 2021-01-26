@@ -21,9 +21,9 @@ public interface UserService {
 
 	public int genreList(UserVO vo);
 
-	public int actorList(UserVO vo);
+	public int actorList(UserVO vo, ActorVO avo);
 
-	public int directorList(UserVO vo);
+	public int directorList(UserVO vo, DirectorVO dvo);
 
 	public boolean uploadProfile(UserVO userVO);
 
@@ -37,13 +37,13 @@ public interface UserService {
 
 	public UserVO getDirectorInfo(String userId);
 
-	public ArrayList<String> listAll2(String result);
+	
 
 	public List<ActorVO> actorList(ActorVO actorvo);
 
 	public List<DirectorVO> directorList(DirectorVO director);
 
-	public UserVO getReview(String user);
+	public List<ReviewBoardVO> getReview(String user);
 
 	
 

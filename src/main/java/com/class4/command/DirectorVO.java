@@ -9,8 +9,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DirectorVO {
 	
-	private String dco;
+	private String dno;
 	private String directorName;
 	private String fDirectorName;
+	
+	
+	
+	
+	
 	
 }

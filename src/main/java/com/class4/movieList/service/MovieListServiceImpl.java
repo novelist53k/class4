@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.class4.command.ActorVO;
 import com.class4.command.DirectorVO;
+import com.class4.command.GenreVO;
 import com.class4.command.MovieInfoVO;
 import com.class4.command.MovieListVO;
 import com.class4.movie.util.Criteria;
@@ -64,49 +65,71 @@ public class MovieListServiceImpl implements MovieListService{
 		return movieListMapper.getMovieInfo(cd);
 	}
 	
-//	@Override
-//	public ArrayList<String> getPeopleCodeList() {
-//		ArrayList<String> actorCodeList = movieListMapper.getActorCodeList();
-//		ArrayList<String> directorCodeList = movieListMapper.getDirectorCodeList();
-//		ArrayList<String> peopleCodeList = new ArrayList<String>();
-//		
-//		for(int i = 0; i < actorCodeList.size(); ++i) {
-//			peopleCodeList.add(actorCodeList.get(i));
-//		}
-//		for(int i = 0; i < directorCodeList.size(); ++i) {
-//			peopleCodeList.add(directorCodeList.get(i));
-//		}
-//		
-//		
-//		return peopleCodeList;
-//	}
-//	@Override
-//	public void testActorInsert(ActorVO actorVO) {
-//		movieListMapper.testActorInsert(actorVO);
-//		System.out.println("배우1");
-//		
-//	}
-//	@Override
-//	public void testDirectorInsert(DirectorVO directorVO) {
-//		System.out.println("감독1");
-//		movieListMapper.testDirectorInsert(directorVO);
-//	}
-//
-//
-//
-//	@Override
-//	public ArrayList<String> getActorCodeList() {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//
-//
-//	@Override
-//	public ArrayList<String> getDirectorCodeList() {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+	@Override
+	public ArrayList<String> getActorCodeList() {
+		return movieListMapper.getActorCodeList();
+	}
 
 
+
+	@Override
+	public ArrayList<String> getDirectorCodeList() {
+		
+		return movieListMapper.getActorCodeList();
+	}
+
+	
+	@Override
+	public ArrayList<String> getPeopleCodeList() {
+		ArrayList<String> actorCodeList = movieListMapper.getActorCodeList();
+		ArrayList<String> directorCodeList = movieListMapper.getDirectorCodeList();
+		ArrayList<String> peopleCodeList = new ArrayList<String>();
+		
+		for(int i = 0; i < actorCodeList.size(); ++i) {
+			peopleCodeList.add(actorCodeList.get(i));
+		}
+		for(int i = 0; i < directorCodeList.size(); ++i) {
+			peopleCodeList.add(directorCodeList.get(i));
+		}
+		
+		
+		return peopleCodeList;
+	}
+
+	
+	@Override
+	public void ActorInsert(ActorVO vo) {
+		movieListMapper.ActorInsert(vo);
+		
+	}
+	
+	@Override
+	public void DirectorInsert(DirectorVO directorVO) {
+		movieListMapper.DirectorInsert(directorVO);
+	}
+
+
+
+	@Override
+	public ArrayList<String> getGenreList() {
+		
+		
+		return movieListMapper.getGenreList();
+	}
+
+
+
+	@Override
+	public void GenreInsert(GenreVO vo) {
+		movieListMapper.GenreInsert(vo);
+		
+	}
+	
+	
 }
+	
+
+
+
+
+

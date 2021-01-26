@@ -132,7 +132,6 @@ section {
 <section>
     <lable style="font-size: 40px; font-weight: bold;">영화 리뷰 상세페이지</lable>
     <hr style="border-bottom: 3px solid black; margin: 10px 0;">
-
 	    <div class = wrap>
 	    	<span class="review_bno">${vo.bno }</span>
 	        <div class = "movie-img">
@@ -152,27 +151,29 @@ section {
 			       <div class="btns" style="text-align: right; margin-top: 5px;">
 			           <button class = "list-btn" onclick="location.href='reviewList'">목록</button>
 			           <button type = "submit" class = "list-modify" onclick="location.href='reviewUpdate?bno=${vo.bno}'">수정</button>
-			           <button class = "list-delete">삭제</button>
+			           <button class = "list-delete" onclick = "del(${vo.bno})">삭제</button>
 			       </div>    
 			   </div>
 	        </div>
 	    </div>
 	
     
-    <label>댓글</label>
-    <div class="reply-wrap">
-    	<span class="reply_rno">1</span>
-        <div class="profile-img">
-            <img src="${pageContext.request.contextPath}/resources/img/default_profile.gif" alt="profile">
-        </div>
-        <div class="reply-content">
-            <textarea class="form-control" rows="2" id="reply" readonly>내용</textarea>
-        </div>
-        <div class="reply-btn">
-            <button type = "submit" class = "list-modify">수정</button>
-            <button class = "list-delete">삭제</button>
-        </div>
-    </div>
+	    <label>댓글</label>
+	    <div class="reply-wrap">
+	    	<span class="reply_rno">1</span>
+	        <div class="profile-img">
+	            <img src="${pageContext.request.contextPath}/resources/img/default_profile.gif" alt="profile">
+	        </div>
+	        <div class="reply-content">
+	            <textarea class="form-control" rows="2" id="reply" name="repl-content" readonly>내용</textarea>
+	        </div>
+	        <div class="reply-btn">
+	        	<button type = "button" class = "repl-regist">등록</button>
+	            <button type = "button" class = "repl-modify">수정</button>
+	            <button type = "button" class = "repl-delete">삭제</button>
+	        </div>
+	    </div>
+    
 
 
     <div class = "more-btn" >
@@ -180,23 +181,15 @@ section {
     </div>
     
     <script>
-    
-    
-    
-    	/* function moreRepl(){
-    		
-    		$ajax({
-    			type : "post",
-    			url : "../review/reviewContent",
-    			data : JSON.stringfy({""}),
-    			contentType : "application/json; charset=utf-8",
-    			
-    		
-    			
-    			
-    		})
-    	} */
-    
+    	
+    	function del(bno) {
+    		var chk = confirm("정말 삭제하시겠습니까?");
+    		if (chk) {
+    			location.href='delete?bno='+bno;
+    		}
+		}
+    	
+   
     	
     </script>
     

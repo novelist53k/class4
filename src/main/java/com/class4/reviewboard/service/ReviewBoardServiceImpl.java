@@ -44,6 +44,20 @@ public class ReviewBoardServiceImpl implements ReviewBoardService{
 	}
 
 
+	@Override
+	public int delete(int bno) {
+		
+		return reviewBoardMapper.delete(bno);
+	}
+
+
+	@Override
+	public void regist(ReviewBoardVO vo) {
+		
+		reviewBoardMapper.regist(vo);		
+	}
+
+
 	
 
 	

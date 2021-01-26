@@ -97,20 +97,20 @@ section {
     <label style="font-size: 40px; font-weight: bold;">영화 리뷰 수정 페이지</label>
     <hr style="border-bottom: 3px solid black; margin: 10px 0;">
     
-    <form action="reviewModify" method = "post" name = "reviewModify">
+    <form action="reviewModify" method = "post" name="reviewModify">
 	    <div class = wrap>
-	    	<span class="review_bno">${vo.bno }</span>
+	    	<input name="bno" type="text" class="review_bno" value="${vo.bno }">
 	        <div class = "movie-img">
 	            <img src="${pageContext.request.contextPath }/resources/img/movie_image.jpg" alt="영화포스터">
 	            
 	        </div>    
 	        <div class = "review-content">
-	          <label>${vo.movieTitle }</label>
-	          <p class = "point glyphicon glyphicon glyphicon-star" aria-hidden="true" style="color: rgb(233, 49, 49);"></p>
-	          <p class = "score" style="display: inline-block;">5</p>
-	          <p>${vo.writer}</p>
-	          <div class = "day">	        		 
-	           		<fmt:formatDate value="${vo.regDate }" pattern="yyyy-MM-dd HH:ss"/>
+		          <label><input type="text" name="movieTitle" value="${vo.movieTitle }" readonly="readonly"></label>
+		          <p class = "point glyphicon glyphicon glyphicon-star" aria-hidden="true" style="color: rgb(233, 49, 49);"></p>
+		          <p class = "score" style="display: inline-block;">5</p>W
+		          <input type = "text" name="writer" value = "${vo.writer}" readonly="readonly">
+		          <div class = "day">	        		 
+		           		<fmt:formatDate value="${vo.updateDate }" pattern="yyyy-MM-dd HH:ss"/>
 	        	</div>
 	        </div>
 	    </div>
@@ -119,7 +119,7 @@ section {
 	        <label>내용</label>
 	        <textarea class="content form-control" rows="10" name='content' >${vo.content }</textarea>
 	        <div class="btns" style="text-align: right;">
-	            <button type = "submit" class="list-modify" id="modifyBtn">수정</button>
+	            <button type = "button" class="list-modify" id="modifyBtn">수정</button>
 	            <button class = "list-cancel" id="cancelBtn">취소</button>
 	        </div>    
 	    </div>

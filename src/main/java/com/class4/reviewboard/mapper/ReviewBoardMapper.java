@@ -11,5 +11,7 @@ public interface ReviewBoardMapper {
 	public int getTotal(Criteria cri);
 	public ReviewBoardVO getContent(int bno);
 	public int modify(ReviewBoardVO vo);
+	public int delete(int bno);
+	public void regist(ReviewBoardVO vo);
 
 }

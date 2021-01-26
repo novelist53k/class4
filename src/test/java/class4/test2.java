@@ -20,12 +20,12 @@ public class test2 {
 	public void actorTest() {
 		// api에 사용할 객체 service
 		KobisOpenAPIRestService service = new KobisOpenAPIRestService("7e7efe4ec48bc16bff2f86fbc588f9ca");
-		String itemPerPage = "2";	// 가져올 사람 수
+		String itemPerPage = "100";	// 가져올 사람 수
 		int row = Integer.parseInt(itemPerPage);
 		
 		try {
 			// 문자열을 반환 후 json 형식을 HashMap으로 변경하여 영화인리스트에서 영화인코드로 접근
-			String strPeopleList = service.getPeopleList(true, "1", itemPerPage, "", "");
+			String strPeopleList = service.getPeopleList(true, "100", itemPerPage, "", "");
 			ObjectMapper mapper = new ObjectMapper();
 			HashMap<String, Object> peopleHashMap = mapper.readValue(strPeopleList, HashMap.class);
 			HashMap<String, Object> peopleListResult = (HashMap<String, Object>)peopleHashMap.get("peopleListResult");
@@ -62,7 +62,7 @@ public class test2 {
 				else if(peopleInfo.get("repRoleNm").equals("감독")) {
 					// Director 테이블을 조회해서 이미 있는 peopleCd라면 추가하지 말고 출연, 감독한 영화로 이동
 					
-					DirectorVO directorVO = new DirectorVO(peopleCd, peopleNm,);
+					DirectorVO directorVO = new DirectorVO(peopleCd, peopleNm);
 					System.out.println("감독 : " + directorVO.toString());
 				}
 				else {

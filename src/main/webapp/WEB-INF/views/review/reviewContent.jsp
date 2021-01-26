@@ -150,8 +150,8 @@ section {
 			       </div>
 			       <div class="btns" style="text-align: right; margin-top: 5px;">
 			           <button class = "list-btn" onclick="location.href='reviewList'">목록</button>
-			           <button type = "submit" class = "list-modify" onclick="location.href='reviewUpdate?bno=${vo.bno}'">수정</button>
-			           <button class = "list-delete" onclick = "del(${vo.bno})">삭제</button>
+			           <button type = "submit" class = "list-modify" onclick="location.href='reviewUpdate?bno=${vo.bno}&writer=${vo.writer } '">수정</button>
+			           <button class = "list-delete">삭제</button>
 			       </div>    
 			   </div>
 	        </div>

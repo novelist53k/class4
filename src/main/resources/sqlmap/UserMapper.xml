@@ -11,7 +11,7 @@
   	
   	<insert id="JoinReq">
   		insert into users(userId,userPw,userName,userGender,userAge,userEmail1,userEmail2,addrBasic,addrDetail,addrZipNum ) 
-  		values(#{userId},#{userPw},#{userName},#{userGender},#{userAge},#{userEmail1},#{userEmail2},#{addrBasic},#{addrDetail},#{addrZipNum})
+  		values(#{vo.userId},#{vo.userPw},#{vo.userName},#{vo.userGender},#{vo.userAge},#{vo.userEmail1},#{vo.userEmail2},#{vo.addrBasic},#{vo.addrDetail},#{vo.addrZipNum})
   	</insert>
   	<update id="uploadProfile">
   		update users set path=#{path}, fileRealName=#{fileRealName} where userId = #{userId}
@@ -22,28 +22,28 @@
   	</select>
 	
 	<insert id="genreList" >
-		insert into userGenre (ugno,ugId, genre) values(userGenre_seq.nextval,#{userId},#{genre})
+		insert into userGenre (ugno,ugId,genre) values(userGenre_seq.nextval,#{userId},#{genre})
 	</insert>
 	<insert id="actorList" >
-		insert into userActor (uano, uaId, actor) values(userActor_seq.nextval,#{userId},#{actor})
+		insert into userActor (uano, uaId, ano,uaAge,uaGender) values(userActor_seq.nextval,#{userId},#{aco},#{userAge},#{userGender})
 	</insert>
 	<insert id="directorList" >
-		insert into userDirector (udno, udId, director) values(userDirector_seq.nextval,#{userId},#{director})
+		insert into userDirector (udno, udId, dno,udAge,udGender) values(userDirector_seq.nextval,#{userId},#{dco},#{userAge},#{userGender})
 	</insert>
 	<select id="getActorInfo" resultMap="usersInfo">
-  		select userid,username,userGender,userAge,useremail1,useremail2,addrbasic,addrdetail,u.addrzipnum, a.uaid,a.uano,a.actor from users u left outer JOIN USERACTOR a on u.userId = a.uaid where userId = #{userId}
+  		select userId,userName,userGender,userAge,useremail1,useremail2,addrbasic,addrdetail,u.addrzipnum, a.uaid,a.uano,a.actor from users u left outer JOIN USERACTOR a on u.userId = a.uaid where userId = #{userId}
   	</select>
   	<select id="getGenreInfo" resultMap="usersInfo">
-  		select userid,username,userGender,userAge,useremail1,useremail2,addrbasic,addrdetail,u.addrzipnum, g.ugid,g.genre,g.ugno from users u left outer JOIN USERGENRE g on u.userId = g.ugid where userId = #{userId}
+  		select userId,userName,userGender,userAge,useremail1,useremail2,addrbasic,addrdetail,u.addrzipnum, g.ugid,g.genre,g.ugno from users u left outer JOIN USERGENRE g on u.userId = g.ugid where userId = #{userId}
   	</select>
   	<select id="getDirectorInfo" resultMap="usersInfo">
   		select userid,username,userGender,userAge,useremail1,useremail2,addrbasic,addrdetail,u.addrzipnum, d.udid,d.udno,d.director from users u left outer JOIN USERDIRECTOR d on u.userId = d.udid where userId = #{userId}
   	</select>
   	<select id="actorName" resultType="ActorVO">
-  		select * from actor where actorName like #{actorName} || '%'
+  		select * from actor where actorName like #{actorName} || '%' or factorName like #{actorName} || '%'
   	</select>
   	<select id="directorName" resultType="DirectorVO">
-  		select * from director where directorName like #{directorName} || '%'
+  		select * from director where DIRECTORNAME like '%'|| #{directorName} || '%' or FDIRECTORNAME like '%' || #{directorName} || '%'
   	</select>
   	
   	
@@ -67,25 +67,28 @@
   	<resultMap type="UserActorListVO" id="userActorList">
   		<result property="uano" column="UANO"/>
   		<result property="uaId" column="UAID"/>
-  		<result property="actor" column="ACTOR"/> 	
+  		<result property="ano" column="ANO"/>
+  		<result property="uaAge" column="UAAGE"/>
+  		<result property="uaGender" column="UAGENDER"/> 	
   	</resultMap>  
   	<resultMap type="UserGenreListVO" id="userGenreList">
   		<result property="ugno" column="UGNO"/>
   		<result property="ugId" column="UGID"/>
-  		<result property="gno" column="GNO"/>  		
+  		<result property="genre" column="GENRE"/>  		
   	</resultMap>  	
 	<resultMap type="UserDirectorListVO" id="userDirectorList">
   		<result property="udno" column="UDNO"/>
   		<result property="udid" column="UDID"/>
-  		<result property="director" column="DIRECTOR"/> 	
+  		<result property="dno" column="DNO"/>
+  		<result property="udAge" column="UDAGE"/>
+  		<result property="udGender" column="UDGENDER"/> 	
   	</resultMap> 
   	<resultMap type="ReviewBoardVO" id="userReviewList">
   		<result property="bno" column="BNO"/>
   		<result property="mno" column="MNO"/>
   		<result property="writer" column="WRITER"/>
   		<result property="movieTitle" column="MOVIETITLE"/>
-  		<result property="content" column="CONTENT"/>  		
-  		<result property="updateDate" column="UPDATEDATE"/>	
+  		<result property="content" column="CONTENT"/>  			
   	</resultMap> 
 	
 	<delete id="delUser">
@@ -106,7 +109,7 @@
 		addrBasic=#{addrBasic},addrDetail=#{addrDetail},addrZipNum=#{addrZipNum} where userId = #{userId}
 	</update>
 	
-	<select id="getReview">
+	<select id="getReview" resultMap="usersInfo">
 		select * from users u left outer join review r on u.userId = r.writer where r.writer = #{userId}
 	</select>
 	

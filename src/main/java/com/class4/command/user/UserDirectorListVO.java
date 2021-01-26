@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 public class UserDirectorListVO {
 
 	private String udid;
-	private String director;
+	private String dno;
 	private int udno;
+	private String udAge;
+	private String udGender;
 }

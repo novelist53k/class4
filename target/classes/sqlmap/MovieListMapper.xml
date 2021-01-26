@@ -28,10 +28,7 @@
 	
 	<select id="eMovieList" resultType="MovieListVO">
 		<![CDATA[  
-		select *
-		from(select rownum as rn,
-   				 c.*
-				from(select a.*,
+		select *from(select rownum as rn, c.* from(select a.*,
       				 b.subhead,
        				 b.content,
        				 b.poster,
@@ -93,12 +90,20 @@ select a.*,
 		SELECT dno FROM director
 	</select>
 	
-	<insert id="testActorInsert">
-		INSERT INTO actor(ano, actorName) VALUES(#{ano}, #{actorName})
+	<insert id="ActorInsert">
+		INSERT INTO actor(ano, actorName, fActorName) VALUES(#{ano}, #{actorName}, #{fActorName})
 	</insert>
 	
-	<insert id="testDirectorInsert">
-		INSERT INTO director(dno, directorName) VALUES(#{dno}, #{directorName})
+	<insert id="DirectorInsert">
+		INSERT INTO director(dno, directorName, fDirectorName) VALUES(#{dno}, #{directorName}, #{fDirectorName})
+	</insert>
+	
+	<select id = "getGenreList" resultType="String">
+		SELECT * FROM genre
+	</select>
+	
+	<insert id="GenreInsert">
+		INSERT INTO genre(genre) values(#{genre})
 	</insert>
 	
 	

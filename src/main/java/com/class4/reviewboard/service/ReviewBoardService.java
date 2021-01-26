@@ -13,6 +13,8 @@ public interface ReviewBoardService {
 	public ArrayList<ReviewBoardVO> getList(Criteria cri);
 	public int getTotal(Criteria cri);
 	public ReviewBoardVO getContent(int bno);
-	public int reviewModify(ReviewBoardVO vo);
+	public int modify(ReviewBoardVO vo);
+	public int delete(int bno);
+	public void regist(ReviewBoardVO vo);
 	
 }

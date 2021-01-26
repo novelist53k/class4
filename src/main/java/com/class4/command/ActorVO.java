@@ -9,7 +9,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ActorVO {
 	
-	private String aco;
+	private String ano;
 	private String actorName;
 	private String fActorName;
+	
+	
+	
+	
 }

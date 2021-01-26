@@ -12,4 +12,13 @@ public class MovieDirectorVO {
 	private int mdno;
 	private String mno;
 	private String dno;
+	
+	
+	public MovieDirectorVO(String mno, String dno) {
+		this.mno = mno;
+		this.dno = dno;
+	}
+	
+	
+	
 }

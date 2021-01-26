@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.class4.command.ReplyVO;
 import com.class4.command.ReviewBoardVO;
 import com.class4.common.util.Criteria;
 import com.class4.common.util.PageVO;
@@ -51,8 +50,13 @@ public class ReviewController {
 		return "review/reviewRegist";
 	}
 	
-	@RequestMapping("/reviewRegistForm")
-	public String reviewRegistForm() {
+	//글 등록
+	@RequestMapping(value = "/reviewRegistForm", method=RequestMethod.POST)
+	public String reviewRegistForm(ReviewBoardVO vo, RedirectAttributes RA) {
+		
+		reviewBoardService.regist(vo); 
+		RA.addFlashAttribute("msg", "리뷰 등록이 완료 되었습니다."); //화면 전달
+		
 		return "redirect:/review/reviewList";
 	}
 	
@@ -77,9 +81,10 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value = "/reviewModify", method = RequestMethod.POST)
-	public String reviewUpdate(ReviewBoardVO vo, RedirectAttributes RA) {
-		
-		int result = reviewBoardService.reviewModify(vo);
+	public String reviewModify(ReviewBoardVO vo, RedirectAttributes RA) {
+		System.out.println(vo);
+		int result = reviewBoardService.modify(vo);
+		System.out.println(result);
 		
 		if(result == 1) {
 			RA.addFlashAttribute("msg", "수정이 완료 되었습니다.");
@@ -90,6 +95,20 @@ public class ReviewController {
 		return "redirect:reviewList";
 	}
 	
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public String reviewDelete(@RequestParam("bno") int bno, RedirectAttributes RA) {
+		
+		int result = reviewBoardService.delete(bno);
+		System.out.println(result);
+		
+		if(result == 1) {
+			RA.addFlashAttribute("msg", "해당 리뷰 삭제 완료.");
+		}else {
+			RA.addFlashAttribute("msg", "삭제 실패.");
+		}
+		
+		return "redirect:reviewList";
+	}
 	
 	
 	

@@ -11,6 +11,7 @@ import java.util.LinkedHashMap;
 
 import org.junit.Test;
 
+import com.class4.command.DirectorVO;
 import com.class4.command.MovieInfoVO;
 import com.class4.command.mapping.MovieGenreVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -90,35 +91,15 @@ public class test {
 			
 			// 
 			
-			
+			/*
 			for(int i = 0; i < movieCdList.size(); ++i) {
 				// 영화 코드를 이용하여 영화 정보 불러오기
 				String strMovieInfo = service.getMovieInfo(true, movieCdList.get(i));
 				HashMap<String, Object> movieInfoHashMap = mapper.readValue(strMovieInfo, HashMap.class);
 				LinkedHashMap<String, Object> movieInfoResult = (LinkedHashMap<String, Object>) movieInfoHashMap.get("movieInfoResult");
 				LinkedHashMap<String, Object> movieInfo = (LinkedHashMap<String, Object>) movieInfoResult.get("movieInfo");
-				//System.out.println(movieInfo);
-				
-				// api 정보로 MovieInfoVO 객체 생성
-				MovieInfoVO movie = new MovieInfoVO();
-				String mno = movieInfo.get("movieCd").toString();
-				movie.setMovieCd(mno);
-				movie.setTitle(movieInfo.get("movieNm").toString());
-				movie.setFtitle(movieInfo.get("movieNmEn").toString());
-				
-				ArrayList<Object> audits = (ArrayList<Object>) movieInfo.get("audits");
-				if(audits.size() == 0) {
-					movie.setGrade("등급 없음");
-				}
-				else {
-					LinkedHashMap<String, Object> grade = (LinkedHashMap<String, Object>) audits.get(0);
-					movie.setGrade(grade.get("watchGradeNm").toString());
-				}
-				
-				String strDate = movieInfo.get("openDt").toString();
-				String strDateFormat = strDate.substring(6) + "/" + strDate.substring(4,6) + "/" + strDate.substring(0, 4);
-				//System.out.println(strDateFormat);
-				
+				System.out.println(movieInfo);
+
 				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 			    Date date = dateFormat.parse(strDateFormat);
 			    Timestamp openDt = new Timestamp(date.getTime());
@@ -142,14 +123,61 @@ public class test {
 			    	MovieGenreVO mgVO = new MovieGenreVO(1, movieCdList.get(i), genreList.get(j));
 			    	// MovieGenre 테이블에서 mno와 genre가 동시에 같지 않다면 추가
 			    }
+*/
+				
+//				System.out.println("감독 이름:"+directorVO.getDirectorName());
+//				System.out.println("감독 영어이름:"+directorVO.getFDirectorName());
+//				// api 정보로 MovieInfoVO 객체 생성
+//				MovieInfoVO movie = new MovieInfoVO();
+//				String mno = movieInfo.get("movieCd").toString();
+//				movie.setMovieCd(mno);
+//				movie.setTitle(movieInfo.get("movieNm").toString());
+//				movie.setFtitle(movieInfo.get("movieNmEn").toString());
+//				
+//				ArrayList<Object> audits = (ArrayList<Object>) movieInfo.get("audits");
+//				if(audits.size() == 0) {
+//					movie.setGrade("등급 없음");
+//				}
+//				else {
+//					LinkedHashMap<String, Object> grade = (LinkedHashMap<String, Object>) audits.get(0);
+//					movie.setGrade(grade.get("watchGradeNm").toString());
+//				}
+//				
+//				String strDate = movieInfo.get("openDt").toString();
+//				String strDateFormat = strDate.substring(6) + "/" + strDate.substring(4,6) + "/" + strDate.substring(0, 4);
+//				//System.out.println(strDateFormat);
+//				
+//				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+//			    Date date = dateFormat.parse(strDateFormat);
+//			    Timestamp openDt = new Timestamp(date.getTime());
+//			    movie.setOpenDt(openDt);
+//			    
+//			    
+//			    // 영화의 장르명 추출
+//			    ArrayList<Object> genres = (ArrayList<Object>) movieInfo.get("genres");
+//			    ArrayList<String> genreList = new ArrayList<String>();
+//			    for(int j = 0; j < genres.size(); ++j) {
+//			    	LinkedHashMap<String, Object> genreMap = (LinkedHashMap<String, Object>) genres.get(j);
+//			    	genreList.add(genreMap.get("genreNm").toString());
+//			    }
+//			    
+//			    // Genre 테이블에 없는 장르면 추가 있으면 아래로
+//			    
+//			    
+//			    
+//			    for(int j = 0; j < genreList.size(); ++j) {
+//			    	MovieGenreVO mgVO = new MovieGenreVO(1, movieCdList.get(i), genreList.get(j));
+//			    	// MovieGenre 테이블에서 mno와 genre가 동시에 같지 않다면 추가
+//			    	
+//			    }
+//			    
+
 			    
 			    
 			    
 			    
 			    
-			    
-			}
-			
+	
 			
 			
 			

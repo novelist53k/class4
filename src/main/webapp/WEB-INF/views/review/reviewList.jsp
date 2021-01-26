@@ -341,6 +341,7 @@ section {
             
             window.onload = function() {
    			 if(history.state === '' ) return;
+   			 console.log(history.state);
    			 
    			 var msg = "${msg}"; //컨트롤러에서 넘어온 메시지
    			 if(msg !== '') {

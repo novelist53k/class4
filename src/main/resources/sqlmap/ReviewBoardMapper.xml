@@ -39,9 +39,10 @@
 	</select> 
 	
 	
-	<update id="reviewModify">
+	<update id="modify">
 		update review
-		set content = #{content}
+		set content = #{content},
+			updatedate = sysdate
 		where bno = #{bno}
 	
 	</update>
@@ -49,6 +50,11 @@
 	<delete id="delete">
 		delete from review where bno = #{bno}
 	</delete>
+	
+	<insert id="regist">
+		insert into review (writer, movietitle, content)
+		values(#{writer}, #{movieTitle}, #{content})
+	</insert>
 	
   
 </mapper>

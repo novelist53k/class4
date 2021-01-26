@@ -56,15 +56,15 @@ public class UserController {
 		UserVO vo =(UserVO)session.getAttribute("login");
 		String userId = vo.getUserId();
 		
-		//1:N°ü°è ¸ÊÇÎÀ¸·Î °á°ú¸¦ Ã³¸®
+		//1:Nï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
 		UserVO userActorInfo = userService.getActorInfo(userId);
 		UserVO userGenreInfo = userService.getGenreInfo(userId);
 		UserVO userDirectorInfo = userService.getDirectorInfo(userId);
+		List<ReviewBoardVO> usereview = userService.getReview(userId);
 		
 		model.addAttribute("userActorInfo",userActorInfo);
 		model.addAttribute("userGenreInfo",userGenreInfo);
 		model.addAttribute("userDirectorInfo",userDirectorInfo);
-		UserVO usereview = userService.getReview(userId);
 		model.addAttribute("userReview",usereview);
 		
 		return "user/mypage";
@@ -96,23 +96,48 @@ public class UserController {
 		
 	}
 	@RequestMapping(value="JoinReq", method=RequestMethod.POST)	
-	public String Join(UserVO vo) {
-		int result1 = 0;
-		for (int i = 0; i < vo.getGenreLike().length; i++) {			
-			vo.setGenre(vo.getGenreLike()[i]);
-			result1 = userService.genreList(vo);
+	public String Join(UserVO vo , DirectorVO dvo, ActorVO avo) {
+		
+		vo.setUserAge(vo.getUserYear()+vo.getUserMonth()+vo.getUserDay());
+		System.out.println(vo.getGenrelist());
+		System.out.println(vo.getActor());
+		System.out.println(vo.toString());
+		if(vo.getGenrelist() !=null) {
+			for (int i = 0; i < vo.getGenrelist().length; i++) {			
+				vo.setGenre(vo.getGenrelist()[i]);
+				userService.genreList(vo);
 			
+			}
 		}
-		System.out.println(result1);
+		
+		if(vo.getLikeActor() != null) {
 		for (int i = 0; i < vo.getLikeActor().length; i++) {
-			vo.setActor(vo.getLikeActor()[i]);
-			userService.actorList(vo);
-		}
-		for (int i = 0; i < vo.getLikeDirector().length; i++) {
-			vo.setDirector(vo.getLikeDirector()[i]);
-			userService.directorList(vo);
-		}
+			String actorName = vo.getLikeActor()[i].substring(0,vo.getLikeActor()[i].indexOf("."));
+			String factorName = vo.getLikeActor()[i].substring(vo.getLikeActor()[i].indexOf(".")+1,vo.getLikeActor()[i].lastIndexOf("."));
+			String aco = vo.getLikeActor()[i].substring(vo.getLikeActor()[i].lastIndexOf(".")+1);
+			System.out.println(factorName);
+			System.out.println(aco);
+			vo.setActor(actorName);
+			avo.setActorName(actorName);
+			avo.setFActorName(factorName);
+			avo.setAno(aco);
 			
+			userService.actorList(vo, avo);
+		
+		}}
+		
+		if(vo.getLikeDirector()!=null) {
+		for (int i = 0; i < vo.getLikeDirector().length; i++) {
+			String directorName = vo.getLikeDirector()[i].substring(0,vo.getLikeDirector()[i].indexOf("."));
+			String fdirectorName = vo.getLikeDirector()[i].substring(vo.getLikeDirector()[i].indexOf(".")+1,vo.getLikeActor()[i].lastIndexOf("."));
+			String dco = vo.getLikeActor()[i].substring(vo.getLikeDirector()[i].lastIndexOf(".")+1);
+			vo.setDirector(directorName);
+			dvo.setDno(dco);
+			dvo.setDirectorName(directorName);
+			dvo.setFDirectorName(fdirectorName);
+			userService.directorList(vo, dvo);
+			}
+		}
 		int result = userService.JoinReq(vo);
 		if(result ==1) {
 			
@@ -131,12 +156,12 @@ public class UserController {
 		
 		
 		try {
-			UserVO userVO = (UserVO)session.getAttribute("userVO");
+			UserVO userVO = (UserVO)session.getAttribute("login");
 			
-			//Æú´õ¸í
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			String fileLoca = userVO.getUserId();
 			
-			//ÀúÀåÇÒ Æú´õ
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			String path = "D:\\course\\workspace\\class4\\src\\main\\webapp\\resources\\img\\profile\\"+fileLoca;
 			String sqlPath = "\\movie\\resources\\img\\profile\\"+fileLoca;
 			File folder = new File(path);
@@ -151,7 +176,7 @@ public class UserController {
 			
 			System.out.println(fileRealName);
 			
-			//¾÷·Îµå
+			//ï¿½ï¿½ï¿½Îµï¿½
 			File saveFile = new File(path + "\\" + fileRealName);
 			file.transferTo(saveFile);
 			userVO.setPath(sqlPath);
@@ -184,12 +209,10 @@ public class UserController {
 	@RequestMapping(value="delUser", method=RequestMethod.POST)
 	public String delUser(@RequestParam( value ="checkPw") String checkPw, HttpSession session) {
 		UserVO vo = (UserVO)session.getAttribute("login");
-		System.out.println(vo.getUserId());
-		System.out.println(checkPw+"ÀÔ·ÂÇÑ ºñ¹ø");
-		System.out.println(vo.getUserPw()+"ÇöÀç ·Î±×ÀÎÇÑ ºñ¹ø");
+		
 		String userId = vo.getUserId();
 		
-		System.out.println(vo.getUserPw()+"ÄÁÆ®·Ñ·¯ : À¯Àúºñ¹ø ºñ¹ø È®ÀÎ");
+		
 		
 		if(vo.getUserPw().equals(checkPw)) {
 			userService.delUser(userId);
@@ -236,13 +259,18 @@ public class UserController {
 		
 		 List<ActorVO> list = userService.actorList(actorvo);
 		 JSONArray array = new JSONArray();
+		 
 		 for(int i= 0; i<list.size(); i++) {
-			 array.add(list.get(i).getActorName());
+			 array.add(list.get(i).getActorName()+"."+list.get(i).getFActorName() +"."+list.get(i).getAno());
+			 
+			 
+			 
 		}
 		 System.out.println(array.toString());
 		 PrintWriter out = response.getWriter();
 		 out.print(array.toString());
-		
+		 
+		  
 		 
 		 
 		 
@@ -250,14 +278,16 @@ public class UserController {
 	}
 	@RequestMapping(value = "/autocomplete1", method = RequestMethod.POST)
 	public void autoSearch1(ModelMap model, HttpServletRequest request,			
-			 HttpServletResponse response, UserVO vo,DirectorVO director) throws IOException {
+			 HttpServletResponse response, UserVO vo, DirectorVO director) throws IOException {
 		
 		 request.setCharacterEncoding("UTF-8");
 		
 		 List<DirectorVO> list = userService.directorList(director);
 		 JSONArray array = new JSONArray();
+		 
 		 for(int i= 0; i<list.size(); i++) {
-			 array.add(list.get(i).getDirectorName());
+			 array.add(list.get(i).getDirectorName()+" / "+list.get(i).getFDirectorName()+" / "+list.get(i).getDno());
+			 
 		}
 		 System.out.println(array.toString());
 		 PrintWriter out = response.getWriter();

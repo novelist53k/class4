@@ -38,9 +38,23 @@ public class ReviewBoardServiceImpl implements ReviewBoardService{
 
 
 	@Override
-	public int reviewModify(ReviewBoardVO vo) {
+	public int modify(ReviewBoardVO vo) {
 		
-		return reviewBoardMapper.reviewModify(vo);
+		return reviewBoardMapper.modify(vo);
+	}
+
+
+	@Override
+	public int delete(int bno) {
+		
+		return reviewBoardMapper.delete(bno);
+	}
+
+
+	@Override
+	public void regist(ReviewBoardVO vo) {
+		
+		reviewBoardMapper.regist(vo);		
 	}
 
 

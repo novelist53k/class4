@@ -23,6 +23,7 @@ section {
     padding: 20px 60px;
     width: 996px;
     height: 1150px;
+    margin: 0 auto;
 
     
 }
@@ -66,6 +67,13 @@ section {
 
 }
 
+.review_bno{
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: whitesmoke;
+}
+
 
 
 /* 리뷰 내용 작성 */
@@ -74,62 +82,58 @@ section {
     margin: 5px auto;
 }
 
-/* 댓글 프로필 이미지 */
-
-.profile-img img{
-    width: 55px;
-    margin-right: 5px;
-    float: left;
+.btns{
+	width: 84%;
 }
 
-/* 댓글 */
-.form-control {
-    margin-top: 0;
-}
-
-
-.reply-content textarea{
-    width: 90%;
-}
-
-.reply-wrap{
-    position: relative;
-    margin-top: 20px;
-}
-
-.reply-btn{
-    position: absolute;
-    right: 10px;
-    top : 10px;
-}
 </style>  	
 	
 <section>
     <lable style="font-size: 40px; font-weight: bold;">영화 리뷰 작성 페이지</lable>
     <hr style="border-bottom: 3px solid black; margin: 10px 0;">
-    <div class = wrap>
-        <div class = "movie-img">
-            <img src="${pageContext.request.contextPath }/resources/img/movie_image.jpg" alt="영화포스터">
-            
-        </div>    
-        <div class = "review-content">
-          <p>트라이얼 오브 더 시카코 7</p>
-          <p>2020.10.09 (금) 16:45 ~ 18:38</p>
-        </div>
-    </div>
     
-    <div class="content form-group">
-        <label>제목</label>
-        <textarea class="content form-control" rows = "1" name="title" placeholder="제목을 입력해주세요"></textarea>
-
-
-        <label>내용</label>
-        <textarea class="content form-control" rows="10" name='content' placeholder="영화를 어떻게 보셨나요?"></textarea>
-    </div>
-    <div class="btns" style="text-align: right;">
-            <button type = "submit" class = "list-modify">작성</button>
-            <button class = "list-delete">취소</button>
-    </div>    
+    <form action="reviewRegistForm" method="post" name="reviewRegistForm">
+	    <div class = wrap>
+	    <span class="review_bno">${vo.bno }</span>
+	        <div class = "movie-img">
+	            <img src="${pageContext.request.contextPath }/resources/img/movie_image.jpg" alt="영화포스터">
+	            
+	        </div>    
+	        <div class = "review-content">
+	          <label><input type="text" name="movieTitle" value="${vo.movieTitle }" readonly="readonly"></label>
+	          <input type="text" class = "writer" name ="writer" value ="${login.userId}">
+	        </div>
+	    </div>
+	    
+	    <div class="content form-group">
+	        <label>내용</label>
+	        <textarea class="content form-control" rows="10" name='content' id='msgContent' placeholder="영화를 어떻게 보셨나요?"></textarea>
+	    </div>
+	    <div class="btns" style="text-align: right;">
+            <button type = "button" class = "list-modify" onclick="regist()">작성</button>
+            <button type = "button" class = "list-delete" onclick="location.href= '../movie/movieContent'">취소</button>
+	    </div>
+    </form>    
 </section>
 
-<footer>
+<script>
+	//글 등록
+	function regist() {
+		
+		if(document.reviewRegistForm.content.value === ''){
+			document.getElementById("msgContent").innerHTML = "내용을 입력해주세요!!";
+			document.reviewRegistForm.content.focus();
+			return;
+		}else{
+			document.reviewRegistForm.submit();
+		}
+		
+	}
+
+
+</script>
+
+
+
+
+

@@ -11,4 +11,5 @@ public class ActorVO {
 	
 	private String aco;
 	private String actorName;
+	private String fActorName;
 }

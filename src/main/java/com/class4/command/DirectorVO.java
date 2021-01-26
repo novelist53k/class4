@@ -11,5 +11,6 @@ public class DirectorVO {
 	
 	private String dco;
 	private String directorName;
+	private String fDirectorName;
 	
 }

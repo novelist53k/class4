@@ -28,10 +28,7 @@
 	
 	<select id="eMovieList" resultType="MovieListVO">
 		<![CDATA[  
-		select *
-		from(select rownum as rn,
-   				 c.*
-				from(select a.*,
+		select *from(select rownum as rn, c.* from(select a.*,
       				 b.subhead,
        				 b.content,
        				 b.poster,

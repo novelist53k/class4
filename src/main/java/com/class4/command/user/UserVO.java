@@ -16,29 +16,34 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserVO {
+	
 	private String userId;
 	private String userPw;
 	private String userName;
 	private String userEmail1;
 	private String userEmail2;
 	private String userGender;
+	private String userYear;
+	private String userDay;
+	private String userMonth;
 	private String userAge;
 	private String addrBasic;
 	private String addrDetail;
 	private String addrZipNum;
 	private Timestamp regdate;
-	private int genre;
+	private String genre;
 	private String actor;
 	private String director;
-	private int[] genreLike;
+	private String[] genrelist;
 	private String[] likeActor;
 	private String[] likeDirector;
 	private String path;
 	private String fileRealName;
 	
+	
 	private String checkPw;
 	
-	//마이페이지 1:N맵핑
+	//
 		private ArrayList<UserActorListVO> actorlist;
 		private ArrayList<UserDirectorListVO> directorlist;
 		private ArrayList<UserGenreListVO> usergenrelist;

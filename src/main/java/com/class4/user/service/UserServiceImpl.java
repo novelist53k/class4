@@ -44,15 +44,15 @@ public class UserServiceImpl implements UserService{
 		
 	}
 	@Override
-	public int actorList(UserVO vo) {
-		return userMapper.actorList(vo);
+	public int actorList(UserVO vo,ActorVO avo) {
+		return userMapper.actorList(vo, avo);
 		
 	}
 
 	@Override
-	public int directorList(UserVO vo) {
+	public int directorList(UserVO vo, DirectorVO dvo) {
 		
-		return userMapper.directorList(vo);
+		return userMapper.directorList(vo,dvo);
 	}
 
 	@Override
@@ -109,12 +109,7 @@ public class UserServiceImpl implements UserService{
 		return userMapper.actorName(actorvo);
 	}
 
-	@Override
-	public ArrayList<String> listAll2(String result) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	@Override
 	public List<DirectorVO> directorList(DirectorVO director) {
 		// TODO Auto-generated method stub
@@ -123,7 +118,7 @@ public class UserServiceImpl implements UserService{
 
 	
 	@Override
-	public UserVO getReview(String user) {
+	public List<ReviewBoardVO> getReview(String user) {
 		// TODO Auto-generated method stub
 		return userMapper.getReview(user);
 	}

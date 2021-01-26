@@ -17,8 +17,8 @@ public interface UserMapper {
 	public UserVO Login(UserVO vo);
 	public int idCheck(String userId);
 	public int genreList(UserVO vo);
-	public int actorList(UserVO vo);
-	public int directorList(UserVO vo);
+	public int actorList(UserVO vo, ActorVO avo);
+	public int directorList(UserVO vo, DirectorVO dvo);
 	public boolean uploadProfile(UserVO userVO);
 	public void delUser(String userId);
 	public int checkPw(String vo, UserVO checkPw);
@@ -31,9 +31,8 @@ public interface UserMapper {
 	public UserVO getDirectorInfo(String userId);
 	public ArrayList<String> listAll2(String result);
 	public List<ActorVO> actorName(ActorVO actorvo);
-	public List<DirectorVO> directorName(DirectorVO director);
-	
-	public UserVO getReview(String user);
+	public List<DirectorVO> directorName(DirectorVO director);	
+	public List<ReviewBoardVO> getReview(String user);
 	
 	
 }

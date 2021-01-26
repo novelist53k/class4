@@ -10,5 +10,7 @@ import lombok.NoArgsConstructor;
 public class UserActorListVO {
 	private int uano;
 	private String uaId;
-	private String actor;
+	private String ano;
+	private String uaAge;
+	private String uaGender;
 }

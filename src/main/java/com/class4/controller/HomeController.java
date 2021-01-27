@@ -59,10 +59,6 @@ public class HomeController {
 		model.addAttribute("wTRDirector", wTRDirector);
 		model.addAttribute("wTRGenre", wTRGenre);
 		
-		System.out.println("선호 배우 등록 여부 : " + wTRActor);
-		System.out.println("선호 감독 등록 여부 : " + wTRDirector);
-		System.out.println("선호 장르 등록 여부 : " + wTRGenre);
-		
 		return "main";
 	}
 	
@@ -72,20 +68,13 @@ public class HomeController {
 	@ResponseBody
 	public ArrayList<MovieInfoVO> userLikeActor(HttpSession session) {
 		UserVO vo = (UserVO)session.getAttribute("login");
-		
-		/*
+
 		if(vo == null) {
 			return new ArrayList<MovieInfoVO>();
 		}
-		*/
-		
-		// 테스트용 임시 변수
-		vo = new UserVO();
-		vo.setUserId("qwer");
-		
+
 		ArrayList<MovieInfoVO> userLikeActorList = homeService.getUserActorML(vo.getUserId());
-		System.out.println(userLikeActorList);
-		System.out.println(userLikeActorList.size());
+		
 		return userLikeActorList;
 	}
 	
@@ -94,16 +83,10 @@ public class HomeController {
 	@ResponseBody
 	public ArrayList<MovieInfoVO> userLikeDirector(HttpSession session) {
 		UserVO vo = (UserVO)session.getAttribute("login");
-		
-		/*
+
 		if(vo == null) {
 			return new ArrayList<MovieInfoVO>();
 		}
-		*/
-		
-		// 테스트용 임시 변수
-		vo = new UserVO();
-		vo.setUserId("qwer");
 		
 		ArrayList<MovieInfoVO> userLikeDirectorList = homeService.getUserDirectorML(vo.getUserId());
 		System.out.println(userLikeDirectorList);
@@ -116,16 +99,10 @@ public class HomeController {
 	@ResponseBody
 	public ArrayList<MovieInfoVO> userLikeGenre(HttpSession session) {
 		UserVO vo = (UserVO)session.getAttribute("login");
-		
-		/*
+
 		if(vo == null) {
 			return new ArrayList<MovieInfoVO>();
 		}
-		*/
-		
-		// 테스트용 임시 변수
-		vo = new UserVO();
-		vo.setUserId("qwer");
 		
 		ArrayList<MovieInfoVO> userLikeGenreList = homeService.getUserGenreML(vo.getUserId());
 		System.out.println(userLikeGenreList);
@@ -159,10 +136,14 @@ public class HomeController {
 	
 	// 검색
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
-	public String search(String keyword, Model model) {
+	public String search(String keyword, Model model, HttpSession session) {
+		UserVO vo = (UserVO)session.getAttribute("login");
+		if(vo != null) {
+			homeService.addSearchHistory(vo.getUserId(), keyword);
+		}
+		System.out.println(1);
 		
 		ArrayList<MovieInfoVO> result = homeService.searchMovie(keyword);
-		// homeService.addSearchHistory(id, keyword);
 		
 		model.addAttribute("list", result);
 		
@@ -173,18 +154,30 @@ public class HomeController {
 	
 	// 이런 영화는 어떠세요 버튼 누를 시 작동
 	// 검색 기록에서 많이 사용된 단어로 영화 검색
-	@RequestMapping(value = "/searchHistory", method = RequestMethod.GET)
-	public String searchHistory(String id, Model model) {
+	@GetMapping("/searchHistory")
+	@ResponseBody
+	public ArrayList<MovieInfoVO> searchHistory(HttpSession session) {
+		UserVO vo = (UserVO)session.getAttribute("login");
+		
+		if(vo == null) {
+			return new ArrayList<MovieInfoVO>();
+		}
+		
 		
 		// 검색기록 쿠키에 따른 텍스트마이닝
-		ArrayList<MovieInfoVO> searchHistoryList = homeService.getSearchHistoryMovieList(id);
-		model.addAttribute("searchHistoryList", searchHistoryList);
+		ArrayList<MovieInfoVO> searchHistoryList = homeService.getSearchHistoryMovieList(vo.getUserId());
+
 		
-		return "movieSearch";
+		return searchHistoryList;
 	}
 	
 	
-	
+	public String test() {
+		homeService.test();
+		
+		
+		return "";
+	}
 	
 	
 	

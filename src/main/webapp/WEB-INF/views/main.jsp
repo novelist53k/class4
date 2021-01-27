@@ -17,10 +17,10 @@
             <h3 class="sliderTitle"><a href="movie/movieCurrent">최신영화</a></h3>
             <div class="swiper-container">
                 <div class="swiper-wrapper">
-                	<c:forEach var="RecentVO" items="${mainRecentlyMovie}">
+                	<c:forEach var="RecentVO" items="${mainRecentlyList}">
                     	<div class="swiper-slide">
                     		<a href="movie/movieContent?movieCd=${RecentVO.movieCd}" title="${RecentVO.title }">
-                    			<img src="${pageContext.request.contextPath }/resources/img/current/${RecentVO.poster}" class = "img_g">
+                    			<img src="${pageContext.request.contextPath }/resources/img/poster/${RecentVO.poster == null ? 'b' : RecentVO.poster}" class = "img_g">
                     		</a>
                     	</div>
                 	</c:forEach>
@@ -61,27 +61,21 @@
         <!-- 로그인 시만 보이되 테스트시에는 조건 적용 X-->
         
         <!-- 선호하는 배우가 출연한 영화, 선호하는 배우 미선택시 안 보이게 -->
-	    <div id="actorSlider" class="slider_area_login">
-	    	<c:if test="${wTRActor == 0 }">
-		    	<h3 id="userLikeActor" class="sliderTitle">""님이 선호하는 배우가 출연한 영화 ▼</h3>
-		    	<hr>
-	    	</c:if>
+	    <div id="actorSlider" class="slider_area_login" style='${wTRActor != 0 ? "" : "visibility:hidden"}'>
+		    <h3 id="userLikeActor" class="sliderTitle">""님이 선호하는 배우가 출연한 영화 ▼</h3>
+		    <hr>
 	    </div>
         
         <!-- 선호하는 감독의 영화, 선호하는 감독 미선택시 안 보이게 -->
-	    <div id="directorSlider" class="slider_area_login">
-	    	<c:if test="${wTRDirector == 0 }">
-		    	<h3 id="userLikeDirector" class="sliderTitle">""님이 선호하는 감독의 영화 ▼</h3>
-		    	<hr>
-		    </c:if>
+	    <div id="directorSlider" class="slider_area_login" style='${wTRDirector != 0 ? "" : "visibility:hidden"}'>
+		    <h3 id="userLikeDirector" class="sliderTitle">""님이 선호하는 감독의 영화 ▼</h3>
+		    <hr>
 	    </div>
         
         <!-- 선호하는 장르의 영화, 선호하는 장르 미선택시 안 보이게 -->
-	    <div id="genreSlider" class="slider_area_login">
-	    	<c:if test="${wTRGenre == 0 }">
-		        <h3 id="userLikeGenre" class="sliderTitle">""님이 선호하는 장르별 영화 ▼</h3>
-		        <hr>
-	        </c:if>
+	    <div id="genreSlider" class="slider_area_login" style='${wTRGenre != 0 ? "" : "visibility:hidden"}'>
+		    <h3 id="userLikeGenre" class="sliderTitle">""님이 선호하는 장르별 영화 ▼</h3>
+		    <hr>
         </div>
         
         <!-- 연령별 선호 영화 -->
@@ -98,8 +92,8 @@
         <!-- 성별별 선호 영화 -->
         <div id="genderSlider">
         	<h3 id="genderGroupLike" class="sliderTitle">
-        		<span id="male">남성들이 선호하는 영화 ▼</span> / 
-        		<span id="female">여성들이 선호하는 영화 ▼</span>
+        		<span id="man">남성들이 선호하는 영화 ▼</span> / 
+        		<span id="women">여성들이 선호하는 영화 ▼</span>
         	</h3>
         </div>
         
@@ -109,7 +103,7 @@
     <script>
 	    document.getElementById("userLikeActor").onclick = function() {
 	    	getUserActorML();
-	    }
+	    };
 	
 		// 유저가 선호하는 배우가 출연한 영화를 가져오는 함수
 		function getUserActorML() {
@@ -124,11 +118,19 @@
 					str += '<h3 id="userLikeActor" style="text-align:center; margin-top:10px; color:white;">""님이 선호하는 배우가 출연한 영화</h3>';
 					str += '<div class="swiper-container">';
 	                str += '<div class="swiper-wrapper">';
-	             	// for(var i = 0; i < dataList.length; ++i) {
-		            for(var i = 0; i < 16; ++i) {
+	             	for(var i = 0; i < dataList.length; ++i) {
+
 			            str += '<div class="swiper-slide">';
-			            str += '<a href="movie/movieContent?movieCd=${userLikeActorList.movieCd}"';
-			            str += '<img src="${pageContext.request.contextPath}/resources/img/current/${userLikeActorList.poster}" class = "img_g">';
+			            str += '<a href="movie/movieContent?movieCd=' + dataList[i].movieCd + '>"';
+			            if(dataList[i].grade == '청소년 관람불가' && dataList[i].poster == null) {
+			            	str += '<img src="${pageContext.request.contextPath}/resources/img/poster/' + 'a.jpg' + '" class = "img_g">';
+			            }
+			            else if(dataList[i].grade != '청소년 관람불가' && dataList[i].poster == null) {
+			            	str += '<img src="${pageContext.request.contextPath}/resources/img/poster/' + 'b.png' + '" class = "img_g">';
+			            }
+			            else {
+			            	str += '<img src="${pageContext.request.contextPath}/resources/img/poster/' + dataList[i].poster + '" class = "img_g">';    	
+			            }
 			            str += '</a>';
 			            str += '</div>';    	
 		            }
@@ -144,6 +146,7 @@
 				}
 			);
 			
+			slide();
 			
 		}
     
@@ -159,20 +162,27 @@
 			$.getJSON(
 				"userLikeDirector/",
 				function(dataList) {
-					console.log(dataList);
 					
 					var str = "";
 					
 					str += '<h3 id="userLikeDirector" style="text-align:center; margin-top:10px; color:white;">""님이 선호하는 감독의 영화</h3>';
 					str += '<div class="swiper-container">';
 	                str += '<div class="swiper-wrapper">';
-	             	// for(var i = 0; i < dataList.length; ++i) {
-		            for(var i = 0; i < 16; ++i) {
+	             	for(var i = 0; i < dataList.length; ++i) {
+	             		console.log(dataList[i] != null ? dataList[i].movieCd : '1');
 			            str += '<div class="swiper-slide">';
-			            str += '<a href="movie/movieContent?movieCd=${userLikeDirectorList.movieCd}"';
-			            str += '<img src="${pageContext.request.contextPath}/resources/img/current/${userLikeDirectorList.poster}" class = "img_g">';
+			            str += '<a href="movie/movieContent?movieCd=' + dataList[i].movieCd + '>"';
+			            if(dataList[i].grade == '청소년 관람불가' && dataList[i].poster == null) {
+			            	str += '<img src="${pageContext.request.contextPath}/resources/img/poster/' + 'a.jpg' + '" class = "img_g">';
+			            }
+			            else if(dataList[i].grade != '청소년 관람불가' && dataList[i].poster == null) {
+			            	str += '<img src="${pageContext.request.contextPath}/resources/img/poster/' + 'b.png' + '" class = "img_g">';
+			            }
+			            else {
+			            	str += '<img src="${pageContext.request.contextPath}/resources/img/poster/' + dataList[i].poster + '" class = "img_g">';    	
+			            }
 			            str += '</a>';
-			            str += '</div>';  	
+			            str += '</div>';    	
 		            }
 	                str += '</div>';
 	                str += '<div class="swiper-button-next"></div>';
@@ -186,7 +196,7 @@
 				}
 			);
 			
-			
+			slide();
 		}
 
     
@@ -209,13 +219,21 @@
 		            str += '<div class="swiper-container">';
 		            str += '<div class="swiper-wrapper">';
 		            
-		            // for(var i = 0; i < dataList.length; ++i) {
-		            for(var i = 0; i < 16; ++i) {
+	             	for(var i = 0; i < dataList.length; ++i) {
+
 			            str += '<div class="swiper-slide">';
-			            str += '<a href="movie/movieContent?movieCd=${userLikeGenreList.movieCd}"';
-			            str += '<img src="${pageContext.request.contextPath}/resources/img/current/${userLikeGenreList.poster}" class = "img_g">';
+			            str += '<a href="movie/movieContent?movieCd=' + dataList[i].movieCd + '>"';
+			            if(dataList[i].grade == '청소년 관람불가' && dataList[i].poster == null) {
+			            	str += '<img src="${pageContext.request.contextPath}/resources/img/poster/' + 'a.jpg' + '" class = "img_g">';
+			            }
+			            else if(dataList[i].grade != '청소년 관람불가' && dataList[i].poster == null) {
+			            	str += '<img src="${pageContext.request.contextPath}/resources/img/poster/' + 'b.png' + '" class = "img_g">';
+			            }
+			            else {
+			            	str += '<img src="${pageContext.request.contextPath}/resources/img/poster/' + dataList[i].poster + '" class = "img_g">';    	
+			            }
 			            str += '</a>';
-			            str += '</div>';   	
+			            str += '</div>';    	
 		            }
 		            str += '</div>';		            
 		            str += '<div class="swiper-button-next"></div>';
@@ -228,7 +246,7 @@
 				}
 			);
 			
-			
+			slide();
 		}
 
 				
@@ -258,13 +276,20 @@
 			            str += '<div class="swiper-container">';
 			            str += '<div class="swiper-wrapper">';
 			            
-			            // for(var i = 0; i < dataList.length; ++i) {
-			            for(var i = 0; i < 16; ++i) {
+		             	for(var i = 0; i < dataList.length; ++i) {
 				            str += '<div class="swiper-slide">';
-				            str += '<a href="movie/movieContent?movieCd=${userLikeByAgeList.movieCd}"';
-				            str += '<img src="${pageContext.request.contextPath}/resources/img/current/${userLikeByAgeList.poster}" class = "img_g">';
+				            str += '<a href="movie/movieContent?movieCd=' + dataList[i].movieCd + '>"';
+				            if(dataList[i].grade == '청소년 관람불가' && dataList[i].poster == null) {
+				            	str += '<img src="${pageContext.request.contextPath}/resources/img/poster/' + 'a.jpg' + '" class = "img_g">';
+				            }
+				            else if(dataList[i].grade != '청소년 관람불가' && dataList[i].poster == null) {
+				            	str += '<img src="${pageContext.request.contextPath}/resources/img/poster/' + 'b.png' + '" class = "img_g">';
+				            }
+				            else {
+				            	str += '<img src="${pageContext.request.contextPath}/resources/img/poster/' + dataList[i].poster + '" class = "img_g">';    	
+				            }
 				            str += '</a>';
-				            str += '</div>';  
+				            str += '</div>';    	
 			            }
 			            str += '</div>';		            
 			            str += '<div class="swiper-button-next"></div>';
@@ -308,12 +333,20 @@
 			            str += '<div class="swiper-container">';
 			            str += '<div class="swiper-wrapper">';
 			            
-			            // for(var i = 0; i < dataList.length; ++i) {
-			            for(var i = 0; i < 16; ++i) {
+		             	for(var i = 0; i < dataList.length; ++i) {
 				            str += '<div class="swiper-slide">';
-				            str += '<a href="movie/movieContent?movieCd=${userLikeByGenderList.movieCd}"';
-				            str += '<img src="${pageContext.request.contextPath}/resources/img/current/${userLikeByGenderList.poster}" class = "img_g">';
-				            str += '</div>';
+				            str += '<a href="movie/movieContent?movieCd=' + dataList[i].movieCd + '>"';
+				            if(dataList[i].grade == '청소년 관람불가' && dataList[i].poster == null) {
+				            	str += '<img src="${pageContext.request.contextPath}/resources/img/poster/' + 'a.jpg' + '" class = "img_g">';
+				            }
+				            else if(dataList[i].grade != '청소년 관람불가' && dataList[i].poster == null) {
+				            	str += '<img src="${pageContext.request.contextPath}/resources/img/poster/' + 'b.png' + '" class = "img_g">';
+				            }
+				            else {
+				            	str += '<img src="${pageContext.request.contextPath}/resources/img/poster/' + dataList[i].poster + '" class = "img_g">';    	
+				            }
+				            str += '</a>';
+				            str += '</div>';    	
 			            }
 			            str += '</div>';		            
 			            str += '<div class="swiper-button-next"></div>';
@@ -329,13 +362,39 @@
 		        	}
 			);
 		}
-					
+		
+		function slide() {
+			// swiper 슬라이더
+	    	new Swiper('.swiper-container', {
+
+		        slidesPerView : 6, // 동시에 보여줄 슬라이드 갯수
+		        spaceBetween : 30, // 슬라이드간 간격
+		        slidesPerGroup : 6, // 그룹으로 묶을 수, slidesPerView 와 같은 값을 지정하는게 좋음
+		
+		        // 그룹수가 맞지 않을 경우 빈칸으로 메우기
+		        // 3개가 나와야 되는데 1개만 있다면 2개는 빈칸으로 채워서 3개를 만듬
+		        loopFillGroupWithBlank : true,
+		
+		        loop : true, // 무한 반복
+		
+		        pagination : { // 페이징
+		            el : '.swiper-pagination',
+		            clickable : true, // 페이징을 클릭하면 해당 영역으로 이동, 필요시 지정해 줘야 기능 작동
+		        },
+		        navigation : { // 네비게이션
+		            nextEl : '.swiper-button-next', // 다음 버튼 클래스명
+		            prevEl : '.swiper-button-prev', // 이번 버튼 클래스명
+		        },
+	        });
+			
+			console.log('슬라이드');
+		};
 
 
 		
 		// swiper 슬라이더
     	new Swiper('.swiper-container', {
-
+    		
 	        slidesPerView : 6, // 동시에 보여줄 슬라이드 갯수
 	        spaceBetween : 30, // 슬라이드간 간격
 	        slidesPerGroup : 6, // 그룹으로 묶을 수, slidesPerView 와 같은 값을 지정하는게 좋음

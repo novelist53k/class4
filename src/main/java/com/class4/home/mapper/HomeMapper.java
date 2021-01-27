@@ -62,4 +62,11 @@ public interface HomeMapper {
 	
 	// 사용자 검색기록 추가
 	public void addSearchHistory(String id, String keyword);
+	
+	// 영화 개수 가져오기
+	public int countMovie();
+	
+	// 테스트용
+	public String testActor(String actorName);
+	public String testDirector(String directorName);
 }

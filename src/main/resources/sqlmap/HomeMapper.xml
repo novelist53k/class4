@@ -59,7 +59,7 @@
 	
 	<!-- 유저가 선호하는 배우들의 코드 가져오기 -->
 	<select id="getActorCodeList" resultType="string">
-		SELECT Count(*) FROM userActor WHERE uaid = #{id}
+		SELECT ano FROM userActor WHERE uaid = #{id}
 	</select>
 	
 	<!-- 유저가 선호하는 배우 코드로 영화 코드 가져오기 -->
@@ -122,13 +122,24 @@
 	<!-- 사용자 검색기록 추가 -->
 	<select id="addSearchHistory">
 		INSERT INTO SearchHistory
-		WHERE searchUserid = #{id}
+		VALUES(search_history_seq.NEXTVAL, #{id}, #{keyword})
+	</select>
+	
+	<!-- 영화 개수 가져오기 -->
+	<select id="countMovie" resultType="int">
+		SELECT COUNT(*) FROM movie
 	</select>
 	
 	
 	
+	<!-- 테스트용 코드 -->
+	<select id="testActor" resultType="String">
+		SELECT ano FROM actor WHERE actorName = #{actorName}
+	</select>
 	
-	
+	<select id="testDirector" resultType="String">
+		SELECT dno FROM director WHERE directorName = #{directorName}
+	</select>
 	
 	
 </mapper>

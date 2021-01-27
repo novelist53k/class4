@@ -19,6 +19,7 @@ import com.class4.command.MovieListVO;
 import com.class4.command.RegistVO;
 import com.class4.command.mapping.MovieActorVO;
 import com.class4.command.mapping.MovieDirectorVO;
+import com.class4.command.mapping.MovieGenreVO;
 import com.class4.movie.util.Criteria;
 import com.class4.movieList.mapper.MovieListMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -46,16 +47,21 @@ public class MovieListServiceImpl implements MovieListService{
 			ObjectMapper mapper = new ObjectMapper();
 			HashMap<String, Object> peopleHashMap = mapper.readValue(strPeopleList, HashMap.class);
 			HashMap<String, Object> peopleListResult = (HashMap<String, Object>)peopleHashMap.get("peopleListResult");
+
 			
 			// peopleCd를 리스트에 보관
 			ArrayList<String> peopleCdList = new ArrayList<String>();
+			
 			for(int i = 0; i < row; ++i) {
+				System.out.println(row);
+				System.out.println(i);
 				// peopleCd를 리스트에 추가
 				HashMap<String, Object> peopleList = (HashMap<String, Object>) ((ArrayList<Object>) peopleListResult.get("peopleList")).get(i);
 				peopleCdList.add(peopleList.get("peopleCd").toString());
 
 			}
 			
+
 			for(int i = 0; i < peopleCdList.size(); ++i) {
 				
 				// peopleCd로 영화인 정보 추출
@@ -75,8 +81,6 @@ public class MovieListServiceImpl implements MovieListService{
 				// 기존 테이블에서 peopleCd 호출
 				ArrayList<String> tableActorCodeList = movieListMapper.getActorCodeList();
 				ArrayList<String> tableDirectorCodeList = movieListMapper.getDirectorCodeList();
-				
-				System.out.println("기존 테이블 인물코드 : " + tableActorCodeList);
 				
 				// 중복 여부 체크 변수
 				boolean actorFlag = true;
@@ -122,20 +126,38 @@ public class MovieListServiceImpl implements MovieListService{
 				ArrayList<Object> filmos = (ArrayList<Object>) peopleInfo.get("filmos");
 				
 				// 출연, 감독한 영화의 키 저장
-				ArrayList<String> filmosMovieCdList = new ArrayList<String>();
+				ArrayList<String> movieCdListByAno = movieListMapper.getMnoByAno(peopleCd);
+				ArrayList<String> movieCdListByDno = movieListMapper.getMnoByDno(peopleCd);
+
 				
 				for(int j = 0; j < filmos.size(); ++j) {
 					LinkedHashMap<String, Object> filmoInfo = (LinkedHashMap<String, Object>) filmos.get(j);
+					boolean mnoFlag = true;
+					String mcd = filmoInfo.get("movieCd").toString();
+					System.out.println("영화 코드 : " + mcd);
 					
 					if(filmoInfo.get("moviePartNm").equals("배우")) {
 						// MovieActor 테이블을 조회해서 movieCd와 peopleCd가 모두 일치하면 추가X
+						for(String code : movieCdListByAno) {
+							if(code.equals(mcd)) {
+								mnoFlag = false;
+							}
+						}
 						
-						MovieActorVO movieActorVO = new MovieActorVO(filmoInfo.get("movieCd").toString(), peopleCd);
+						if(mnoFlag) {
+							movieListMapper.registMovieActor(new MovieActorVO(mcd, peopleCd));										
+						}
 					}
 					else if (filmoInfo.get("moviePartNm").equals("감독")) {
 						// MovieDirector 테이블을 조회해서 movieCd와 peopleCd가 모두 일치하면 추가X
+						// MovieActor 테이블을 조회해서 movieCd와 peopleCd가 모두 일치하면 추가X
+						for(String code : movieCdListByDno) {
+							if(code.equals(mcd)) {
+								mnoFlag = false;
+							}
+						}
 						
-						MovieDirectorVO movieDirectorVO = new MovieDirectorVO(filmoInfo.get("movieCd").toString(), peopleCd);
+						movieListMapper.registMovieDirector(new MovieDirectorVO(mcd, peopleCd));
 					}
 				}
 			}
@@ -226,6 +248,7 @@ public class MovieListServiceImpl implements MovieListService{
 				LinkedHashMap<String, Object> cdHashMap = (LinkedHashMap<String, Object>) movieList.get(i);
 				
 				String movieCd = cdHashMap.get("movieCd").toString();
+				System.out.println(movieCd);
 				// movieCd와 기존 테이블에 저장된 코드들을 비교해서 없는 코드일 시에만 movieCdList에 추가
 				for(int l = 0; l < tableCodeList.size(); ++l) {
 					
@@ -241,9 +264,8 @@ public class MovieListServiceImpl implements MovieListService{
 
 			System.out.println("첫번째여기");
 			
-			ArrayList<String> tableGenres = movieListMapper.getGenreList();//<----------------------------
 			
-			System.out.println("장르목록 : "+tableGenres);
+	
 			for(int i = 0 ; i < movieCdList.size(); ++i) {
 				String strMovieInfo = service.getMovieInfo(true, movieCdList.get(i));
 				HashMap<String, Object> movieInfoHashMap = mapper.readValue(strMovieInfo, HashMap.class);
@@ -254,45 +276,44 @@ public class MovieListServiceImpl implements MovieListService{
 				System.out.println(genres.size());
 				//불러오기 
 				
+				
+				ArrayList<String> tableGenres = movieListMapper.getGenreList();//<----------------------------
+				
 				String genreNm = "";
 				boolean flag= true;
-				///////학원에서 해야지... 지금 여기서부터 오류
+				
 				start:for(int j = 0; j < genres.size() ; j++) {
 					flag = true;
 					
 					System.out.println("되냐?");
 					genreNm = genres.get(j).get("genreNm").toString();
-					System.out.println("테이블값:"+tableGenres);
-					
-					// 장르 추가 시 비교할 전체 장르 테이블 최신화
-					if(tableGenres.size() != movieListMapper.getGenreSize()) {
-						genres = (ArrayList<LinkedHashMap<String, Object>>) movieInfo.get("genres");
-					}
+					System.out.println("장르명 : " + genreNm);
+
 					
 					for(int k = 0; k < tableGenres.size(); ++k) {
 						if(tableGenres.get(k).equals(genreNm)){
 							flag = false;
-							break start;
 						}
 					}
 					
-					
+					System.out.println("중복 아니면 true : " + flag);
+					if(flag) {
+						GenreVO genre = new GenreVO();
+						genre.setGenre(genreNm);
+						movieListMapper.GenreInsert(genre);
+					}
 				}
 				
-				System.out.println("중복 아니면 true : " + flag);
 				
 				
-				if(flag) {
-					GenreVO genre = new GenreVO();
-					genre.setGenre(genreNm);
-					movieListMapper.GenreInsert(genre);
-				}
+				
 			}
 			System.out.println("두번째");
 			
 			
 			System.out.println("세번째");
 			for(int i = 0; i < movieCdList.size(); ++i) {
+				System.out.println("영화 코드 목록 : " + movieCdList);
 				// 영화 코드를 이용하여 영화 정보 불러오기
 				String strMovieInfo = service.getMovieInfo(true, movieCdList.get(i));
 				HashMap<String, Object> movieInfoHashMap = mapper.readValue(strMovieInfo, HashMap.class);
@@ -330,8 +351,47 @@ public class MovieListServiceImpl implements MovieListService{
 
 				movieListMapper.regist(movie);
 				
-				// 무비장르 테이블
-			  
+				// 영화의 장르명 추출
+				ArrayList<Object> genres = (ArrayList<Object>) movieInfo.get("genres");
+				System.out.println(genres);
+			    ArrayList<String> genreList = new ArrayList<String>();
+			    for(int j = 0; j < genres.size(); ++j) {
+			    	LinkedHashMap<String, Object> genreMap = (LinkedHashMap<String, Object>) genres.get(j);
+			    	genreList.add(genreMap.get("genreNm").toString());
+			    }
+			    System.out.println("영화 장르 : " + genreList.toString());
+			    
+			    for(int j = 0; j < genreList.size(); ++j) {
+			    	ArrayList<String> genreListByMno = movieListMapper.getGenreByMno(movieCdList.get(i));
+			    	System.out.println("movieDirecotr테이블에서 영화 코드로 가져온 장르: " + genreListByMno);
+			    	
+			    	
+			    	
+			    	
+			    	MovieGenreVO mgVO = new MovieGenreVO(1, movieCdList.get(i), genreList.get(j));
+			    	System.out.println("추가할 놈 : " + mgVO.toString());
+			    	// MovieGenre 테이블에서 mno와 genre가 동시에 같지 않다면 추가
+
+			    	boolean mgFlag = true;
+			    	
+			    	System.out.println(genreListByMno);
+			    	for(String m : genreListByMno) {
+			    		System.out.println("기존 장르 : " + m);
+			    		System.out.println("넣을 장르 : " + genreList.get(j));
+			    		if(m.equals(genreList.get(j))) {
+			    			mgFlag = false;
+			    			break;
+			    		}
+			    	}
+			    	if(mgFlag) {
+			    		System.out.println(1);
+			    		System.out.println(mgVO.toString());
+			    		movieListMapper.registMovieGenre(mgVO);			    		
+			    	}
+
+			    	
+			    	
+			    }
 			}
 			
 		System.out.println("끝");

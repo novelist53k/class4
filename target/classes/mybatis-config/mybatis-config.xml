@@ -17,5 +17,8 @@
 		<typeAlias type="com.class4.command.mapping.UserActorVO" alias="UserActorVO"/>
 		<typeAlias type="com.class4.command.mapping.UserGenreVO" alias="UserGenreVO"/>
 		<typeAlias type="com.class4.command.mapping.UserDirectorVO" alias="UserDirectorVO"/>
+		<typeAlias type="com.class4.command.mapping.MovieActorVO" alias="MovieActorVO"/>
+		<typeAlias type="com.class4.command.mapping.MovieDirectorVO" alias="MovieDirectorVO"/>
+		<typeAlias type="com.class4.command.mapping.MovieGenreVO" alias="MovieGenreVO"/>
  	</typeAliases>   
 </configuration>

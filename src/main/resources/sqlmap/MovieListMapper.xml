@@ -106,7 +106,33 @@ select a.*,
 		INSERT INTO Genre(genre) values(#{genre})
 	</insert>
 	
+	<select id="getGenreSize" resultType="int">
+		SELECT COUNT(*) FROM genre
+	</select>
 	
+	<insert id="registMovieGenre">
+		INSERT INTO movieGenre VALUES(movieGenre_seq.nextval, #{mno}, #{genre})
+	</insert>
+	
+	<select id="getGenreByMno" resultType="String">
+		SELECT genre FROM movieGenre WHERE mno = #{mno}
+	</select>
+	
+	<select id="getMnoByAno" resultType="String">
+		SELECT mno FROM movieActor WHERE mno = #{mno}
+	</select>
+	
+	<select id="getMnoByDno" resultType="String">
+		SELECT mno FROM movieDirector WHERE mno = #{mno}
+	</select>
+	
+	<insert id="registMovieActor">
+		INSERT INTO movieActor VALUES(movieActor_seq.nextval, #{mno}, #{ano})
+	</insert>
+	
+	<insert id="registMovieDirector">
+		INSERT INTO movieDirector VALUES(movieDirector_seq.nextval, #{mno}, #{dno})
+	</insert>
 	
 	
 	

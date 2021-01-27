@@ -360,8 +360,10 @@ header .icon-container{
 /* 영화 수정 페이지 */
 .movie_regist_update_area .registForm{
     background: linear-gradient(45deg, rgb(241, 241, 241), rgb(110, 109, 109));
+    width:80%;
+    margin:0 auto;
 }
-.movie_regist_update_area table{
+.movie_regist_update_area .up{
     width: 80%;
 }
 

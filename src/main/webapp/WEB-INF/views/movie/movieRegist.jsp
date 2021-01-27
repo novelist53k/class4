@@ -27,12 +27,13 @@
             
         </table>  
         
-        <button  style="width: 80px; height: 30px;" id="registBtn">등록하기</button>
+        <button  style="width: 80px; height: 30px;" id="movieBtn">영화등록</button>
+        <button  style="width: 80px; height: 30px;" id="peopleBtn">영화인등록</button>
         <br><br><br><br>
     </form>
     </section>
     <script>
-    $("#registBtn").click(function(){
+    $("#movieBtn").click(function(){
     	
     	if($("#key").val() == ''){
     		alert("key값은 필수 입니다")
@@ -44,6 +45,19 @@
     		$("#registBtn").submit();
     	}
     });
+    
+	$("#peopleBtn").click(function(){
+			$(".registForm").attr("action", "registP");
+	    	if($("#key").val() == ''){
+	    		alert("key값은 필수 입니다")
+	    		return;
+	    	} else if($("#openStartDt").val() == '' || $("#openEndDt").val()==''){
+	    		alert("연도는 필수 값입니다")
+	    		return;
+	    	}else{
+	    		$("#registBtn").submit();
+	    	}
+	    });
     	
     
     </script>

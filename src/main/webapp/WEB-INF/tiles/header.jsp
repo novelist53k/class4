@@ -36,8 +36,7 @@
                         <li><a href="${pageContext.request.contextPath }" class="menu">메인</a></li>
                         <li><a href="${pageContext.request.contextPath }/movie/movieCurrent" class="menu">영화</a></li>
                         <li><a href="${pageContext.request.contextPath }/review/reviewList" class="menu">리뷰</a></li>
-                        <li><a href="${pageContext.request.contextPath }/theater/theater" class="menu">영화관</a></li>
-                        <li><a href="#" class="menu">다운로드</a></li>
+                        <li><a href="${pageContext.request.contextPath }/theater/theater" class="menu">영화관</a></li>                        
                     </ul>
                   
                     <form name="movieSearchForm" action="${pageContext.request.contextPath}/search" class="navbar-form navbar-right" role="search">
@@ -82,7 +81,7 @@
                         </div>
                         <div class="modal-body">
                             <label>아이디</label><br><input type="text" id="loginId" name="userId" class="userId"><br>
-                            <label>비밀번호</label><br><input type="text" id="loginPw" name="userPw" class="userPw">
+                            <label>비밀번호</label><br><input type="password" id="loginPw" name="userPw" class="userPw">
                         </div>
                         <div class="modal-footer">                            
                             <button type="button" class="btn btn-primary" data-dismiss="modal" id="login" name="login">Login</button>

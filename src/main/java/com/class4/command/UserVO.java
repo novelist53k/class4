@@ -1,10 +1,13 @@
-package com.class4.command.user;
+package com.class4.command;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import com.class4.command.ReviewBoardVO;
+import com.class4.command.mapping.UserActorVO;
+import com.class4.command.mapping.UserDirectorVO;
+import com.class4.command.mapping.UserGenreVO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,7 +29,7 @@ public class UserVO {
 	private String userYear;
 	private String userDay;
 	private String userMonth;
-	private String userAge;
+	private Timestamp userAge;
 	private String addrBasic;
 	private String addrDetail;
 	private String addrZipNum;
@@ -44,9 +47,7 @@ public class UserVO {
 	private String checkPw;
 	
 	//
-		private ArrayList<UserActorListVO> actorlist;
-		private ArrayList<UserDirectorListVO> directorlist;
-		private ArrayList<UserGenreListVO> usergenrelist;
+		
 		private ArrayList<ReviewBoardVO> userReview;
 		@Override
 		public String toString() {

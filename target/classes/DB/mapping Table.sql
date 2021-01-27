@@ -15,6 +15,7 @@ create table userActor(
     ano varchar2(50) not null,
     uaAge DATE,
     uaGender VARCHAR2(50)
+    
 );
 alter table userActor add CONSTRAINTS ua_pk PRIMARY KEY (uano);
 create SEQUENCE userActor_seq increment by 1 start with 1 nocache;

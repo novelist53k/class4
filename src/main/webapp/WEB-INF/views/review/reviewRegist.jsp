@@ -101,7 +101,7 @@ input:focus{
     
     <form action="reviewRegistForm" method="post" name="registForm">
 	    <div class = "wrap">
-	    	<input name="mno" type="text" class="movie-mno" value="${movieInfoVO.movieCd }" readonly="readonly">
+	    	<input name="mno" type="text" class="movie-mno" value="${movieInfoVO.movieCd == null ? } " readonly="readonly">
 	        <div class = "movie-img">
 	            <img src="${pageContext.request.contextPath }/resources/img/movie_image.jpg" alt="영화포스터">
 	        </div>    

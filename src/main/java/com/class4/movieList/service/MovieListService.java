@@ -7,6 +7,7 @@ import com.class4.command.DirectorVO;
 import com.class4.command.GenreVO;
 import com.class4.command.MovieInfoVO;
 import com.class4.command.MovieListVO;
+import com.class4.command.RegistVO;
 import com.class4.movie.util.Criteria;
 
 public interface MovieListService {
@@ -15,9 +16,10 @@ public interface MovieListService {
 	public int getTotalC();
 	public int getTotalE();
 	public int update(MovieInfoVO vo);
+	public void regist(RegistVO vo);
+	public void registP(RegistVO vo);
+
 	public ArrayList<String> getGenreList();
-	
-	public void regist(MovieInfoVO vo);
 	public ArrayList<String> getCodeList();
 	public MovieInfoVO getMovieInfo(String cd);
 	public ArrayList<String> getActorCodeList();

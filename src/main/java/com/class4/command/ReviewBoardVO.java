@@ -12,10 +12,11 @@ import lombok.NoArgsConstructor;
 public class ReviewBoardVO {
 	
 	private int bno;
-	private int mno;
+	private String mno;
 	private String writer;
 	private String movieTitle;
 	private String content;
+	private String fileRealName;
 	private Timestamp regDate;
 	private Timestamp updateDate;
 	

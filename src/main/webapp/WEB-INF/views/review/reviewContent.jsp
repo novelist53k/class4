@@ -83,6 +83,8 @@ section {
 	height: 80px;
 }
 
+
+
 /* .day{
 	position: absolute;
 	top : 0px;
@@ -97,6 +99,11 @@ section {
 }
 
 /*댓글 */
+
+input:focus{
+	outline:none;
+}
+
 .form-control {
     margin-top: 0;
 }
@@ -114,7 +121,17 @@ section {
 	position: absolute;
 	top: 0;
 	left: 0;
-	color: white; 
+	color: whitesmoke;
+	background-color: whitesmoke;
+	border: none;
+	width: 2%;
+	
+	
+}
+.reply_id{
+	position: absolute;
+	border: none;
+	top : -20px;
 }
 
 .reply-btn{
@@ -130,7 +147,7 @@ section {
 </style>    
     
 <section>
-    <lable style="font-size: 40px; font-weight: bold;">영화 리뷰 상세페이지</lable>
+    <label style="font-size: 40px; font-weight: bold;">영화 리뷰 상세페이지</label>
     <hr style="border-bottom: 3px solid black; margin: 10px 0;">
 	    <div class = wrap>
 	    	<span class="review_bno">${vo.bno }</span>
@@ -142,6 +159,9 @@ section {
 	            <p class = "point glyphicon glyphicon glyphicon-star" aria-hidden="true" style="color: rgb(233, 49, 49);"></p>
 	            <p class = "score" style="display: inline-block;">5</p>
 	            <p>${vo.writer }</p>
+	            <div class = "day">	        		 
+		           		<fmt:formatDate value="${vo.updateDate }" pattern="yyyy-MM-dd HH:mm"/>
+	        	</div>
 			
 			   <div class="content form-group">
 			       <label>내용</label>
@@ -151,34 +171,39 @@ section {
 			       <div class="btns" style="text-align: right; margin-top: 5px;">
 			           <button class = "list-btn" onclick="location.href='reviewList'">목록</button>
 			           <button type = "submit" class = "list-modify" onclick="location.href='reviewUpdate?bno=${vo.bno}&writer=${vo.writer } '">수정</button>
-			           <button class = "list-delete">삭제</button>
+			           <button type = "button" class = "list-delete" onclick="del(${vo.bno})">삭제</button>
 			       </div>    
 			   </div>
 	        </div>
 	    </div>
 	
     
-	    <label>댓글</label>
-	    <div class="reply-wrap">
-	    	<span class="reply_rno">1</span>
-	        <div class="profile-img">
-	            <img src="${pageContext.request.contextPath}/resources/img/default_profile.gif" alt="profile">
-	        </div>
-	        <div class="reply-content">
-	            <textarea class="form-control" rows="2" id="reply" name="repl-content" readonly>내용</textarea>
-	        </div>
-	        <div class="reply-btn">
-	        	<button type = "button" class = "repl-regist">등록</button>
-	            <button type = "button" class = "repl-modify">수정</button>
-	            <button type = "button" class = "repl-delete">삭제</button>
-	        </div>
-	    </div>
+	    <%-- <label>댓글</label>
+	    <form action="replyRegist" method="post">
+		    <div class="reply-wrap">
+		    	<input type="text" class="reply_rno" value="${rvo.rno }" readonly="readonly">
+		    	<input type="text" class="reply_id" value="1" readonly="readonly">
+		        <div class="profile-img">
+		            <img src="${pageContext.request.contextPath}/resources/img/default_profile.gif" alt="profile">
+		        </div>
+		        <div class="reply-content">
+		            <textarea class="form-control" rows="2" id="reply" name="repl-content">내용</textarea>
+		        </div>
+		        <div class="reply-btn">
+		        	<button type = "submit" class = "repl-regist" id = "repl-regist">등록</button>
+		            <button type = "button" class = "repl-modify">수정</button>
+		            <button type = "button" class = "repl-delete">삭제</button>
+		        </div>
+		    </div>
+	    </form>
     
 
 
     <div class = "more-btn" >
         <button type="button" id="more_repl" style="width: 100%; margin-top: 10px; background-color: rgb(37,37,37); color: white;" onclick="moreRepl()">댓글 더보기</button>
-    </div>
+    </div> --%>
+    
+    
     
     <script>
     	
@@ -189,7 +214,44 @@ section {
     		}
 		}
     	
-   
+  	
+    $(document).ready(function name() {
+   		
+    	$("#repl-regist").click(repl);
+		
+    	
+    	function repl() {
+			var rno = "${rvo.rno}";
+			var content = $("#reply").val();
+			
+		}
+    	
+    	$.ajax({
+    		type : "POST",
+    		url : "../reply/replyRegist",
+    		data : JSON.stringify({"rno":rno, "reply":reply}),
+    		contentType: "application/json; charset=utf-8",
+    		succcess: function (data) {
+				
+    			if(data == 1){
+    				$("#reply").val("");
+    				alert("댓글이 등록 되었습니다.");
+    				getList(1, true);
+    				
+    			}else{
+    				alert("재등록 해주세요");
+    			}
+			}
+    	})
+    	
+	})
+    
+    
+    	
+    	
+    	
+    	
+    	
     	
     </script>
     

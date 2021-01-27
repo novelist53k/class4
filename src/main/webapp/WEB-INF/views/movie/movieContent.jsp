@@ -4,6 +4,7 @@
   <section class="movie_content_area">
  <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
  <% pageContext.setAttribute("replaceChar", "\n"); %>
+ <%@taglib prefix = "c" uri="http://java.sun.com/jsp/jstl/core" %>
 
     <div class="container">
       <div class="outter">
@@ -11,6 +12,7 @@
         <div class="mid1">
           <div class="photo-box">
             <img src="${pageContext.request.contextPath }/resources/img/poster/${info.poster}" style="width: 200px; height: 306px;">
+          <button type="button" class="phobtn">사진등록</button>
           </div>
         </div>
 
@@ -22,9 +24,8 @@
             
            
             <div class="btn-box">
-                    <button type="button" class="regbtn">등록</button>
       				<button type="button" class="updbtn">수정</button>
-      				<button type="button" class="delbtn">삭제</button>
+      				<!-- <button type="button" class="delbtn">삭제</button> -->
       		</div>
       		</span>
             <div class="mov-sec">
@@ -37,20 +38,29 @@
                 </span>
               </div>
             </div>
-            <span class="mov-genre">액션/어드벤처</span>
+            <c:forEach var="genre" items="${genre }">
+            <span class="mov-genre">${genre}</span>
+            </c:forEach>
+            
             <div class="date-grade">
               <span class="mov-date"><fmt:formatDate value="${info.openDt }" pattern="yyyy년 MM월 dd일"/> 개봉</span>
               <span class="mov-grade">${info.grade }</span>
             </div>
             <div class="mov-maker"> 
               <!-- 네이버 포털 검색 -->
-              감독 <span class="mov-dit"><a href="https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=메간 폭스">메간 폭스</a></span>
-              
-              주연 <span class="mov-act">
-                <a href="https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=메간 폭스">
-                  제레미레이너
-                </a>
-              </span>
+          	    감독
+              <c:forEach var="director" items="${directorList }">
+               <span class="mov-dit"><a href="https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query='${director }">${director }</a></span>
+           </c:forEach>
+             	 주연
+      	  <c:forEach var="actor" items="${actorList }">
+      	  	<span class="mov-act"><a href="https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query='${actor }">${actor }</a></span>
+          </c:forEach>
+                
+                
+                 
+                
+             
             </div>
 
           </div>
@@ -106,7 +116,7 @@
           <div class="head-box">
             
 
-            <h3 class="rev-head" style="font-weight: bold;">리뷰</h3>
+       
             <div class="rev-left">
               <table>
                 <tr>
@@ -118,15 +128,15 @@
             <div class="rev-right">
               <a href="../review/reviewRegist?mno=${info.movieCd }" class="right-regist" style="color: black;">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true" style="color: black;"></span>
-                글쓰기</a>
+              	  글쓰기</a>
             </div>
             
           </div>
           <table class="t">
-            <thead>
+            <thead style="margin-top:50px;">
               <tr>
                 <th class="t1">번호</th>
-                <th class="t2">감상평</th>
+<!--                 <th class="t2">감상평</th> -->
                 <th class="t3">글쓴이·날짜</th>
               </tr>
             </thead>
@@ -172,6 +182,9 @@
         <form action="update" name="regForm" method="post">
         	<input type="hidden" name="cd" value="">
          </form>  
+          <form action="phobtn" name="phoForm" method="post">
+        	<input type="hidden" name="cd" value="">
+         </form>
       </div>
 
   </section>
@@ -186,5 +199,12 @@
 		document.regForm.cd.value=cd;
 		document.regForm.submit();
 	});
+	
+	$(".phobtn").click(function(){
+		var cd = $("#movieCd").val();
+		document.phoForm.cd.value=cd;
+		document.phoForm.submit();
+	});
+	
 	
 </script>

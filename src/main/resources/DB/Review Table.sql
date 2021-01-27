@@ -5,9 +5,9 @@ CREATE TABLE REVIEW(
     writer varchar2(50) not null,
     movietitle varchar2(50) not null,
     content varchar2(1000),
-    FILEREALNAME varchar2(200),
     regdate TIMESTAMP DEFAULT sysdate,
-    updatedate TIMESTAMP DEFAULT sysdate
+    updatedate TIMESTAMP DEFAULT sysdate,
+    FILEREALNAME varchar2(200)
 );
 
 ALTER TABLE REVIEW ADD CONSTRAINT bno_PK PRIMARY key(bno);

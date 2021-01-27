@@ -16,14 +16,14 @@ alter table movie add CONSTRAINT info_pk primary key (moviecd);
 
 ============= 영화부수자료 ===============
 create table moviesub(
-    sno number(10) not null,  --영화순번
+--    sno number(10) not null,  --영화순번
     title varchar2(200) not null, --영화제목
     subhead varchar2(2000),  --줄거리제목
     content varchar2(3000),   --줄거리
     poster varchar2(500),  --포스터
     trailer varchar2(2000)  --예고편
 );
-alter table moviesub add CONSTRAINT sub_pk primary key (sno);
+alter table moviesub add CONSTRAINT sub_pk primary key (title);
 
 --============= 영화리스트 ===============
 --create table movielist(

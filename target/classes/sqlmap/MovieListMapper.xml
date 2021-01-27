@@ -68,10 +68,10 @@ select a.*,
 		select count(*) from movie where opendt > sysdate
 	</select>
 	
-	<update id="update">
-		update [테이블] set subhead = #{subhead}, content=#{content}, poster=#{poster}, trailer = #{trailer}
-		where title = #{title}
-	</update>
+	<insert id="update">
+		insert into moviesub (title,subhead,content,poster,trailer) VALUES( #{title},#{subhead},#{content},null,#{trailer})
+		
+	</insert>
 	
 	<insert id="regist">
 		INSERT INTO movie(movieCd, title, ftitle, grade, openDt) VALUES(#{movieCd}, #{title}, #{ftitle}, #{grade}, #{openDt})
@@ -106,34 +106,37 @@ select a.*,
 		INSERT INTO Genre(genre) values(#{genre})
 	</insert>
 	
-	<select id="getGenreSize" resultType="int">
-		SELECT COUNT(*) FROM genre
-	</select>
-	
-	<insert id="registMovieGenre">
-		INSERT INTO movieGenre VALUES(movieGenre_seq.nextval, #{mno}, #{genre})
-	</insert>
-	
-	<select id="getGenreByMno" resultType="String">
-		SELECT genre FROM movieGenre WHERE mno = #{mno}
-	</select>
-	
-	<select id="getMnoByAno" resultType="String">
-		SELECT mno FROM movieActor WHERE mno = #{mno}
-	</select>
-	
-	<select id="getMnoByDno" resultType="String">
-		SELECT mno FROM movieDirector WHERE mno = #{mno}
-	</select>
-	
-	<insert id="registMovieActor">
-		INSERT INTO movieActor VALUES(movieActor_seq.nextval, #{mno}, #{ano})
-	</insert>
-	
-	<insert id="registMovieDirector">
-		INSERT INTO movieDirector VALUES(movieDirector_seq.nextval, #{mno}, #{dno})
-	</insert>
+	<update id="postUpload">
+		 UPDATE MOVIESUB set poster=#{poster} where title = #{title}
+	</update>
 	
 	
+     <select id="getGenreSize" resultType="int">
+      SELECT COUNT(*) FROM genre
+   </select>
+   
+   <insert id="registMovieGenre">
+      INSERT INTO movieGenre VALUES(movieGenre_seq.nextval, #{mno}, #{genre})
+   </insert>
+   
+   <select id="getGenreByMno" resultType="String">
+      SELECT genre FROM movieGenre WHERE mno = #{mno}
+   </select>
+   
+   <select id="getMnoByAno" resultType="String">
+      SELECT mno FROM movieActor WHERE mno = #{mno}
+   </select>
+   
+   <select id="getMnoByDno" resultType="String">
+      SELECT mno FROM movieDirector WHERE mno = #{mno}
+   </select>
+   
+   <insert id="registMovieActor">
+      INSERT INTO movieActor VALUES(movieActor_seq.nextval, #{mno}, #{ano})
+   </insert>
+   
+   <insert id="registMovieDirector">
+      INSERT INTO movieDirector VALUES(movieDirector_seq.nextval, #{mno}, #{dno})
+   </insert>
 	
 </mapper>

@@ -87,7 +87,10 @@
 		SELECT mno FROM movieGenre WHERE genre = #{genre}
 	</select>
 
-	
+     <!--  마이페이지에서 프로필사진 업로드-->
+     <update id="uploadProfile">
+        update users set path=#{path}, fileRealName=#{fileRealName} where userId = #{userId}
+     </update>
 	
 	
 	<!-- 영화 제목 검색 -->

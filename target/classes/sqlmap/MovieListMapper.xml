@@ -68,10 +68,10 @@ select a.*,
 		select count(*) from movie where opendt > sysdate
 	</select>
 	
-	<update id="update">
-		update moviesub set subhead = #{subhead}, content=#{content}, trailer = #{trailer}
-		where title = #{title}
-	</update>
+	<insert id="update">
+		insert into moviesub (title,subhead,content,poster,trailer) VALUES( #{title},#{subhead},#{content},null,#{trailer})
+		
+	</insert>
 	
 	<insert id="regist">
 		INSERT INTO movie(movieCd, title, ftitle, grade, openDt) VALUES(#{movieCd}, #{title}, #{ftitle}, #{grade}, #{openDt})
@@ -111,7 +111,7 @@ select a.*,
 	</update>
 	
 	
-  <select id="getGenreSize" resultType="int">
+     <select id="getGenreSize" resultType="int">
       SELECT COUNT(*) FROM genre
    </select>
    
@@ -122,5 +122,21 @@ select a.*,
    <select id="getGenreByMno" resultType="String">
       SELECT genre FROM movieGenre WHERE mno = #{mno}
    </select>
+   
+   <select id="getMnoByAno" resultType="String">
+      SELECT mno FROM movieActor WHERE mno = #{mno}
+   </select>
+   
+   <select id="getMnoByDno" resultType="String">
+      SELECT mno FROM movieDirector WHERE mno = #{mno}
+   </select>
+   
+   <insert id="registMovieActor">
+      INSERT INTO movieActor VALUES(movieActor_seq.nextval, #{mno}, #{ano})
+   </insert>
+   
+   <insert id="registMovieDirector">
+      INSERT INTO movieDirector VALUES(movieDirector_seq.nextval, #{mno}, #{dno})
+   </insert>
 	
 </mapper>

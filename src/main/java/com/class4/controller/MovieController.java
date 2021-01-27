@@ -111,7 +111,14 @@ public class MovieController {
 	public String movieContent(MovieInfoVO vo, Model model) {
 		String cd = vo.getMovieCd();
 		MovieInfoVO info = movieListService.getMovieInfo(cd);
+		ArrayList<String>genreList = movieListService.getGenreByMno(cd);
+		ArrayList<String>directorList = movieListService.getMnoByDno(cd);
+		ArrayList<String>actorList = movieListService.getMnoByAno(cd);
+		
 		model.addAttribute("info", info);
+		model.addAttribute("genre", genreList);
+		model.addAttribute("director", directorList);
+		model.addAttribute("actor",actorList);
 		
 		return "movie/movieContent";
 	}
@@ -121,19 +128,32 @@ public class MovieController {
 	public String movieUpdate(@RequestParam("cd")String cd, Model model) {
 		MovieInfoVO vo = new MovieInfoVO();
 		MovieInfoVO info = movieListService.getMovieInfo(cd);
+		
 		model.addAttribute("info", info);
 		return "movie/movieUpdate";
 	}
 	
+	
+	//사진등록페이지
+	@RequestMapping(value="/phobtn",method=RequestMethod.POST)
+	public String movieUpdatePhoto(@RequestParam("cd")String cd, Model model) {
+		MovieInfoVO vo = new MovieInfoVO();
+		MovieInfoVO info = movieListService.getMovieInfo(cd);
+		model.addAttribute("info", info);
+		return "movie/movieUpdatePoster";
+	}
+	
+	
+	
 	@RequestMapping(value="/modify",method=RequestMethod.POST)
-	public String movieUpdate(@RequestParam("cd")String cd, MovieInfoVO vo) {
-		vo.setMovieCd(cd);
-		System.out.println(vo.getMovieCd());
-		System.out.println(vo.getSubhead());
-		System.out.println(vo.getContent());
-		System.out.println(vo.getTrailer());
-		System.out.println(vo.getPoster());
-		return "movie/movieUpdate";
+	public String movieUpdate(MovieInfoVO vo,Model model) {
+		
+		movieListService.update(vo);
+		System.out.println("됨?");
+		String cd = vo.getMovieCd();
+		MovieInfoVO info = movieListService.getMovieInfo(cd);
+		model.addAttribute("info", info);
+		return "redirect:/movie/movieContent";
 	}
 	
 	
@@ -145,9 +165,7 @@ public class MovieController {
 						 @RequestParam("title")String title
 						 ) {
 		
-		System.out.println(1);
 		try {
-			System.out.println(1);
 			System.out.println("영화제목:"+title);
 			//UserVO userVO = (UserVO)session.getAttribute("login");
 			MovieInfoVO vo = new MovieInfoVO();
@@ -155,7 +173,7 @@ public class MovieController {
 			//String fileLoca = vo.getPoster();
 			
 			//占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙
-			String path = "C:\\Users\\1104-07\\Desktop\\class4팀원의 것\\class4\\src\\main\\webapp\\resources\\img\\poster";
+			String path = "C:\\Users\\user\\Desktop\\프로젝트\\class4\\class4\\src\\main\\webapp\\resources\\img\\poster";
 			//String sqlPath = "\\movie\\resources\\img\\profile\\"+fileLoca;
 			File folder = new File(path);
 			if(!folder.exists()) {
@@ -168,7 +186,6 @@ public class MovieController {
 			String fileExtention = fileRealName.substring(fileRealName.lastIndexOf("."), fileRealName.length());
 			vo.setPoster(fileRealName);
 			vo.setTitle(title);
-			System.out.println(fileRealName);
 			
 			//占쏙옙占싸듸옙
 			File saveFile = new File(path + "\\" + fileRealName);

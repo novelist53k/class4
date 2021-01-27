@@ -8,6 +8,8 @@ import com.class4.command.GenreVO;
 import com.class4.command.MovieInfoVO;
 import com.class4.command.MovieListVO;
 import com.class4.command.UserVO;
+import com.class4.command.mapping.MovieActorVO;
+import com.class4.command.mapping.MovieDirectorVO;
 import com.class4.command.mapping.MovieGenreVO;
 import com.class4.movie.util.Criteria;
 
@@ -16,7 +18,7 @@ public interface MovieListMapper {
 	public ArrayList<MovieListVO> eMovieList(Criteria cri);
 	public int getTotalC();
 	public int getTotalE();
-	public int update(MovieInfoVO vo);
+	public void update(MovieInfoVO vo);
 	public ArrayList<String> getGenreList();
 	
 	public void regist(MovieInfoVO vo);
@@ -36,4 +38,11 @@ public interface MovieListMapper {
 	   public void registMovieGenre(MovieGenreVO vo);
 	   
 	   public ArrayList<String> getGenreByMno(String mno);
+	   
+	   public ArrayList<String> getMnoByAno(String ano);
+	   public ArrayList<String> getMnoByDno(String mno);
+	   
+	   public void registMovieActor(MovieActorVO vo);
+	   public void registMovieDirector(MovieDirectorVO vo);
+	   
 }

@@ -31,125 +31,143 @@ public class MovieListServiceImpl implements MovieListService{
 	@Autowired
 	private MovieListMapper movieListMapper;
 	
-	//사람등록메서드
-	@Override
-	public void registP(RegistVO vo) {
-		System.out.println("사람등록 시작");
-		// api에 사용할 객체 service
-		KobisOpenAPIRestService service = new KobisOpenAPIRestService(vo.getKey());
-		String curPage = vo.getCurPage();	// 페이지
-		String itemPerPage = vo.getItemPerPage();	// 가져올 사람 수
-		int row = Integer.parseInt(itemPerPage);
-		
-		try {
-			// 문자열을 반환 후 json 형식을 HashMap으로 변경하여 영화인리스트에서 영화인코드로 접근
-			String strPeopleList = service.getPeopleList(true, curPage, itemPerPage, "", "");
-			ObjectMapper mapper = new ObjectMapper();
-			HashMap<String, Object> peopleHashMap = mapper.readValue(strPeopleList, HashMap.class);
-			HashMap<String, Object> peopleListResult = (HashMap<String, Object>)peopleHashMap.get("peopleListResult");
-			
-			// peopleCd를 리스트에 보관
-			ArrayList<String> peopleCdList = new ArrayList<String>();
-			for(int i = 0; i < row; ++i) {
-				// peopleCd를 리스트에 추가
-				HashMap<String, Object> peopleList = (HashMap<String, Object>) ((ArrayList<Object>) peopleListResult.get("peopleList")).get(i);
-				peopleCdList.add(peopleList.get("peopleCd").toString());
+	   //사람등록메서드
+	   @Override
+	   public void registP(RegistVO vo) {
+	      System.out.println("사람등록 시작");
+	      // api에 사용할 객체 service
+	      KobisOpenAPIRestService service = new KobisOpenAPIRestService(vo.getKey());
+	      String curPage = vo.getCurPage();   // 페이지
+	      String itemPerPage = vo.getItemPerPage();   // 가져올 사람 수
+	      int row = Integer.parseInt(itemPerPage);
+	      
+	      try {
+	         // 문자열을 반환 후 json 형식을 HashMap으로 변경하여 영화인리스트에서 영화인코드로 접근
+	         String strPeopleList = service.getPeopleList(true, curPage, itemPerPage, "", "");
+	         ObjectMapper mapper = new ObjectMapper();
+	         HashMap<String, Object> peopleHashMap = mapper.readValue(strPeopleList, HashMap.class);
+	         HashMap<String, Object> peopleListResult = (HashMap<String, Object>)peopleHashMap.get("peopleListResult");
+	         
+	         // peopleCd를 리스트에 보관
+	         ArrayList<String> peopleCdList = new ArrayList<String>();
+	         for(int i = 0; i < row; ++i) {
+	            // peopleCd를 리스트에 추가
+	            HashMap<String, Object> peopleList = (HashMap<String, Object>) ((ArrayList<Object>) peopleListResult.get("peopleList")).get(i);
+	            peopleCdList.add(peopleList.get("peopleCd").toString());
 
-			}
-			
-			for(int i = 0; i < peopleCdList.size(); ++i) {
-				
-				// peopleCd로 영화인 정보 추출
-				String strActorInfo = service.getPeopleInfo(true, peopleCdList.get(i));
-				HashMap<String, Object> peopleResult = mapper.readValue(strActorInfo, HashMap.class);
-				LinkedHashMap<String, Object> peopleInfoResult = (LinkedHashMap<String, Object>) peopleResult.get("peopleInfoResult");
-				LinkedHashMap<String, Object> peopleInfo = (LinkedHashMap<String, Object>) peopleInfoResult.get("peopleInfo");
-				System.out.println(peopleInfo);
-				
-				// 인물코드, 이름, 영어이름
-				String peopleCd = peopleInfo.get("peopleCd").toString();
-				String peopleNm = peopleInfo.get("peopleNm").toString();
-				String peopleNmEn = peopleInfo.get("peopleNmEn").toString();
-				
-				
-				
-				// 기존 테이블에서 peopleCd 호출
-				ArrayList<String> tableActorCodeList = movieListMapper.getActorCodeList();
-				ArrayList<String> tableDirectorCodeList = movieListMapper.getDirectorCodeList();
-				
-				System.out.println("기존 테이블 인물코드 : " + tableActorCodeList);
-				
-				// 중복 여부 체크 변수
-				boolean actorFlag = true;
-				boolean directorFlag = true;
-				
-				for(int j = 0; j < tableActorCodeList.size(); ++j) {
-					if(peopleCd.equals(tableActorCodeList.get(j))) {
-						actorFlag = false;
-						break;
-					}
-				}
-				
-				for(int j = 0; j < tableDirectorCodeList.size(); ++j) {
-					if(peopleCd.equals(tableDirectorCodeList.get(j))) {
-						directorFlag = false;
-						break;
-					}
-				}
-				
-				System.out.println(1);
-				
-				// 중복 시 insert하지 않는다
-			
-				// 배우면 ActorVO에, 감독이면 DirectorVO에 추가
-				if(actorFlag && peopleInfo.get("repRoleNm").equals("배우")) {
-					// Actor 테이블을 조회해서 이미 있는 peopleCd라면 추가하지 말고 출연, 감독한 영화로 이동
-						
-					ActorVO actorVO = new ActorVO(peopleCd, peopleNm, peopleNmEn);
-					movieListMapper.ActorInsert(actorVO);
-						
-				}
-				else if(directorFlag && peopleInfo.get("repRoleNm").equals("감독")) {
-					// Director 테이블을 조회해서 이미 있는 peopleCd라면 추가하지 말고 출연, 감독한 영화로 이동
-						
-					DirectorVO directorVO = new DirectorVO(peopleCd, peopleNm, peopleNmEn);
-					movieListMapper.DirectorInsert(directorVO);
-				}
-			
-				System.out.println(2);
-				
-				
-				// 출연, 감독한 정보 추출
-				ArrayList<Object> filmos = (ArrayList<Object>) peopleInfo.get("filmos");
-				
-				// 출연, 감독한 영화의 키 저장
-				ArrayList<String> filmosMovieCdList = new ArrayList<String>();
-				
-				for(int j = 0; j < filmos.size(); ++j) {
-					LinkedHashMap<String, Object> filmoInfo = (LinkedHashMap<String, Object>) filmos.get(j);
-					
-					if(filmoInfo.get("moviePartNm").equals("배우")) {
-						// MovieActor 테이블을 조회해서 movieCd와 peopleCd가 모두 일치하면 추가X
-						
-						MovieActorVO movieActorVO = new MovieActorVO(filmoInfo.get("movieCd").toString(), peopleCd);
-					}
-					else if (filmoInfo.get("moviePartNm").equals("감독")) {
-						// MovieDirector 테이블을 조회해서 movieCd와 peopleCd가 모두 일치하면 추가X
-						
-						MovieDirectorVO movieDirectorVO = new MovieDirectorVO(filmoInfo.get("movieCd").toString(), peopleCd);
-					}
-				}
-			}
-			
-			System.out.println("사람등록 끝");
-			
-			
-		} catch (Exception e) {
-			System.out.println("사람등록 에러");
-			e.printStackTrace();
-		}
-		
-	}
+	         }
+	         
+	         for(int i = 0; i < peopleCdList.size(); ++i) {
+	            
+	            // peopleCd로 영화인 정보 추출
+	            String strActorInfo = service.getPeopleInfo(true, peopleCdList.get(i));
+	            HashMap<String, Object> peopleResult = mapper.readValue(strActorInfo, HashMap.class);
+	            LinkedHashMap<String, Object> peopleInfoResult = (LinkedHashMap<String, Object>) peopleResult.get("peopleInfoResult");
+	            LinkedHashMap<String, Object> peopleInfo = (LinkedHashMap<String, Object>) peopleInfoResult.get("peopleInfo");
+	            System.out.println(peopleInfo);
+	            
+	            // 인물코드, 이름, 영어이름
+	            String peopleCd = peopleInfo.get("peopleCd").toString();
+	            String peopleNm = peopleInfo.get("peopleNm").toString();
+	            String peopleNmEn = peopleInfo.get("peopleNmEn").toString();
+	            
+	            
+	            
+	            // 기존 테이블에서 peopleCd 호출
+	            ArrayList<String> tableActorCodeList = movieListMapper.getActorCodeList();
+	            ArrayList<String> tableDirectorCodeList = movieListMapper.getDirectorCodeList();
+	            
+	            // 중복 여부 체크 변수
+	            boolean actorFlag = true;
+	            boolean directorFlag = true;
+	            
+	            for(int j = 0; j < tableActorCodeList.size(); ++j) {
+	               if(peopleCd.equals(tableActorCodeList.get(j))) {
+	                  actorFlag = false;
+	                  break;
+	               }
+	            }
+	            
+	            for(int j = 0; j < tableDirectorCodeList.size(); ++j) {
+	               if(peopleCd.equals(tableDirectorCodeList.get(j))) {
+	                  directorFlag = false;
+	                  break;
+	               }
+	            }
+	            
+	            System.out.println(1);
+	            
+	            // 중복 시 insert하지 않는다
+	         
+	            // 배우면 ActorVO에, 감독이면 DirectorVO에 추가
+	            if(actorFlag && peopleInfo.get("repRoleNm").equals("배우")) {
+	               // Actor 테이블을 조회해서 이미 있는 peopleCd라면 추가하지 말고 출연, 감독한 영화로 이동
+	                  
+	               ActorVO actorVO = new ActorVO(peopleCd, peopleNm, peopleNmEn);
+	               movieListMapper.ActorInsert(actorVO);
+	                  
+	            }
+	            else if(directorFlag && peopleInfo.get("repRoleNm").equals("감독")) {
+	               // Director 테이블을 조회해서 이미 있는 peopleCd라면 추가하지 말고 출연, 감독한 영화로 이동
+	                  
+	               DirectorVO directorVO = new DirectorVO(peopleCd, peopleNm, peopleNmEn);
+	               movieListMapper.DirectorInsert(directorVO);
+	            }
+	         
+	            System.out.println(2);
+	            
+	            
+	            // 출연, 감독한 정보 추출
+	            ArrayList<Object> filmos = (ArrayList<Object>) peopleInfo.get("filmos");
+	            
+	            // 출연, 감독한 영화의 키 저장
+	            ArrayList<String> movieCdListByAno = movieListMapper.getMnoByAno(peopleCd);
+	            ArrayList<String> movieCdListByDno = movieListMapper.getMnoByDno(peopleCd);
+
+	            
+	            for(int j = 0; j < filmos.size(); ++j) {
+	               LinkedHashMap<String, Object> filmoInfo = (LinkedHashMap<String, Object>) filmos.get(j);
+	               boolean mnoFlag = true;
+	               String mcd = filmoInfo.get("movieCd").toString();
+	               System.out.println("사람 코드 : " + mcd);
+	               
+	               if(filmoInfo.get("moviePartNm").equals("배우")) {
+	                  // MovieActor 테이블을 조회해서 movieCd와 peopleCd가 모두 일치하면 추가X
+	                  for(String code : movieCdListByAno) {
+	                     if(code.equals(mcd)) {
+	                        mnoFlag = false;
+	                     }
+	                  }
+	                  
+	                  if(mnoFlag) {
+	                     movieListMapper.registMovieActor(new MovieActorVO(mcd, peopleCd));                              
+	                  }
+	               }
+	               else if (filmoInfo.get("moviePartNm").equals("감독")) {
+	                  // MovieDirector 테이블을 조회해서 movieCd와 peopleCd가 모두 일치하면 추가X
+	                  // MovieActor 테이블을 조회해서 movieCd와 peopleCd가 모두 일치하면 추가X
+	                  for(String code : movieCdListByDno) {
+	                     if(code.equals(mcd)) {
+	                        mnoFlag = false;
+	                     }
+	                  }
+	                  
+	                  movieListMapper.registMovieDirector(new MovieDirectorVO(mcd, peopleCd));
+	               }
+	            }
+	         }
+	         
+	         System.out.println("사람등록 끝");
+	         
+	         
+	      } catch (Exception e) {
+	         System.out.println("사람등록 에러");
+	         e.printStackTrace();
+	      }
+	      
+	   }
+	
+	
 	
 	
 	   //영화등록메서드
@@ -243,10 +261,8 @@ public class MovieListServiceImpl implements MovieListService{
 
 	         System.out.println("첫번째여기");
 	         
-	         ArrayList<String> tableGenres = movieListMapper.getGenreList();//<----------------------------
 	         
-	         
-	         System.out.println("장르목록 : "+tableGenres);
+	   
 	         for(int i = 0 ; i < movieCdList.size(); ++i) {
 	            String strMovieInfo = service.getMovieInfo(true, movieCdList.get(i));
 	            HashMap<String, Object> movieInfoHashMap = mapper.readValue(strMovieInfo, HashMap.class);
@@ -258,6 +274,7 @@ public class MovieListServiceImpl implements MovieListService{
 	            //불러오기 
 	            
 	            
+	            ArrayList<String> tableGenres = movieListMapper.getGenreList();//<----------------------------
 	            
 	            String genreNm = "";
 	            boolean flag= true;
@@ -267,31 +284,26 @@ public class MovieListServiceImpl implements MovieListService{
 	               
 	               System.out.println("되냐?");
 	               genreNm = genres.get(j).get("genreNm").toString();
-	               System.out.println("테이블값:"+tableGenres);
-	               
-	               // 장르 추가 시 비교할 전체 장르 테이블 최신화
-	               if(tableGenres.size() != movieListMapper.getGenreSize()) {
-	                  genres = (ArrayList<LinkedHashMap<String, Object>>) movieInfo.get("genres");
-	               }
+	               System.out.println("장르명 : " + genreNm);
+
 	               
 	               for(int k = 0; k < tableGenres.size(); ++k) {
 	                  if(tableGenres.get(k).equals(genreNm)){
 	                     flag = false;
-	                     break start;
 	                  }
 	               }
 	               
-	               
+	               System.out.println("중복 아니면 true : " + flag);
+	               if(flag) {
+	                  GenreVO genre = new GenreVO();
+	                  genre.setGenre(genreNm);
+	                  movieListMapper.GenreInsert(genre);
+	               }
 	            }
 	            
-	            System.out.println("중복 아니면 true : " + flag);
 	            
 	            
-	            if(flag) {
-	               GenreVO genre = new GenreVO();
-	               genre.setGenre(genreNm);
-	               movieListMapper.GenreInsert(genre);
-	            }
+	            
 	         }
 	         System.out.println("두번째");
 	         
@@ -344,6 +356,7 @@ public class MovieListServiceImpl implements MovieListService{
 	                LinkedHashMap<String, Object> genreMap = (LinkedHashMap<String, Object>) genres.get(j);
 	                genreList.add(genreMap.get("genreNm").toString());
 	             }
+	             System.out.println("영화 장르 : " + genreList.toString());
 	             
 	             for(int j = 0; j < genreList.size(); ++j) {
 	                ArrayList<String> genreListByMno = movieListMapper.getGenreByMno(movieCdList.get(i));
@@ -415,8 +428,8 @@ public class MovieListServiceImpl implements MovieListService{
 		return movieListMapper.getTotalE();
 	}
 	@Override
-	public int update(MovieInfoVO vo) {
-		return movieListMapper.update(vo);
+	public void update(MovieInfoVO vo) {
+		 movieListMapper.update(vo);
 	}
 	@Override
 	public ArrayList<String> getCodeList() {
@@ -496,6 +509,59 @@ public class MovieListServiceImpl implements MovieListService{
 	public boolean postUpload(MovieInfoVO vo) {
 		
 		return movieListMapper.postUpload(vo);
+	}
+
+
+
+
+	@Override
+	public void registMovieGenre(MovieGenreVO vo) {
+		movieListMapper.registMovieGenre(vo);
+		
+	}
+
+
+
+
+	@Override
+	public ArrayList<String> getGenreByMno(String mno) {
+		
+		return movieListMapper.getGenreByMno(mno);
+	}
+
+
+
+
+	@Override
+	public ArrayList<String> getMnoByAno(String ano) {
+		
+		return movieListMapper.getMnoByAno(ano);
+	}
+
+
+
+
+	@Override
+	public ArrayList<String> getMnoByDno(String dno) {
+		return movieListMapper.getMnoByDno(dno);
+	}
+
+
+
+
+	@Override
+	public void registMovieActor(MovieActorVO vo) {
+		
+		movieListMapper.registMovieActor(vo);
+		
+	}
+
+
+
+
+	@Override
+	public void registMovieDirector(MovieDirectorVO vo) {
+		movieListMapper.registMovieDirector(vo);
 	}
 
 

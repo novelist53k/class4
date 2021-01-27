@@ -239,7 +239,7 @@ section {
         </form>
         <!--리뷰 -->
         <div class = "review_main">
-            <label style="font-size: 40px; font-weight: bold;">영화 리뷰</label>
+            <label style="font-size: 40px; font-weight: bold;">영화 리뷰 게시판</label>
             <hr style="border-bottom: 3px solid black; margin: 10px 0;">
 			
             <ul class="review_list" id="movie_review_list">
@@ -258,15 +258,15 @@ section {
                         <ul class="writer_info">
                             <li class = "movie_title">
                                 <label><a href="reviewContent?bno=${vo.bno }">${vo.movieTitle }</a></label>
-                                <span class = "point glyphicon glyphicon glyphicon-star" aria-hidden="true" style="color: rgb(233, 49, 49);"></span>
-                                <span class = "score">5</span><br>
+                                <!-- <span class = "point glyphicon glyphicon glyphicon-star" aria-hidden="true" style="color: rgb(233, 49, 49);"></span>
+                                <span class = "score">5</span><br> -->
                             </li>
                             <li class="writer_name">
                                 <p>${vo.writer }</p>
                             </li>
                             <li class="writer_etc">
                                 <span class = "day">
-                                	<fmt:formatDate value="${vo.regDate }" pattern="yyyy-MM-dd HH:mm"/> 
+                                	<fmt:formatDate value="${vo.updateDate }" pattern="yyyy-MM-dd HH:mm"/> 
                                 </span>
                             </li>
                         </ul>

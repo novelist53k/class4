@@ -38,7 +38,7 @@ public class PageVO {
 		}
 		
 		//이전버튼 활성화여부
-		this.prev = startPage >= 1;
+		this.prev = startPage > 1;
 		
 		//다음 버튼은 
 		this.next = realEnd > this.endPage;

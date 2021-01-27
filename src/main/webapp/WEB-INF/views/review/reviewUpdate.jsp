@@ -117,8 +117,8 @@ input:focus{
 	        </div>    
 	        <div class = "review-content">
 		          <label><input type="text" name="movieTitle" value="${vo.movieTitle }" readonly="readonly"></label><br>
-		          <p class = "point glyphicon glyphicon glyphicon-star" aria-hidden="true" style="color: rgb(233, 49, 49);"></p>
-		          <p class = "score" style="display: inline-block;">5</p><br>
+		          <!-- <p class = "point glyphicon glyphicon glyphicon-star" aria-hidden="true" style="color: rgb(233, 49, 49);"></p>
+		          <p class = "score" style="display: inline-block;">5</p><br> -->
 		          <input type = "text" class = "writer" name="writer" value = "${vo.writer}" readonly="readonly">
 		          <div class = "day">	        		 
 		           		<fmt:formatDate value="${vo.updateDate }" pattern="yyyy-MM-dd HH:mm"/>
@@ -127,8 +127,8 @@ input:focus{
 	    </div>
 	    
 	    <div class="content form-group">
-	        <label>내용</label>
-	        <textarea class="content form-control" rows="10" name='content' >${vo.content }</textarea>
+	        <label>내용(100글자 이내)</label>
+	        <textarea class="content form-control" rows="10" name='content' id="updateContent">${vo.content }</textarea>
 	        <div class="btns" style="text-align: right;">
 	            <button type = "button" class="list-modify" id="modifyBtn">수정</button>
 	            <button type = "button" class = "list-cancel" id="cancelBtn">취소</button>
@@ -157,6 +157,18 @@ input:focus{
 	cancelBtn.onclick = function () {
 		location.href = 'reviewList';
 	}
+	
+	
+	/*굴자수 제한*/
+	$(document).ready(function() {
+		$("#updateContent").keyup(function() {
+			var inputLength = $(this).val().length;
+			if(inputLength > 100) {
+				$(this).val($(this).val().substring(0,100));
+				alert("더이상 입력 할 수 없습니다.");
+			}
+		});
+	});
 	
 	
 	

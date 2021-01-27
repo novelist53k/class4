@@ -212,17 +212,34 @@
             <label for="gender" class="joinLabel"> 생년월일</label>
             <select name="userYear" id="userYear" class="userYear">
            		<c:forEach begin="1930" end="2015" var="i" >
+           		
            		<option>${i }
+           		
            		</c:forEach>
            		</select> 
            	<select name="userMonth" id="userMonth" class="userMonth">
            	<c:forEach begin="1" end="12" var="i">
-           		<option>${i }
+           		<c:choose>
+           			<c:when test="${i<10 }">
+           				<option>0${i}
+           			</c:when>
+           			<c:otherwise>
+           				<option>${i }
+           			</c:otherwise>
+           		</c:choose>  
            	</c:forEach>
            	</select> 
             <select name="userDay" id="userDay" class="userDay">
            	<c:forEach begin="1" end="31" var="i">
-           		<option>${i }
+           		<c:choose>
+           			<c:when test="${i<10 }">
+           				<option>0${i}
+           			</c:when>
+           			<c:otherwise>
+           				<option>${i }
+           			</c:otherwise>
+           		</c:choose>       		
+           		
            	</c:forEach>
             
             </select>
@@ -258,18 +275,18 @@
             <button type="button" class="add btn-primary" onclick="addDirector()">+</button>
             <button type="button" class="minus btn-primary" onclick="minusDirector()">-</button>
             <div class="genre">
-			  <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist" name="genrelist" value="애니메이션"/> 애니메이션</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist" name="genreList" value="드라마"/> 드라마</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist" name="genreList" value="가족"/> 가족</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist" name="genreList" value="미스테리"/> 미스테리</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist" name="genreList" value="범죄"/> 범죄</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist" name="genreList" value="다큐멘터리"/> 다큐멘터리</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist" name="genreList" value="스릴러"/> 스릴러</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist" name="genreList" value="공포"/> 공포</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist" name="genreList" value="판타지"/> 판타지</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist" name="genreList" value="액션"/> 액션</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist" name="genreList" value="로맨스"/> 로맨스</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist" name="genreList" value="SF"/> SF</label>
+			  <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist1" name="genrelist" value="애니메이션"/> 애니메이션</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist2" name="genrelist" value="드라마"/> 드라마</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist3" name="genrelist" value="가족"/> 가족</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist4" name="genrelist" value="미스테리"/> 미스테리</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist5" name="genrelist" value="범죄"/> 범죄</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist6" name="genrelist" value="다큐멘터리"/> 다큐멘터리</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist7" name="genrelist" value="스릴러"/> 스릴러</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist8" name="genrelist" value="공포"/> 공포</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist9" name="genrelist" value="판타지"/> 판타지</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist0" name="genrelist" value="액션"/> 액션</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist11" name="genrelist" value="로맨스"/> 로맨스</label>
+              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist12" name="genrelist" value="SF"/> SF</label>
               
               
               
@@ -395,7 +412,7 @@ var directorName = null;
   input.setAttribute('id','likeDirector')
   input.setAttribute('placeholder','이름을 입력하세요')
   directorName = $(".likeDirector").val();
-  input.setAttribute('value',autocomplete1(directorName));
+  autocomplete1(directorName);
   
   
   }

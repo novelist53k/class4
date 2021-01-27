@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.class4.command.user.UserVO;
+import com.class4.command.UserVO;
 
 public class ReviewHandler extends HandlerInterceptorAdapter{
 

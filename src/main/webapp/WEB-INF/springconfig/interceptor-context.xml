@@ -24,7 +24,9 @@
 		<mvc:interceptors>
 			<!-- 로그인된 유저만 사용할수 있는 권한 핸들러 -->
 			<mvc:interceptor>
-				<mvc:mapping path="/user/mypage"/>				
+				<mvc:mapping path="/user/mypage"/>
+				<mvc:mapping path="/user/update"/>
+				<mvc:mapping path="/user/modify"/>				
 				<ref bean="userAuthHandler"/><!-- 위에서 만든 userAuthHandler가 동작 -->
 				
 			</mvc:interceptor>
@@ -32,7 +34,7 @@
 			<mvc:interceptor>
 				
 				<mvc:mapping path="/review/reviewUpdate"/>				
-				<ref bean="ReviewHandler"/><!-- 위에서 만든 userAuthHandler가 동작 -->
+				<ref bean="ReviewHandler"/>
 				
 			</mvc:interceptor>
 			

@@ -4,44 +4,58 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.class4.user.mapper.UserMapper">
-
+	<!-- 아이디 중복체크 -->
 	<select id="idCheck" resultType="int">
   		select count(*) as total from users where userId = #{userId}
-  	</select>
-  	
+  	</select>  	
+  	<!-- 회원가입 -->
   	<insert id="JoinReq">
   		insert into users(userId,userPw,userName,userGender,userAge,userEmail1,userEmail2,addrBasic,addrDetail,addrZipNum ) 
-  		values(#{vo.userId},#{vo.userPw},#{vo.userName},#{vo.userGender},#{vo.userAge},#{vo.userEmail1},#{vo.userEmail2},#{vo.addrBasic},#{vo.addrDetail},#{vo.addrZipNum})
+  		values(#{userId},#{userPw},#{userName},#{userGender},#{userAge},#{userEmail1},#{userEmail2},#{addrBasic},#{addrDetail},#{addrZipNum})
   	</insert>
+  	<!--  마이페이지에서 프로필사진 업로드-->
   	<update id="uploadProfile">
   		update users set path=#{path}, fileRealName=#{fileRealName} where userId = #{userId}
   	</update>
-  	
+  	<!-- 회원 로그인 -->
   	<select id="Login" resultType="UserVO">
   		select * from users where userId = #{userId} and userPw =#{userPw}
   	</select>
-	
+	<!-- 가입시 선호 장르 넣기 -->
 	<insert id="genreList" >
-		insert into userGenre (ugno,ugId,genre) values(userGenre_seq.nextval,#{userId},#{genre})
+		insert into userGenre (ugno,ugId,genre) values(userGenre_seq.nextval,#{ugId},#{genre})
 	</insert>
+	<!-- 가입시 선호 배우 넣기 -->
 	<insert id="actorList" >
-		insert into userActor (uano, uaId, ano,uaAge,uaGender) values(userActor_seq.nextval,#{userId},#{aco},#{userAge},#{userGender})
+		insert into userActor (uano, uaId, ano,uaAge,uaGender) values(userActor_seq.nextval,#{uaId},#{ano},#{uaAge},#{uaGender})
 	</insert>
+	<!-- 가입시 선호 감독 넣기 -->
 	<insert id="directorList" >
-		insert into userDirector (udno, udId, dno,udAge,udGender) values(userDirector_seq.nextval,#{userId},#{dco},#{userAge},#{userGender})
+		insert into userDirector (udno, udId, dno,udAge,udGender) values(userDirector_seq.nextval,#{udId},#{dno},#{udAge},#{udGender})
 	</insert>
-	<select id="getActorInfo" resultMap="usersInfo">
-  		select userId,userName,userGender,userAge,useremail1,useremail2,addrbasic,addrdetail,u.addrzipnum, a.uaid,a.uano,a.actor from users u left outer JOIN USERACTOR a on u.userId = a.uaid where userId = #{userId}
+	<select id="getGenreList" resultType="String">
+		select genre from genre
+	</select>
+	<select id="mypage" resultType="UserVO">
+		select * from users where userId = #{userId}
+	</select>
+	<!-- 마이페이지 선호배우 띄우기 -->
+	<select id="getActorInfo" resultMap="getActorInfo" resultType="UserActorVO">
+  		select a.actorName from userActor ua left outer join actor a on ua.ano = a.ano where ua.uaId = #{userId}
   	</select>
-  	<select id="getGenreInfo" resultMap="usersInfo">
-  		select userId,userName,userGender,userAge,useremail1,useremail2,addrbasic,addrdetail,u.addrzipnum, g.ugid,g.genre,g.ugno from users u left outer JOIN USERGENRE g on u.userId = g.ugid where userId = #{userId}
+  	<!-- 마이페이지 선호장르 띄우기 -->
+  	<select id="getGenreInfo" resultMap="getGenreInfo" resultType="UserGenreVO">
+  		select * from userGenre where ugId = #{userId}
   	</select>
-  	<select id="getDirectorInfo" resultMap="usersInfo">
-  		select userid,username,userGender,userAge,useremail1,useremail2,addrbasic,addrdetail,u.addrzipnum, d.udid,d.udno,d.director from users u left outer JOIN USERDIRECTOR d on u.userId = d.udid where userId = #{userId}
+  	<!-- 마이페이지 선호감독 띄우기 -->
+  	<select id="getDirectorInfo" resultMap="getDirectorInfo" resultType="UserDirectorVO">
+  		select d.directorName from userDirector ud left outer join director d on ud.dno = d.dno where ud.udId = #{userId}
   	</select>
+  	<!-- 가입시 선호 배우 검색 -->
   	<select id="actorName" resultType="ActorVO">
   		select * from actor where actorName like #{actorName} || '%' or factorName like #{actorName} || '%'
   	</select>
+  	<!-- 가입시 선호 감독 검색 -->
   	<select id="directorName" resultType="DirectorVO">
   		select * from director where DIRECTORNAME like '%'|| #{directorName} || '%' or FDIRECTORNAME like '%' || #{directorName} || '%'
   	</select>
@@ -58,31 +72,34 @@
   		<result property="userEmail2" column="USEREMAIL2"/>
   		<result property="addrBasic" column="ADDRBASIC"/>
   		<result property="addrDetail" column="ADDRDETAIL"/>
-  		<result property="addrZipNum" column="ADDRZIPNUM"/>
-  		<collection property="actorlist" resultMap="userActorList"/>
-  		<collection property="usergenrelist" resultMap="userGenreList"/>
-  		<collection property="directorlist" resultMap="userDirectorList"/>
+  		<result property="addrZipNum" column="ADDRZIPNUM"/> 
   		<collection property="userReview" resultMap="userReviewList"/>
   	</resultMap>
-  	<resultMap type="UserActorListVO" id="userActorList">
+  	
+  	<resultMap type="UserActorVO" id="getActorInfo">
   		<result property="uano" column="UANO"/>
   		<result property="uaId" column="UAID"/>
   		<result property="ano" column="ANO"/>
   		<result property="uaAge" column="UAAGE"/>
-  		<result property="uaGender" column="UAGENDER"/> 	
-  	</resultMap>  
-  	<resultMap type="UserGenreListVO" id="userGenreList">
-  		<result property="ugno" column="UGNO"/>
-  		<result property="ugId" column="UGID"/>
-  		<result property="genre" column="GENRE"/>  		
-  	</resultMap>  	
-	<resultMap type="UserDirectorListVO" id="userDirectorList">
+  		<result property="uaGender" column="UAGENDER"/>  			
+  	</resultMap>
+
+  	<resultMap type="UserDirectorVO" id="getDirectorInfo">
   		<result property="udno" column="UDNO"/>
-  		<result property="udid" column="UDID"/>
+  		<result property="udId" column="UDID"/>
   		<result property="dno" column="DNO"/>
   		<result property="udAge" column="UDAGE"/>
-  		<result property="udGender" column="UDGENDER"/> 	
-  	</resultMap> 
+  		<result property="udGender" column="UDGENDER"/>  		
+  	</resultMap>  
+
+  	<resultMap type="UserGenreVO" id="getGenreInfo">
+  		<result property="ugno" column="UGNO"/>
+  		<result property="ugId" column="UGID"/>
+  		<result property="genre" column="GENRE"/>
+  		 		
+  	</resultMap>  	
+  	
+	 
   	<resultMap type="ReviewBoardVO" id="userReviewList">
   		<result property="bno" column="BNO"/>
   		<result property="mno" column="MNO"/>
@@ -95,13 +112,13 @@
 		delete from users where userId = #{userId}		
 	</delete>
 	<delete id="delUD">
-		delete from userDirector where udid = #{userId}
+		delete from userDirector where udId = #{userId}
 	</delete>
 	<delete id="delUA">
-		delete from userActor where uaid = #{userId}
+		delete from userActor where uaId = #{userId}
 	</delete>
 	<delete id="delUG">
-		delete from userGenre where ugid = #{userId}
+		delete from userGenre where ugId = #{userId}
 	</delete>
 	<update id="update">
 		update users set userPw=#{userPw},userName=#{userName},userGender=#{userGender},
@@ -110,7 +127,7 @@
 	</update>
 	
 	<select id="getReview" resultMap="usersInfo">
-		select * from users u left outer join review r on u.userId = r.writer where r.writer = #{userId}
+		select u.*,r.* from users u left outer join review r on u.userId = r.writer where r.writer = #{userId}
 	</select>
 	
 </mapper>

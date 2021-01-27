@@ -131,8 +131,7 @@
     }
     .likeActor, .likeDirector{
       display: block;
-      position: relative;
-      width: 100%;
+      position: relative;      
       height: 34px;
       padding: 6px 12px;
       font-size: 14px;
@@ -340,6 +339,7 @@
     width:150px;}
     .genreLike{
     	display:box;
+    	width: 24%;
     }
 
 
@@ -364,7 +364,7 @@
 
   <div class="tab-content">
     <div id="myInfo" class="myInfo tab-pane fade in active">
-      <form action="update" class="joinForm" method="POST">
+      <form action="" class="joinForm" method="POST">
         <br>
         	<label for="id" class="joinLabel">ID</label><br>
        		<input type="text" class="joinId" name="id" id="id" value="${login.userId }" readonly><br>
@@ -399,13 +399,7 @@
         </select>  
         
         <label for="gender" class="joinLabel"> 나이</label>
-        <select name="age" id="age" class="age">
-        <c:forEach begin="7" end="100" var="i">
-             	<option value="${i==login.userAge?'selected':'' }" >${i}
-                                   
-             </c:forEach>
-        
-        </select>
+        <input type="text" class="joinId" name="userAge" id="userAge" value="${login.userAge }" readonly><br>
         <br>
         <label for="email" class="joinLabel">EMAIL</label><br>
         <input type="text" class="email1" name="email1" value="${login.userEmail1 }" readonly> @ 
@@ -434,23 +428,17 @@
         <div class="actorSection">
           <label for="likeActor" class="joinLabel pwlabel">관심있는 배우</label><br>
                           
-             <c:forEach var="vo" items="${userActorInfo.actorlist }">
-             	<input class="likeActor" id="likeActor" name="likeActor" value="${vo.actor }" readonly>
+             <c:forEach var="vo" items="${userActorInfo}">
+             	<input class="likeActor" id="likeActor" name="likeActor" value="${vo.actorName}" readonly>
                                    
              </c:forEach>                         
                                    	
           
-        </div>
-        
-        
-        
-       
-        <br>
-        <br>
+        </div><br><br>
         <div class="diretorSection">
         <label for="likeDirector" class="joinLabel pwlabel">관심있는 감독</label><br>
-        	 <c:forEach var="vo" items="${userDirectorInfo.directorlist }">
-             	<input class="likeDirector" id="likeDirector" name="likeDirector" value="${vo.director }" readonly>
+        	 <c:forEach var="vo" items="${userDirectorInfo}">
+             	<input class="likeDirector" id="likeDirector" name="likeDirector" value="${vo.directorName}" readonly>
                                    
              </c:forEach>
       </div>
@@ -464,8 +452,8 @@
 
 			
           <label class="joinLabel">선호하는 장르</label><br>
-          <c:forEach var="vo" items="${userGenreInfo.usergenrelist}">
-                  <input class="likeGenre" id="likeGenre" name="likeGenre" value="${vo.gno }">
+          <c:forEach var="vo" items="${userGenreInfo}">
+                  <input class="likeDirector" id="likeGenre" name="likeGenre" value="${vo.genre }">
         	</c:forEach>
            <table>
            <colgroup>
@@ -477,11 +465,11 @@
     		</colgroup>
            <tbody>
            
-        	<c:forEach var="vo1" items="${userGenreInfo.usergenrelist}">
+        	<c:forEach var="vo1" items="${userGenre.genrelist}">
             <c:if test="${i%j == 0 }">
                 <tr>
             </c:if>                  
-	        	<td> <label><input type="checkbox" class="genreLike" id="genreLike" name="genreLike" value="${vo1.gno }" > ${vo1.ugno }</label></td>                    
+	        	<td> <label><input type="checkbox" class="genreLike" id="genreLike" name="genreLike" value="${vo1.genre }" > ${vo1.genre}</label></td>                    
             <c:if test="${i%j == j-1 }">
                 </tr>
             </c:if>
@@ -501,7 +489,7 @@
         </div>
         <br>
                 
-        <button type="submit" class="btn joinbtn " style="padding: 15px;">수정</button>
+        <button type="button" class="btn joinbtn" onclick="location.href='update'" style="padding: 15px;">수정</button>
         
       </form>
     </div>
@@ -512,7 +500,7 @@
           <div class="reviewPoster"><img src="img/1.jpg" class="poster"></div>
           <div class="reviewBox">
             <div class="reviewBoxin">
-              <div class="myrvTitle">제목: ${userReview.movieTitle }<a href=""></a></div>
+              <div class="myrvTitle">제목: <a href=""></a></div>
               <div class="myrvScore">평점: </div>
               <div class="myrvRegdate">2020-01-11</div>
           </div>
@@ -562,6 +550,7 @@
 
 </section>
 <script>
+
 	/* $("#delcheck").click(function(){
 		var checkPw = $("#checkPw").val()
 		console.log("확인누름")

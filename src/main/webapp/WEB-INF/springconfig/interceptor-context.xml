@@ -29,13 +29,13 @@
 				
 			</mvc:interceptor>
 			
-			<mvc:interceptor>
+			<!-- <mvc:interceptor>
 				
 				<mvc:mapping path="/review/reviewUpdate"/>				
-				<ref bean="ReviewHandler"/><!-- 위에서 만든 userAuthHandler가 동작 -->
+				<ref bean="ReviewHandler"/>위에서 만든 userAuthHandler가 동작
 				
 			</mvc:interceptor>
-			
+			 -->
 			
 			
 		</mvc:interceptors>

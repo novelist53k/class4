@@ -41,10 +41,8 @@
 	
 	<update id="modify">
 		update review
-		set content = #{content},
-			updatedate = sysdate
+		set content = #{content}, updateDate = sysdate
 		where bno = #{bno}
-	
 	</update>
 	
 	<delete id="delete">
@@ -52,8 +50,8 @@
 	</delete>
 	
 	<insert id="regist">
-		insert into review (writer, movietitle, content)
-		values(#{writer}, #{movieTitle}, #{content})
+		insert into review (bno, mno, writer, movietitle, content)
+		values(bno_seq.nextval, #{mno}, #{writer}, #{movieTitle}, #{content})
 	</insert>
 	
   

@@ -67,13 +67,20 @@ section {
 
 }
 
-.review_bno{
+.movie-mno{
     position: absolute;
     top: 0;
     left: 0;
     color: whitesmoke;
 }
 
+.wrap>input, .review-content>input, .review-content>label>input{
+	border: none;
+	background-color: whitesmoke;
+}
+input:focus{
+	outline:none;
+}
 
 
 /* 리뷰 내용 작성 */
@@ -89,19 +96,18 @@ section {
 </style>  	
 	
 <section>
-    <lable style="font-size: 40px; font-weight: bold;">영화 리뷰 작성 페이지</lable>
+    <label style="font-size: 40px; font-weight: bold;">영화 리뷰 작성 페이지</label>
     <hr style="border-bottom: 3px solid black; margin: 10px 0;">
     
-    <form action="reviewRegistForm" method="post" name="reviewRegistForm">
-	    <div class = wrap>
-	    <span class="review_bno">${vo.bno }</span>
+    <form action="reviewRegistForm" method="post" name="registForm">
+	    <div class = "wrap">
+	    	<input name="mno" type="text" class="movie-mno" value="1" readonly="readonly">
 	        <div class = "movie-img">
 	            <img src="${pageContext.request.contextPath }/resources/img/movie_image.jpg" alt="영화포스터">
-	            
 	        </div>    
 	        <div class = "review-content">
-	          <label><input type="text" name="movieTitle" value="${vo.movieTitle }" readonly="readonly"></label>
-	          <input type="text" class = "writer" name ="writer" value ="${login.userId}">
+	          <label><input type="text" name="movieTitle" value="movietitle" readonly="readonly"></label><br>
+	          <input type="text" class = "writer" name ="writer" value ="임시" readonly="readonly">
 	        </div>
 	    </div>
 	    
@@ -120,12 +126,12 @@ section {
 	//글 등록
 	function regist() {
 		
-		if(document.reviewRegistForm.content.value === ''){
+		if(document.registForm.content.value === ''){
 			document.getElementById("msgContent").innerHTML = "내용을 입력해주세요!!";
-			document.reviewRegistForm.content.focus();
+			document.registForm.content.focus();
 			return;
 		}else{
-			document.reviewRegistForm.submit();
+			document.registForm.submit();
 		}
 		
 	}

@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.class4.command.MovieInfoVO;
-import com.class4.command.user.UserVO;
+import com.class4.command.UserVO;
 import com.class4.home.service.HomeService;
 
 @Controller

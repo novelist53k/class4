@@ -4,7 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.sql.Timestamp;
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -32,10 +39,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.class4.command.ActorVO;
 import com.class4.command.DirectorVO;
+import com.class4.command.GenreVO;
 import com.class4.command.ReviewBoardVO;
-import com.class4.command.user.UserActorListVO;
-import com.class4.command.user.UserVO;
+import com.class4.command.UserVO;
+import com.class4.command.mapping.UserActorVO;
+import com.class4.command.mapping.UserDirectorVO;
+import com.class4.command.mapping.UserGenreVO;
 import com.class4.user.service.UserService;
+
+import oracle.sql.TIMESTAMP;
 
 @Controller
 @RequestMapping("/user")
@@ -55,16 +67,23 @@ public class UserController {
 	public String mypage(HttpSession session, Model model) {
 		UserVO vo =(UserVO)session.getAttribute("login");
 		String userId = vo.getUserId();
+		System.out.println("user나이값 : " +vo.getUserAge());
 		
-		//1:N���� �������� ����� ó��
-		UserVO userActorInfo = userService.getActorInfo(userId);
-		UserVO userGenreInfo = userService.getGenreInfo(userId);
-		UserVO userDirectorInfo = userService.getDirectorInfo(userId);
+		SimpleDateFormat formatter = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");
+		Calendar cal = Calendar.getInstance();
+		String today = null;
+		today = formatter.format(cal.getTime());
+		Timestamp ts = Timestamp.valueOf(today);
+		System.out.println("현재시간 "+ ts);
+		
+		List<UserActorVO> userActor = userService.getActorInfo(userId);
+		List<UserGenreVO> userGenre = userService.getGenreInfo(userId);
+		List<UserDirectorVO> userDirector = userService.getDirectorInfo(userId);
 		List<ReviewBoardVO> usereview = userService.getReview(userId);
 		
-		model.addAttribute("userActorInfo",userActorInfo);
-		model.addAttribute("userGenreInfo",userGenreInfo);
-		model.addAttribute("userDirectorInfo",userDirectorInfo);
+		model.addAttribute("userActorInfo",userActor);
+		model.addAttribute("userGenreInfo",userGenre);
+		model.addAttribute("userDirectorInfo",userDirector);
 		model.addAttribute("userReview",usereview);
 		
 		return "user/mypage";
@@ -96,14 +115,27 @@ public class UserController {
 		
 	}
 	@RequestMapping(value="JoinReq", method=RequestMethod.POST)	
-	public String Join(UserVO vo , DirectorVO dvo, ActorVO avo) {
+	public String Join(UserVO vo){
 		
-		vo.setUserAge(vo.getUserYear()+vo.getUserMonth()+vo.getUserDay());
-		System.out.println(vo.getGenrelist());
-		System.out.println(vo.getActor());
+		String birthday = vo.getUserDay()+"/"+vo.getUserMonth()+"/"+ vo.getUserYear();
+
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			Date date = dateFormat.parse(birthday);
+			System.out.println(date.getYear());
+			Timestamp age = new Timestamp(date.getYear()+date.getMonth()+date.getDay());
+			vo.setUserAge(age);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		System.out.println(vo.toString());
+		
 		if(vo.getGenrelist() !=null) {
+			System.out.println(vo.getGenrelist().length);
 			for (int i = 0; i < vo.getGenrelist().length; i++) {			
+				System.out.println(vo.getGenrelist());
 				vo.setGenre(vo.getGenrelist()[i]);
 				userService.genreList(vo);
 			
@@ -115,29 +147,28 @@ public class UserController {
 			String actorName = vo.getLikeActor()[i].substring(0,vo.getLikeActor()[i].indexOf("."));
 			String factorName = vo.getLikeActor()[i].substring(vo.getLikeActor()[i].indexOf(".")+1,vo.getLikeActor()[i].lastIndexOf("."));
 			String aco = vo.getLikeActor()[i].substring(vo.getLikeActor()[i].lastIndexOf(".")+1);
-			System.out.println(factorName);
 			System.out.println(aco);
 			vo.setActor(actorName);
-			avo.setActorName(actorName);
-			avo.setFActorName(factorName);
-			avo.setAno(aco);
 			
-			userService.actorList(vo, avo);
+			
+			userService.actorList(vo, aco,actorName);
 		
 		}}
 		
 		if(vo.getLikeDirector()!=null) {
 		for (int i = 0; i < vo.getLikeDirector().length; i++) {
 			String directorName = vo.getLikeDirector()[i].substring(0,vo.getLikeDirector()[i].indexOf("."));
-			String fdirectorName = vo.getLikeDirector()[i].substring(vo.getLikeDirector()[i].indexOf(".")+1,vo.getLikeActor()[i].lastIndexOf("."));
-			String dco = vo.getLikeActor()[i].substring(vo.getLikeDirector()[i].lastIndexOf(".")+1);
+			String fdirectorName = vo.getLikeDirector()[i].substring(vo.getLikeDirector()[i].indexOf(".")+1,vo.getLikeDirector()[i].lastIndexOf("."));
+			String dco = vo.getLikeDirector()[i].substring(vo.getLikeDirector()[i].lastIndexOf(".")+1);
+			
 			vo.setDirector(directorName);
-			dvo.setDno(dco);
-			dvo.setDirectorName(directorName);
-			dvo.setFDirectorName(fdirectorName);
-			userService.directorList(vo, dvo);
+		
+			userService.directorList(vo,dco,directorName);
 			}
 		}
+		
+		
+		
 		int result = userService.JoinReq(vo);
 		if(result ==1) {
 			
@@ -158,11 +189,11 @@ public class UserController {
 		try {
 			UserVO userVO = (UserVO)session.getAttribute("login");
 			
-			//������
+			//占쏙옙占쏙옙占쏙옙
 			String fileLoca = userVO.getUserId();
 			
-			//������ ����
-			String path = "D:\\course\\workspace\\class4\\src\\main\\webapp\\resources\\img\\profile\\"+fileLoca;
+			//占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙
+			String path = "D:\\project\\class4\\src\\main\\webapp\\resources\\img\\profile\\"+fileLoca;
 			String sqlPath = "\\movie\\resources\\img\\profile\\"+fileLoca;
 			File folder = new File(path);
 			if(!folder.exists()) {
@@ -176,7 +207,7 @@ public class UserController {
 			
 			System.out.println(fileRealName);
 			
-			//���ε�
+			//占쏙옙占싸듸옙
 			File saveFile = new File(path + "\\" + fileRealName);
 			file.transferTo(saveFile);
 			userVO.setPath(sqlPath);
@@ -216,6 +247,7 @@ public class UserController {
 		
 		if(vo.getUserPw().equals(checkPw)) {
 			userService.delUser(userId);
+			session.invalidate();
 			
 			return "/user/join";
 		}else {
@@ -228,15 +260,85 @@ public class UserController {
 		
 	}
 	@RequestMapping("/update")
-	public String update() {
-				
+	public String update(HttpSession session,Model model) {
+		UserVO vo =(UserVO)session.getAttribute("login");
+		String userId = vo.getUserId();
+		System.out.println(userId);
+		
+		System.out.println("1번");
+		List<UserActorVO> userActor = userService.getActorInfo(userId);
+		List<UserGenreVO> userGenre = userService.getGenreInfo(userId);
+		List<UserDirectorVO> userDirector = userService.getDirectorInfo(userId);
+		List<String> genreList = userService.getGenreList();
+		
+		model.addAttribute("userActorInfo",userActor);
+		model.addAttribute("userGenreInfo",userGenre);
+		model.addAttribute("userDirectorInfo",userDirector);
+		model.addAttribute("genreList",genreList);
+		System.out.println("3번");
+		System.out.println(userGenre.toString());
+		System.out.println(genreList.toString());
+		
 		return "user/update";
 	}
 	@RequestMapping("/modify")
-	public String modify(UserVO vo, HttpSession session) {
-			System.out.println(vo.toString());
+	public String modify(UserVO vo, HttpSession session,Model model) {
+		
+		if (vo.getUserPw().equals("")) {
+			UserVO user = (UserVO)session.getAttribute("login");
+			vo.setUserPw(user.getUserPw());
+		}
 			
-			session.setAttribute("login", userService.update(vo));
+		String birthday = vo.getUserDay()+"/"+vo.getUserMonth()+"/"+ vo.getUserYear();
+
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			Date date = dateFormat.parse(birthday);
+			Timestamp age = new Timestamp(date.getTime());
+			vo.setUserAge(age);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("수정"+vo.toString());
+		userService.update(vo);
+		session.setAttribute("login", vo);
+		
+		if(vo.getGenrelist() !=null) {
+			System.out.println(vo.getGenrelist().length);
+			for (int i = 0; i < vo.getGenrelist().length; i++) {			
+				
+				vo.setGenre(vo.getGenrelist()[i]);
+				userService.genreList(vo);
+			
+			}
+		}
+		
+		if(vo.getLikeActor() != null) {
+		for (int i = 0; i < vo.getLikeActor().length; i++) {
+			String actorName = vo.getLikeActor()[i].substring(0,vo.getLikeActor()[i].indexOf("."));
+			String factorName = vo.getLikeActor()[i].substring(vo.getLikeActor()[i].indexOf(".")+1,vo.getLikeActor()[i].lastIndexOf("."));
+			String aco = vo.getLikeActor()[i].substring(vo.getLikeActor()[i].lastIndexOf(".")+1);
+			System.out.println(aco);
+			vo.setActor(actorName);
+			
+			
+			userService.actorList(vo, aco,actorName);
+		
+		}}
+		
+		if(vo.getLikeDirector()!=null) {
+		for (int i = 0; i < vo.getLikeDirector().length; i++) {
+			String directorName = vo.getLikeDirector()[i].substring(0,vo.getLikeDirector()[i].indexOf("."));
+			String fdirectorName = vo.getLikeDirector()[i].substring(vo.getLikeDirector()[i].indexOf(".")+1,vo.getLikeDirector()[i].lastIndexOf("."));
+			String dco = vo.getLikeDirector()[i].substring(vo.getLikeDirector()[i].lastIndexOf(".")+1);
+			
+			vo.setDirector(directorName);
+		
+			userService.directorList(vo,dco,directorName);
+			}
+		}
+			
 			
 			
 		return "redirect:/user/mypage";
@@ -253,14 +355,14 @@ public class UserController {
 	
 	@RequestMapping(value = "/autocomplete", method = RequestMethod.POST)
 	public void autoSearch(ModelMap model, HttpServletRequest request,			
-			 HttpServletResponse response, UserVO vo,ActorVO actorvo) throws IOException {
+			 HttpServletResponse response, ActorVO actorvo) throws IOException {
 		
 		 request.setCharacterEncoding("UTF-8");
 		
-		 List<ActorVO> list = userService.actorList(actorvo);
+		 List<ActorVO> list = userService.actorName(actorvo);
 		 JSONArray array = new JSONArray();
 		 
-		 for(int i= 0; i<list.size(); i++) {
+		 for(int i= 0; i < list.size(); i++) {
 			 array.add(list.get(i).getActorName()+"."+list.get(i).getFActorName() +"."+list.get(i).getAno());
 			 
 			 
@@ -282,19 +384,17 @@ public class UserController {
 		
 		 request.setCharacterEncoding("UTF-8");
 		
-		 List<DirectorVO> list = userService.directorList(director);
+		 List<DirectorVO> list = userService.directorName(director);
 		 JSONArray array = new JSONArray();
 		 
 		 for(int i= 0; i<list.size(); i++) {
-			 array.add(list.get(i).getDirectorName()+" / "+list.get(i).getFDirectorName()+" / "+list.get(i).getDno());
+			 array.add(list.get(i).getDirectorName()+"."+list.get(i).getFDirectorName()+"."+list.get(i).getDno());
 			 
 		}
 		 System.out.println(array.toString());
 		 PrintWriter out = response.getWriter();
 		 out.print(array.toString());
-		 out.flush();		 
-		 out.close();
-		 array.clear();
+		
 		 System.out.println(array.toString());		 
 		 list.clear();
 		 

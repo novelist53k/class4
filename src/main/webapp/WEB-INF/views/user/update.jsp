@@ -229,7 +229,7 @@
     border-radius: 4px;
     
   }
-  .gender, .age {
+  .gender {
     display: block;
     width: 250px;
     height: 34px;
@@ -243,7 +243,20 @@
     border-radius: 4px;
     margin-bottom: 25px;
   }
-  .likeActor, .likeDirector{
+   .userMonth,.userYear,.userDay{    display: inline;
+    width: 150px;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 25px;
+   }
+  .likeActor, .likeDirector,.likeGenre{
     display: block;
     position: relative;
     width: 47%;
@@ -359,10 +372,10 @@
       <form action="modify" class="joinForm" method="POST">
         <br>
         <label for="id" class="joinLabel">ID</label><br>
-       	<input type="text" class="joinId" name="userId" id="userId" value="${login.userId }" readonly><br>        
+       	<input type="text" class="joinId" name="userId" id="userId" value="${login.userId }" readonly><br>   
+       		     
         <label for="password" class="joinLabel pwlabel">PASSWORD</label><br>
         <input type="password" class="userPw" name="userPw" id="userPw">
-        <input type="hidden" class="userPw" name="userPw" id="userPw" value="${login.userPw }">
         <label for="pwCheck" class="joinLabel">PASSWORD 확인</label><br>
         <input type="password" class="pwCheck" name="pwCheck" id="pwCheck" ><br>
         <label for="pwCheck" class="joinLabel">이름</label><br>
@@ -375,14 +388,40 @@
           <option value="woman">여자</option>
         </select>  
         
-        <label for="gender" class="joinLabel"> 나이</label>
-        <select name="userAge" id="userAge" class="age">
-        <c:forEach begin="7" end="100" var="i">
-             	<option value="${i}" >${i}
-                                   
-             </c:forEach>
-        
-        </select>
+        <label for="gender" class="joinLabel"> 생년월일</label><br>
+            <select name="userYear" id="userYear" class="userYear">
+           		<c:forEach begin="1930" end="2015" var="i" >
+           		
+           		<option>${i }
+           		
+           		</c:forEach>
+           		</select> 
+           	<select name="userMonth" id="userMonth" class="userMonth">
+           	<c:forEach begin="1" end="12" var="i">
+           		<c:choose>
+           			<c:when test="${i<10 }">
+           				<option>0${i}
+           			</c:when>
+           			<c:otherwise>
+           				<option>${i }
+           			</c:otherwise>
+           		</c:choose>  
+           	</c:forEach>
+           	</select> 
+            <select name="userDay" id="userDay" class="userDay">
+           	<c:forEach begin="1" end="31" var="i">
+           		<c:choose>
+           			<c:when test="${i<10 }">
+           				<option>0${i}
+           			</c:when>
+           			<c:otherwise>
+           				<option>${i }
+           			</c:otherwise>
+           		</c:choose>       		
+           		
+           	</c:forEach>
+            
+            </select>
         <br>
         <label for="email" class="joinLabel">EMAIL</label><br>
         <input type="text" class="email1" name="userEmail1"> @ 
@@ -410,11 +449,11 @@
         <div class="actorSection">
           <label for="likeActor" class="joinLabel pwlabel">관심있는 배우</label><br>
                           
-             <c:forEach var="vo" items="${userActorInfo.actorlist }">
-             	<input class="likeActor" id="likeActor" name="likeActor" value="${vo.actor }" readonly>
+             <c:forEach var="vo" items="${userActorInfo}">
+             	<input class="likeActor" id="likeActor" name="likeActor" value="${vo.actorName}" >
                                    
              </c:forEach>     
-        </div>       
+        </div>
         
         <button type="button" class="add btn-primary" onclick="addActor()">+</button>
         <button type="button" class="minus btn-primary" onclick="minusActor()">-</button>
@@ -422,55 +461,30 @@
         <br>
         <div class="diretorSection">
         <label for="likeDirector" class="joinLabel pwlabel">관심있는 감독</label><br>
-        	 <c:forEach var="vo" items="${userDirectorInfo.directorlist }">
-             	<input class="likeDirector" id="likeDirector" name="likeDirector" value="${vo.director }" readonly>
+        	 <c:forEach var="vo" items="${userDirectorInfo}">
+             	<input class="likeDirector" id="likeDirector" name="likeDirector" value="${vo.directorName }" >
                                    
              </c:forEach>
       </div>
         <button type="button" class="add btn-primary" onclick="addDirector()">+</button>
         <button type="button" class="minus btn-primary" onclick="minusDirector()">-</button>
+        
         <div class="genre">
     	    <c:set var="i" value="0" />
 
 			<c:set var="j" value="4" />
 
-
-
-			
+		
           <label class="joinLabel">선호하는 장르</label><br>
-          <c:forEach var="vo" items="${userGenreInfo.usergenrelist}">
-                  <input class="likeGenre" id="likeGenre" name="likeGenre" value="${vo.gno }">
+          
+          	<c:forEach var="vo" items="${genreList}">
+          	
+        	  <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre"  name="genrelist" value="${vo}"/>${vo}</label>
         	</c:forEach>
-           <table>
-           <colgroup>
-
-       		<col width="150px" />
-			<col width="150px" />
-        	<col width="150px" />
-
-    		</colgroup>
-           <tbody>
-           
-        	<c:forEach var="vo1" items="${userGenreInfo.usergenrelist}">
-            <c:if test="${i%j == 0 }">
-                <tr>
-            </c:if>                  
-	        	<td> <label><input type="checkbox" class="genreLike" id="genreLike" name="genreLike" value="${vo1.gno }" > ${vo1.ugno }</label></td>                    
-            <c:if test="${i%j == j-1 }">
-                </tr>
-            </c:if>
-            <c:set var="i" value="${i+1 }" />
-        </c:forEach>
-
-    </tbody>
-
-
-
-
-           
-           
-           </table>    
-           	  
+             
+        	
+          
+        
         
         </div>
         <br>
@@ -484,123 +498,130 @@
 </div>
 </section>
 <script>
-	/* $("#delcheck").click(function(){
-		var checkPw = $("#checkPw").val()
-		console.log("확인누름")
-		console.log(checkPw)
-		
-		$.ajax({
-			type : "POST",
-  			url : "delUser",
-  			data : JSON.stringify({"checkPw": checkPw}),
-  			contentType : "application/json; charset=utf-8",
-  			success : function(data){
-  				console.log(data)
-  				if(data == 0){
-  					   					
-  					alert("정상적으로 탈퇴 됐습니다.")
-  					location.href="/user/join";
-  					
-  				}else{
-  					alert("잘못 입력되었습니다.")
-  					$("#checkPw").val(" ")
-  					return;
-  				}
-  			},
-  			error : function(status, error){}	
-			
-			
-		})
-	}) */
-
+//패스워드 옵션
 	
-	$("#upload").click(function(){
-		console.log("업로드 클릭")
-	
-		var file = $("#file").val();
-		var user = "${sessionScope.login.userId}";
-		console.log(user);
-		
-		var file = file.substring(file.lastIndexOf('.')+1, file.length).toLowerCase();
-		if(file !="jpg" && file !="png"&&file!="jpeg" && file!="gif"){
-			alert("이미지파일만 등록 가능");
-			return;
-		}else if(user==''){
-			alert("로그인 필요");
-			return;
-		}
-		var data = $("#file")
-		console.log(data);
-		console.log(data[0]);
-		console.log(data[0].files);
-		console.log(data[0].files[0]);
-		
-		var formData = new FormData();
-		formData.append("file",data[0].files[0]);
-		
-		$.ajax({
-			url:"upload",
-			processData: false,
-			contentType: false,
-			data: formData,
-			type:"POST",
-			success: function(result){
-				console.log(result);
-				alert("업로드 성공")
-			},
-			error:function(status, er){
-				alert("업로드 실패")
-			}
-		})
-		
-	})
 
-
-
-  var pw = document.getElementById("password");
-        pw.onkeyup = function(){
-            var regex = /^[A-Za-z0-9+]{8,16}$/;
-             if(regex.test(document.getElementById("password").value )) {
-                document.getElementById("password").style.borderColor = "green";
-                document.getElementById("msgPw").innerHTML = "사용가능합니다";
-            } else {
-                document.getElementById("password").style.borderColor = "red";
-                document.getElementById("msgPw").innerHTML = "";
-            }
+var pw = document.getElementById("userPw");
+    pw.onkeyup = function(){
+        var regex = /^[A-Za-z0-9+]{8,16}$/;
+         if(regex.test(document.getElementById("userPw").value )) {
+            document.getElementById("userPw").style.borderColor = "green";
+            document.getElementById("msgPw").innerHTML = "사용가능합니다";
+        } else {
+            document.getElementById("userPw").style.borderColor = "red";
+            document.getElementById("msgPw").innerHTML = "";
         }
-        //패스워드 체크
-        var pwConfirm = document.getElementById("pwCheck");
-        pwConfirm.onkeyup = function() {
-            var regex = /^[A-Za-z0-9+]{8,16}$/;
-            if(document.getElementById("pwCheck").value == document.getElementById("password").value ) {
-                document.getElementById("pwCheck").style.borderColor = "green";
-                document.getElementById("msgPw-c").innerHTML = "비밀번호가 일치합니다";
-            } else {
-                document.getElementById("pwCheck").style.borderColor = "red";
-                document.getElementById("msgPw-c").innerHTML = "비밀번호 확인란을 확인하세요";
-            }
-        } 
-   
+    }
+    //패스워드 체크
+    var pwConfirm = document.getElementById("pwCheck");
+    pwConfirm.onkeyup = function() {
+        var regex = /^[A-Za-z0-9+]{8,16}$/;
+        if(document.getElementById("pwCheck").value == document.getElementById("userPw").value ) {
+            document.getElementById("pwCheck").style.borderColor = "green";
+            document.getElementById("msgPw-c").innerHTML = "비밀번호가 일치합니다";
+        } else {
+            document.getElementById("pwCheck").style.borderColor = "red";
+            document.getElementById("msgPw-c").innerHTML = "비밀번호 확인란을 확인하세요";
+        }
+    }
+var count =0;
+var count1 =0;
+var actorName =null;
+var directorName = null;
+  
+//선호 감독, 배우 +,- 버튼
   function addDirector(){
   var input = document.createElement("input")
   var add = document.querySelector(".diretorSection").appendChild(input)
   input.setAttribute('class','likeDirector')
+  input.setAttribute('name','likeDirector')
+  input.setAttribute('id','likeDirector')
+  input.setAttribute('placeholder','이름을 입력하세요')
+  directorName = $(".likeDirector").val();
+  autocomplete1(directorName);
+  
+  
   }
   function addActor(){
   var input = document.createElement("input")
   var add = document.querySelector(".actorSection").appendChild(input)
-  input.setAttribute('class','likeActor')
+  
+  input.setAttribute('class','likeActor')  
+  input.setAttribute('name','likeActor')
+  input.setAttribute('id','likeActor')
+  input.setAttribute('placeholder','이름을 입력하세요') 
+  actorName = $(".likeActor").val();
+  autocomplete(actorName);   
+  }
+  
+  
+  function autocomplete(a){
+	  count = $(".likeActor").length-1;
+  $(".likeActor").autocomplete({
+		 
+		 source : function( request, response ) {
+       $.ajax({
+              type: 'POST',
+              url: "autocomplete",
+              dataType: 'json',
+              data: "actorName="+$(".likeActor")[count].value,
+              success: function(data) {
+                  var result = data;
+                  response(result);     
+  					
+                  
+                  
+              },
+              error : function(data) {
+              	
+              	
+              	console.log("에러발생");
+              }
+						
+					});
+       }				
+	});
+  }
+  function autocomplete1(a){
+	  count1 = $(".likeDirector").length-1;
+  $(".likeDirector").autocomplete({
+		 
+		 source : function( request, response ) {
+       $.ajax({
+              type: 'POST',
+              url: "autocomplete1",
+              dataType: 'json',
+              data: "directorName="+$(".likeDirector")[count1].value,
+              success: function(data) {
+                  var result = data;
+                  response(result);     
+  					
+                  
+                  
+              },
+              error : function(data) {
+              	
+              	
+              	console.log("에러발생");
+              }
+						
+					});
+       }				
+	});
   }
   function minusActor() {
     var inp = document.querySelector(".actorSection");
-    inp.removeChild(inp.children[2])
+    
+    if(inp.children.length > 2){
+    	inp.removeChild(inp.children[inp.children.length-1])
+    }
   }
   function minusDirector() {
     var inp = document.querySelector(".diretorSection");
-    inp.removeChild(inp.children[2])
+    if(inp.children.length > 2){inp.removeChild(inp.children[inp.children.length-1])}
   }
-  
-	//주소찾기
+
+//주소찾기
   function goPopup(){
     		var pop = window.open("${pageContext.request.contextPath}/resources/popup/jusoPopup.jsp","pop","width=570,height=420, scrollbars=yes, resizable=yes");
     		
@@ -610,7 +631,7 @@
     		document.getElementById("addrDetail").value = addrDetail;
     		document.getElementById("addrZipNum").value = zipNo;
     	}
-    
+
 
 
 </script>

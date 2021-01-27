@@ -37,7 +37,7 @@
 						left join moviesub b
 						on a.title = b.title
 						where a.opendt > sysdate
-						order by opendt) c 
+						order by opendt desc) c 
 						)
 			where rn > (#{pageNum}-1) * #{amount} and rn <= #{pageNum} * #{amount}
 			]]>
@@ -99,11 +99,11 @@ select a.*,
 	</insert>
 	
 	<select id = "getGenreList" resultType="String">
-		SELECT * FROM genre
+		SELECT genre FROM genre
 	</select>
 	
 	<insert id="GenreInsert">
-		INSERT INTO genre(genre) values(#{genre})
+		INSERT INTO Genre(genre) values(#{genre})
 	</insert>
 	
 	

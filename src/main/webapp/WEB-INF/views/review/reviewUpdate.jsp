@@ -69,7 +69,6 @@ section {
 }
 
 
-
 /* 리뷰 내용 작성 */
 .content{
     width: 600px;
@@ -83,9 +82,21 @@ section {
     color:white;
 }
 
+.writer{
+	position: absolute;
+	top : 110px;	
+}
 .day{
 	position: absolute;
 	top : 130px;
+}
+
+.wrap>input, .review-content>input, .review-content>label>input{
+	border: none;
+	background-color: whitesmoke;
+}
+input:focus{
+	outline:none;
 }
 
 
@@ -105,12 +116,12 @@ section {
 	            
 	        </div>    
 	        <div class = "review-content">
-		          <label><input type="text" name="movieTitle" value="${vo.movieTitle }" readonly="readonly"></label>
+		          <label><input type="text" name="movieTitle" value="${vo.movieTitle }" readonly="readonly"></label><br>
 		          <p class = "point glyphicon glyphicon glyphicon-star" aria-hidden="true" style="color: rgb(233, 49, 49);"></p>
-		          <p class = "score" style="display: inline-block;">5</p>W
-		          <input type = "text" name="writer" value = "${vo.writer}" readonly="readonly">
+		          <p class = "score" style="display: inline-block;">5</p><br>
+		          <input type = "text" class = "writer" name="writer" value = "${vo.writer}" readonly="readonly">
 		          <div class = "day">	        		 
-		           		<fmt:formatDate value="${vo.updateDate }" pattern="yyyy-MM-dd HH:ss"/>
+		           		<fmt:formatDate value="${vo.updateDate }" pattern="yyyy-MM-dd HH:mm"/>
 	        	</div>
 	        </div>
 	    </div>
@@ -120,7 +131,7 @@ section {
 	        <textarea class="content form-control" rows="10" name='content' >${vo.content }</textarea>
 	        <div class="btns" style="text-align: right;">
 	            <button type = "button" class="list-modify" id="modifyBtn">수정</button>
-	            <button class = "list-cancel" id="cancelBtn">취소</button>
+	            <button type = "button" class = "list-cancel" id="cancelBtn">취소</button>
 	        </div>    
 	    </div>
     </form>

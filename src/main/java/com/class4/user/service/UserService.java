@@ -8,8 +8,12 @@ import javax.servlet.http.HttpSession;
 
 import com.class4.command.ActorVO;
 import com.class4.command.DirectorVO;
+import com.class4.command.GenreVO;
 import com.class4.command.ReviewBoardVO;
-import com.class4.command.user.UserVO;
+import com.class4.command.UserVO;
+import com.class4.command.mapping.UserActorVO;
+import com.class4.command.mapping.UserDirectorVO;
+import com.class4.command.mapping.UserGenreVO;
 
 
 public interface UserService {
@@ -20,10 +24,11 @@ public interface UserService {
 	public int idCheck(String userId);
 
 	public int genreList(UserVO vo);
+	public List<String> getGenreList();
+	public int actorList(UserVO vo,String aco,String actorName);
+	public int directorList(UserVO vo, String dco, String directorName);
 
-	public int actorList(UserVO vo, ActorVO avo);
-
-	public int directorList(UserVO vo, DirectorVO dvo);
+	public UserVO mypage(UserVO vo);
 
 	public boolean uploadProfile(UserVO userVO);
 
@@ -31,19 +36,21 @@ public interface UserService {
 
 	public int update(UserVO vo);
 
-	public UserVO getActorInfo(String userId);
+	public List<UserActorVO> getActorInfo(String userId);
 
-	public UserVO getGenreInfo(String userId);
+	public List<UserGenreVO> getGenreInfo(String userId);
 
-	public UserVO getDirectorInfo(String userId);
+	public List<UserDirectorVO> getDirectorInfo(String userId);
 
 	
+	
+	public List<ActorVO> actorName(ActorVO actorvo);
+	public List<DirectorVO> directorName(DirectorVO director);
 
-	public List<ActorVO> actorList(ActorVO actorvo);
-
-	public List<DirectorVO> directorList(DirectorVO director);
 
 	public List<ReviewBoardVO> getReview(String user);
+
+
 
 	
 

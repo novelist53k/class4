@@ -9,12 +9,13 @@
 		<typeAlias type="com.class4.command.MovieInfoVO" alias="MovieInfoVO"/>
 		<typeAlias type="com.class4.command.MovieListVO" alias="MovieListVO"/>
 		<typeAlias type="com.class4.command.ActorVO" alias="ActorVO"/>
-		<typeAlias type="com.class4.command.DirectorVO" alias="DirectorVO"/>		
+		<typeAlias type="com.class4.command.DirectorVO" alias="DirectorVO"/>
+		<typeAlias type="com.class4.command.GenreVO" alias="GenreVO"/>
 		<typeAlias type="com.class4.command.ReviewBoardVO" alias="ReviewBoardVO"/>
 		<typeAlias type="com.class4.command.ReplyVO" alias="ReplyVO"/>
-		<typeAlias type="com.class4.command.user.UserVO" alias="UserVO"/>
-		<typeAlias type="com.class4.command.user.UserActorListVO" alias="UserActorListVO"/>
-		<typeAlias type="com.class4.command.user.UserGenreListVO" alias="UserGenreListVO"/>
-		<typeAlias type="com.class4.command.user.UserDirectorListVO" alias="UserDirectorListVO"/>
+		<typeAlias type="com.class4.command.UserVO" alias="UserVO"/>
+		<typeAlias type="com.class4.command.mapping.UserActorVO" alias="UserActorVO"/>
+		<typeAlias type="com.class4.command.mapping.UserGenreVO" alias="UserGenreVO"/>
+		<typeAlias type="com.class4.command.mapping.UserDirectorVO" alias="UserDirectorVO"/>
  	</typeAliases>   
 </configuration>

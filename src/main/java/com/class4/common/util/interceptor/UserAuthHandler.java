@@ -6,7 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.class4.command.user.UserVO;
+import com.class4.command.UserVO;
 
 public class UserAuthHandler extends HandlerInterceptorAdapter{
 
@@ -15,7 +15,7 @@ public class UserAuthHandler extends HandlerInterceptorAdapter{
 			throws Exception {
 		HttpSession session = request.getSession();
 		UserVO vo = (UserVO)session.getAttribute("login");
-		System.out.println( "ÀÎÅÍ¼ÁÅÍ ½ÇÇà");
+		System.out.println( "ï¿½ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		if (vo== null) {
 			response.sendRedirect(request.getContextPath());
 			return false;

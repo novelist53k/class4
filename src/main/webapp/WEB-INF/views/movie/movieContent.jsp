@@ -7,7 +7,7 @@
 
     <div class="container">
       <div class="outter">
-
+  
         <div class="mid1">
           <div class="photo-box">
             <img src="${pageContext.request.contextPath }/resources/img/poster/${info.poster}" style="width: 200px; height: 306px;">
@@ -19,12 +19,16 @@
             <span class="mov-title">
            	<b>${info.title }</b>
              <!-- 관리자 아이디로 로그인시에만 보이게 하기 -->
+            
+           
             <div class="btn-box">
-              <input type="button" value="수정">
-              <input type="button" value="삭제">
-            </div>
-            </span>
+                    <button type="button" class="regbtn">등록</button>
+      				<button type="button" class="updbtn">수정</button>
+      				<button type="button" class="delbtn">삭제</button>
+      		</div>
+      		</span>
             <div class="mov-sec">
+            
               <span class="mov-ftitle"><h4>${info.ftitle }</h4></span>
               <div class="star-box">
                 <span class="star-icon">평점
@@ -97,6 +101,7 @@
               allowfullscreen></iframe> -->
           </div>
         </div>
+        
         <div id="menu2" autoplay class="tab-pane fade">
           <div class="head-box">
             
@@ -149,6 +154,7 @@
             </tbody>
             
           </table>
+
           <form class="page-form">
             <div class="pagination">
               <a href="#">&laquo;</a>
@@ -159,17 +165,26 @@
               <a href="#">5</a>
               <a href="#">6</a>
               <a href="#">&raquo;</a>
-            </div>  
+            </div>
           </form>
         </div>
-        
+           	<input type="hidden"  id="movieCd" value="${info.movieCd }">
+        <form action="update" name="regForm" method="post">
+        	<input type="hidden" name="cd" value="">
+         </form>  
       </div>
-    
-    
-    <!-- 관리자 아이디로 로그인시에만 보이게 하기 -->
-    <div class="btn-box" style="float: right;">
-      <input type="button" value="등록">
-      <input type="button" value="수정">
-      <input type="button" value="삭제">
-    </div>
+
   </section>
+<script>
+	$(".regbtn").click(function(){
+		location.href="movieRegist";
+	});
+	
+	$(".updbtn").click(function(){
+		console.log(1)
+		var cd = $("#movieCd").val();
+		document.regForm.cd.value=cd;
+		document.regForm.submit();
+	});
+	
+</script>

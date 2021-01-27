@@ -16,4 +16,3 @@ create table actor(
     actorName varchar2(50) not null,
     fActorName VARCHAR2(50)
 );
-ALTER TABLE actor ADD fActorName VARCHAR2(50);

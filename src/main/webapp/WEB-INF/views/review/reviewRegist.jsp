@@ -101,13 +101,13 @@ input:focus{
     
     <form action="reviewRegistForm" method="post" name="registForm">
 	    <div class = "wrap">
-	    	<input name="mno" type="text" class="movie-mno" value="1" readonly="readonly">
+	    	<input name="mno" type="text" class="movie-mno" value="${movieInfoVO.movieCd }" readonly="readonly">
 	        <div class = "movie-img">
 	            <img src="${pageContext.request.contextPath }/resources/img/movie_image.jpg" alt="영화포스터">
 	        </div>    
 	        <div class = "review-content">
-	          <label><input type="text" name="movieTitle" value="movietitle" readonly="readonly"></label><br>
-	          <input type="text" class = "writer" name ="writer" value ="임시" readonly="readonly">
+	          <label><input type="text" name="movieTitle" value="${movieInfoVO.title }" readonly="readonly"></label><br>
+	          <input type="text" class = "writer" name ="writer" value ="${login.userId }" readonly="readonly">
 	        </div>
 	    </div>
 	    

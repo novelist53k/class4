@@ -73,38 +73,49 @@ public class MovieListServiceImpl implements MovieListService{
 				
 				
 				// 기존 테이블에서 peopleCd 호출
-				ArrayList<String> tablePeopleCodeList = movieListMapper.getPeopleCodeList();
-				System.out.println("기존 테이블 인물코드 : " + tablePeopleCodeList);
+				ArrayList<String> tableActorCodeList = movieListMapper.getActorCodeList();
+				ArrayList<String> tableDirectorCodeList = movieListMapper.getDirectorCodeList();
+				
+				System.out.println("기존 테이블 인물코드 : " + tableActorCodeList);
 				
 				// 중복 여부 체크 변수
-				boolean flag = true;
+				boolean actorFlag = true;
+				boolean directorFlag = true;
 				
-				for(int j = 0; j < tablePeopleCodeList.size(); ++j) {
-					if(peopleCd.equals(tablePeopleCodeList.get(j))) {
-						flag = false;
+				for(int j = 0; j < tableActorCodeList.size(); ++j) {
+					if(peopleCd.equals(tableActorCodeList.get(j))) {
+						actorFlag = false;
 						break;
 					}
 				}
 				
-				// 중복 시 insert하지 않는다
-				if(flag) {
-					// 배우면 ActorVO에, 감독이면 DirectorVO에 추가
-					if(peopleInfo.get("repRoleNm").equals("배우")) {
-						// Actor 테이블을 조회해서 이미 있는 peopleCd라면 추가하지 말고 출연, 감독한 영화로 이동
-						
-						ActorVO actorVO = new ActorVO(peopleCd, peopleNm, peopleNmEn);
-						movieListMapper.ActorInsert(actorVO);
-						
-					}
-					else if(peopleInfo.get("repRoleNm").equals("감독")) {
-						// Director 테이블을 조회해서 이미 있는 peopleCd라면 추가하지 말고 출연, 감독한 영화로 이동
-						
-						DirectorVO directorVO = new DirectorVO(peopleCd, peopleNm, peopleNmEn);
-						movieListMapper.DirectorInsert(directorVO);
+				for(int j = 0; j < tableDirectorCodeList.size(); ++j) {
+					if(peopleCd.equals(tableDirectorCodeList.get(j))) {
+						directorFlag = false;
+						break;
 					}
 				}
 				
+				System.out.println(1);
 				
+				// 중복 시 insert하지 않는다
+			
+				// 배우면 ActorVO에, 감독이면 DirectorVO에 추가
+				if(actorFlag && peopleInfo.get("repRoleNm").equals("배우")) {
+					// Actor 테이블을 조회해서 이미 있는 peopleCd라면 추가하지 말고 출연, 감독한 영화로 이동
+						
+					ActorVO actorVO = new ActorVO(peopleCd, peopleNm, peopleNmEn);
+					movieListMapper.ActorInsert(actorVO);
+						
+				}
+				else if(directorFlag && peopleInfo.get("repRoleNm").equals("감독")) {
+					// Director 테이블을 조회해서 이미 있는 peopleCd라면 추가하지 말고 출연, 감독한 영화로 이동
+						
+					DirectorVO directorVO = new DirectorVO(peopleCd, peopleNm, peopleNmEn);
+					movieListMapper.DirectorInsert(directorVO);
+				}
+			
+				System.out.println(2);
 				
 				
 				// 출연, 감독한 정보 추출
@@ -253,6 +264,11 @@ public class MovieListServiceImpl implements MovieListService{
 					genreNm = genres.get(j).get("genreNm").toString();
 					System.out.println("테이블값:"+tableGenres);
 					
+					// 장르 추가 시 비교할 전체 장르 테이블 최신화
+					if(tableGenres.size() != movieListMapper.getGenreSize()) {
+						genres = (ArrayList<LinkedHashMap<String, Object>>) movieInfo.get("genres");
+					}
+					
 					for(int k = 0; k < tableGenres.size(); ++k) {
 						if(tableGenres.get(k).equals(genreNm)){
 							flag = false;
@@ -312,7 +328,9 @@ public class MovieListServiceImpl implements MovieListService{
 				Date openDt = fm.parse(strDateFormat);
 				movie.setOpenDt(openDt);
 
-			  movieListMapper.regist(movie);
+				movieListMapper.regist(movie);
+				
+				// 무비장르 테이블
 			  
 			}
 			

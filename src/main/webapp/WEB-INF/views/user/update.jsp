@@ -424,7 +424,7 @@
             </select>
         <br>
         <label for="email" class="joinLabel">EMAIL</label><br>
-        <input type="text" class="email1" name="userEmail1"> @ 
+        <input type="text" class="email1" name="userEmail1" value="${vo.userEmail1 }"> @ 
        
        
         <select id="userEmail2" name="userEmail2" class="email2"  onchange="email(this)">          

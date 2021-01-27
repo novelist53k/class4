@@ -22,9 +22,11 @@ public interface MovieListMapper {
 	public MovieInfoVO getMovieInfo(String cd);
 	public ArrayList<String> getActorCodeList();
 	public ArrayList<String> getDirectorCodeList();
-	public ArrayList<String> getPeopleCodeList();
+	
 	public void ActorInsert(ActorVO vo);
 	public void DirectorInsert(DirectorVO vo);
 
 	public void GenreInsert(GenreVO vo);
+	
+	public int getGenreSize();
 }

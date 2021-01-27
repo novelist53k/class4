@@ -116,7 +116,7 @@
               </table>
             </div>
             <div class="rev-right">
-              <a href="#" class="right-regist" style="color: black;">
+              <a href="../review/reviewRegist?mno=${info.movieCd }" class="right-regist" style="color: black;">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true" style="color: black;"></span>
                 글쓰기</a>
             </div>

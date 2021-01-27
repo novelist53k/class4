@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.class4.command.MovieInfoVO;
 import com.class4.command.ReplyVO;
 import com.class4.command.ReviewBoardVO;
 import com.class4.common.util.Criteria;
@@ -56,6 +57,14 @@ public class ReviewBoardServiceImpl implements ReviewBoardService{
 		
 		reviewBoardMapper.regist(vo);		
 	}
+
+
+	@Override
+	public MovieInfoVO getMovieInfo(String mno) {
+		return reviewBoardMapper.getMovieInfo(mno);
+	}
+	
+	
 
 
 	

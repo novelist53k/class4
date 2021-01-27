@@ -2,6 +2,8 @@ package com.class4.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -11,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.class4.command.MovieInfoVO;
 import com.class4.command.ReviewBoardVO;
+import com.class4.command.UserVO;
 import com.class4.common.util.Criteria;
 import com.class4.common.util.PageVO;
 import com.class4.reviewboard.service.ReviewBoardService;
@@ -47,7 +51,11 @@ public class ReviewController {
 	
 	
 	@RequestMapping("/reviewRegist")
-	public String reviewRegist() {
+	public String reviewRegist(@RequestParam("mno") String mno, Model model, HttpSession session) {
+		UserVO userVO = (UserVO)session.getAttribute("login");
+		MovieInfoVO movieInfo = reviewBoardService.getMovieInfo(mno);
+		model.addAttribute("movieInfo", movieInfo);
+		model.addAttribute("login", userVO);
 		return "review/reviewRegist";
 	}
 	

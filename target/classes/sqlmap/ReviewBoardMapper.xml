@@ -54,5 +54,9 @@
 		values(bno_seq.nextval, #{mno}, #{writer}, #{movieTitle}, #{content})
 	</insert>
 	
+	<select id="getMovieInfo" resultType="MovieInfoVO">
+		SELECT * FROM movie WHERE movieCd = #{mno}
+	</select>
+	
   
 </mapper>

@@ -58,7 +58,11 @@ public class UserController {
 	private UserService userService;
 	
 	@RequestMapping("/join")
-	public String join() {
+	public String join(Model model) {
+		List<String> genreList = userService.getGenreList();
+	            
+		model.addAttribute("genreList",genreList);
+	      
 		return "user/join";
 	}
 	
@@ -275,6 +279,7 @@ public class UserController {
 		model.addAttribute("userGenreInfo",userGenre);
 		model.addAttribute("userDirectorInfo",userDirector);
 		model.addAttribute("genreList",genreList);
+		model.addAttribute("vo", vo);
 		System.out.println("3번");
 		System.out.println(userGenre.toString());
 		System.out.println(genreList.toString());

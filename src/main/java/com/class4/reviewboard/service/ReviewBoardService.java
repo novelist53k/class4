@@ -2,6 +2,7 @@ package com.class4.reviewboard.service;
 
 import java.util.ArrayList;
 
+import com.class4.command.MovieInfoVO;
 import com.class4.command.ReplyVO;
 import com.class4.command.ReviewBoardVO;
 import com.class4.common.util.Criteria;
@@ -16,5 +17,7 @@ public interface ReviewBoardService {
 	public int modify(ReviewBoardVO vo);
 	public int delete(int bno);
 	public void regist(ReviewBoardVO vo);
+	
+	public MovieInfoVO getMovieInfo(String mno);
 	
 }

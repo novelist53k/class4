@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,42 +35,99 @@ public class HomeController {
 	private HomeService homeService;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Model model, HttpServletRequest request, String id) {
+	public String home(Model model, HttpSession session) {
+		UserVO vo = (UserVO)session.getAttribute("login");
 
 		// 최신작, 개봉예정작을 model 객체로 attribute
 		HashMap<String, ArrayList<MovieInfoVO>> mainMovieList = homeService.getMainMovieList();
 		model.addAttribute("mainRecentlyList", mainMovieList.get("recent"));
 		model.addAttribute("mainCommingSoonList", mainMovieList.get("commingSoon"));
-
+		
+		// 로그인 시 선호 배우, 감독, 장르에 관해 등록했는지 확인해서 돌려준다
+		int wTRActor = 0;
+		int wTRDirector = 0;
+		int wTRGenre = 0;
+		
+		if(vo != null) {
+			wTRActor = homeService.getWhetherToRegistActor(vo.getUserId());
+			wTRDirector = homeService.getWhetherToRegistDirector(vo.getUserId());
+			wTRGenre = homeService.getWhetherToRegistGenre(vo.getUserId());
+		}
+		
+	
+		model.addAttribute("wTRActor", wTRActor);
+		model.addAttribute("wTRDirector", wTRDirector);
+		model.addAttribute("wTRGenre", wTRGenre);
+		
+		System.out.println("선호 배우 등록 여부 : " + wTRActor);
+		System.out.println("선호 감독 등록 여부 : " + wTRDirector);
+		System.out.println("선호 장르 등록 여부 : " + wTRGenre);
+		
 		return "main";
 	}
 	
 	
 	// 유저가 선호하는 배우의 출연작 가져오기
-	@GetMapping("/userLikeActor/{id}")
+	@GetMapping("/userLikeActor")
 	@ResponseBody
-	public ArrayList<MovieInfoVO> userLikeActor(@PathVariable String id) {
-		ArrayList<MovieInfoVO> userLikeActorList = homeService.getUserActorML(id);
+	public ArrayList<MovieInfoVO> userLikeActor(HttpSession session) {
+		UserVO vo = (UserVO)session.getAttribute("login");
+		
+		/*
+		if(vo == null) {
+			return new ArrayList<MovieInfoVO>();
+		}
+		*/
+		
+		// 테스트용 임시 변수
+		vo = new UserVO();
+		vo.setUserId("qwer");
+		
+		ArrayList<MovieInfoVO> userLikeActorList = homeService.getUserActorML(vo.getUserId());
 		System.out.println(userLikeActorList);
 		System.out.println(userLikeActorList.size());
 		return userLikeActorList;
 	}
 	
 	// 유저가 선호하는 감독의 영화 가져오기
-	@GetMapping("/userLikeDirector/{id}")
+	@GetMapping("/userLikeDirector")
 	@ResponseBody
-	public ArrayList<MovieInfoVO> userLikeDirector(@PathVariable String id) {
-		ArrayList<MovieInfoVO> userLikeDirectorList = homeService.getUserDirectorML(id);
+	public ArrayList<MovieInfoVO> userLikeDirector(HttpSession session) {
+		UserVO vo = (UserVO)session.getAttribute("login");
+		
+		/*
+		if(vo == null) {
+			return new ArrayList<MovieInfoVO>();
+		}
+		*/
+		
+		// 테스트용 임시 변수
+		vo = new UserVO();
+		vo.setUserId("qwer");
+		
+		ArrayList<MovieInfoVO> userLikeDirectorList = homeService.getUserDirectorML(vo.getUserId());
 		System.out.println(userLikeDirectorList);
 		System.out.println(userLikeDirectorList.size());
 		return userLikeDirectorList;
 	}
 	
 	// 유저가 선호하는 감독의 영화 가져오기
-	@GetMapping("/userLikeGenre/{id}")
+	@GetMapping("/userLikeGenre")
 	@ResponseBody
-	public ArrayList<MovieInfoVO> userLikeGenre(@PathVariable String id) {
-		ArrayList<MovieInfoVO> userLikeGenreList = homeService.getUserGenreML(id);
+	public ArrayList<MovieInfoVO> userLikeGenre(HttpSession session) {
+		UserVO vo = (UserVO)session.getAttribute("login");
+		
+		/*
+		if(vo == null) {
+			return new ArrayList<MovieInfoVO>();
+		}
+		*/
+		
+		// 테스트용 임시 변수
+		vo = new UserVO();
+		vo.setUserId("qwer");
+		
+		ArrayList<MovieInfoVO> userLikeGenreList = homeService.getUserGenreML(vo.getUserId());
 		System.out.println(userLikeGenreList);
 		System.out.println(userLikeGenreList.size());
 		return userLikeGenreList;
@@ -79,7 +137,7 @@ public class HomeController {
 	@GetMapping("/userLikeByAge/{age}")
 	@ResponseBody
 	public ArrayList<MovieInfoVO> userLikeByAge(@PathVariable String age) {
-		ArrayList<MovieInfoVO> userLikeByAgeList = homeService.getUserByAgeML(age);
+		ArrayList<MovieInfoVO> userLikeByAgeList = homeService.getUserByAgeML(Integer.parseInt(age));
 		System.out.println(userLikeByAgeList);
 		System.out.println(userLikeByAgeList.size());
 		return userLikeByAgeList;
@@ -96,18 +154,7 @@ public class HomeController {
 		return userLikeByGenderList;
 	}	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	// 검색

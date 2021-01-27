@@ -40,34 +40,51 @@
 		SELECT * FROM movie WHERE movieCd = #{movieCd}
 	</select>
 	
+	
+	<!-- 선호하는 배우 등록 여부 -->
+	<select id="getLikeActorCount" resultType="int">
+		SELECT COUNT(*) FROM userActor WHERE uaid = #{id}
+	</select>
+	
+	<!-- 선호하는 감독 등록 여부 -->
+	<select id="getLikeDirectorCount" resultType="int">
+		SELECT COUNT(*) FROM userDirector WHERE udid = #{id}
+	</select>
+	
+	<!-- 선호하는 장르 등록 여부 -->
+	<select id="getLikeGenreCount" resultType="int">
+		SELECT COUNT(*) FROM userGenre WHERE ugid = #{id}
+	</select>
+	
+	
 	<!-- 유저가 선호하는 배우들의 코드 가져오기 -->
 	<select id="getActorCodeList" resultType="string">
-		SELECT uano FROM UserActor WHERE uaid = #{id}
+		SELECT Count(*) FROM userActor WHERE uaid = #{id}
 	</select>
 	
 	<!-- 유저가 선호하는 배우 코드로 영화 코드 가져오기 -->
 	<select id="getCodeListByActor" resultType="string">
-		SELECT mno FROM MovieActor WHERE ano = #{ano}
+		SELECT mno FROM movieActor WHERE ano = #{ano}
 	</select>
 	
 	<!-- 유저가 선호하는 감독들의 영화 코드 가져오기 -->
 	<select id="getDirectorCodeList" resultType="String">
-		SELECT dno FROM UserDirector WHERE udid = #{id}
+		SELECT dno FROM userDirector WHERE udid = #{id}
 	</select>
 	
 	<!-- 감독의 영화 코드 가져오기 -->
 	<select id="getCodeListByDirector" resultType="string">
-		SELECT mno FROM MovieDirector WHERE dno = #{dno}
+		SELECT mno FROM movieDirector WHERE dno = #{dno}
 	</select>
 	
 	<!-- 유저가 선호하는 장르 가져오기 -->
 	<select id="getGenreCodeList" resultType="string">
-		SELECT genre FROM UserGenre WHERE ugid = #{id}
+		SELECT genre FROM userGenre WHERE ugid = #{id}
 	</select>
 	
 	<!-- 유저가 선호하는 장르로 영화 코드 가져오기 -->
 	<select id="getCodeListByGenre" resultType="string">
-		SELECT mno FROM MovieGenre WHERE genre = #{genre}
+		SELECT mno FROM movieGenre WHERE genre = #{genre}
 	</select>
 
 	

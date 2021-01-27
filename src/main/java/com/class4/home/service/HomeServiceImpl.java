@@ -42,6 +42,25 @@ public class HomeServiceImpl implements HomeService {
 	
 	// 로그인
 
+	// 선호하는 배우 등록 여부
+	@Override
+	public int getWhetherToRegistActor(String id) {
+		return mapper.getLikeActorCount(id);
+	}
+
+
+	// 선호하는 감독 등록 여부
+	@Override
+	public int getWhetherToRegistDirector(String id) {
+		return mapper.getLikeDirectorCount(id);
+	}
+
+
+	// 선호하는 장르 등록 여부
+	@Override
+	public int getWhetherToRegistGenre(String id) {
+		return mapper.getLikeGenreCount(id);
+	}
 
 	// 유저가 선호하는 배우가 출연한 영화리스트를 가져오는 함수
 	@Override
@@ -198,24 +217,27 @@ public class HomeServiceImpl implements HomeService {
 	
 	// 나이별 선호 영화 가져오기
 	@Override
-	public ArrayList<MovieInfoVO> getUserByAgeML(String age) {
+	public ArrayList<MovieInfoVO> getUserByAgeML(int age) {
 		ArrayList<MovieInfoVO> listByUserAge = new ArrayList<MovieInfoVO>();
 		RConnection rconn = null;
 		System.out.println(age);
+		System.out.println(age + 10);
 		
 		try {
 			rconn = new RConnection("127.0.0.1", 6311);
+
 			rconn.eval("library(rJava)");
 			rconn.eval("library(DBI)");
 			rconn.eval("library(RJDBC)");
 			rconn.eval("library(dplyr)");
-			System.out.println(1);
+			
 			rconn.eval("drv <- JDBC('oracle.jdbc.OracleDriver', 'C:/jdbc/Oracle/ojdbc8.jar')");
 			rconn.eval("rconn <- dbConnect(drv, 'jdbc:oracle:thin:@localhost:1521/XEPDB1','CLASS4', 'CLASS4')");
+			
 			System.out.println(2);
-			rconn.eval("ua <- dbGetQuery(rconn, 'ua_age <- dbGetQuery(rconn, 'select *" + 
+			rconn.eval("ua_age <- dbGetQuery(rconn, 'select *" + 
 					"                             from userActor" + 
-					"                             WHERE (SYSDATE - uaage) >= " + age + " * 365 AND (SYSDATE - uaage) < " + (age + 10) + " * 365')')");
+					"                             WHERE (SYSDATE - uaage) >= " + age + " * 365 AND (SYSDATE - uaage) < " + (age + 10) + " * 365')");
 			System.out.println(3);
 			rconn.eval("ua_age <- ua_age %>%" + 
 					"  group_by(ANO) %>%" + 
@@ -223,7 +245,7 @@ public class HomeServiceImpl implements HomeService {
 					"  arrange(desc(feq))");
 			System.out.println(4);
 			rconn.eval("ud_age <- dbGetQuery(rconn, 'select *" + 
-					"                             from userDirector" + 
+					" from userDirector" + 
 					"                             WHERE (SYSDATE - udage) >= " + age + " * 365 AND (SYSDATE - udage) < " + (age + 10) + " * 365')");
 			System.out.println(5);
 			rconn.eval("ud_age <- ud_age %>%" + 
@@ -542,27 +564,6 @@ public class HomeServiceImpl implements HomeService {
 	}
 
 
-
-	
-
-
-
-	
-
-
-
-	
-
-
-
-
-
-	
-
-	
-	
-	
-	
 	
 	
 	

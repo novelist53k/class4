@@ -18,6 +18,17 @@ public interface HomeMapper {
 		
 		
 	// 로그인
+	
+	// 선호하는 배우 등록 여부
+	public int getLikeActorCount(String id);
+	
+	// 선호하는 감독 등록 여부
+	public int getLikeDirectorCount(String id);
+	
+	// 선호하는 장르 등록 여부
+	public int getLikeGenreCount(String id);
+	
+	
 	// 유저가 선호하는 배우의 코드 가져오기
 	public ArrayList<String> getActorCodeList(String id);
 	

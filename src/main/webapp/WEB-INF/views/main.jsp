@@ -14,13 +14,14 @@
         
         <!-- 최신작 -->
         <div class="slider_area_no_login">
-            <h3 class="sliderTitle">최신영화</h3>
+            <h3 class="sliderTitle"><a href="movie/movieCurrent">최신영화</a></h3>
             <div class="swiper-container">
                 <div class="swiper-wrapper">
                 	<c:forEach var="RecentVO" items="${mainRecentlyMovie}">
                     	<div class="swiper-slide">
-                    		<img src="${pageContext.request.contextPath }/resources/img/current/${RecentVO.poster}" class = "img_g">
-                    		<p>영화제목</p>
+                    		<a href="movie/movieContent?movieCd=${RecentVO.movieCd}" title="${RecentVO.title }">
+                    			<img src="${pageContext.request.contextPath }/resources/img/current/${RecentVO.poster}" class = "img_g">
+                    		</a>
                     	</div>
                 	</c:forEach>
                 </div>
@@ -36,12 +37,14 @@
         
         <!-- 개봉예정작 -->
         <div class="slider_area_no_login">
-            <h3 class="sliderTitle">개봉예정작</h3>
+            <h3 class="sliderTitle"><a href="movie/movieExpectced">개봉예정작</a></h3>
             <div class="swiper-container">
                 <div class="swiper-wrapper">
                     <c:forEach var="CommingSoonVO" items="${mainCommingSoonList}">
                     	<div class="swiper-slide">
-                    		<img src="${pageContext.request.contextPath }/resources/img/current/${CommingSoonVO.poster}" class = "img_g">
+                    		<a href="movie/movieContent?movieCd=${CommingSoonVO.movieCd}" title="${CommingSoonVO.title }">
+                    			<img src="${pageContext.request.contextPath }/resources/img/current/${CommingSoonVO.poster}" class = "img_g">
+                    		</a>
                     	</div>
                 	</c:forEach>
                 </div>
@@ -59,20 +62,26 @@
         
         <!-- 선호하는 배우가 출연한 영화, 선호하는 배우 미선택시 안 보이게 -->
 	    <div id="actorSlider" class="slider_area_login">
-	    	<h3 id="userLikeActor" class="sliderTitle">""님이 선호하는 배우가 출연한 영화 ▼</h3>
-	    	<hr>
+	    	<c:if test="${wTRActor == 0 }">
+		    	<h3 id="userLikeActor" class="sliderTitle">""님이 선호하는 배우가 출연한 영화 ▼</h3>
+		    	<hr>
+	    	</c:if>
 	    </div>
         
         <!-- 선호하는 감독의 영화, 선호하는 감독 미선택시 안 보이게 -->
 	    <div id="directorSlider" class="slider_area_login">
-	    	<h3 id="userLikeDirector" class="sliderTitle">""님이 선호하는 감독의 영화 ▼</h3>
-	    	<hr>
+	    	<c:if test="${wTRDirector == 0 }">
+		    	<h3 id="userLikeDirector" class="sliderTitle">""님이 선호하는 감독의 영화 ▼</h3>
+		    	<hr>
+		    </c:if>
 	    </div>
         
         <!-- 선호하는 장르의 영화, 선호하는 장르 미선택시 안 보이게 -->
 	    <div id="genreSlider" class="slider_area_login">
-	        <h3 id="userLikeGenre" class="sliderTitle">""님이 선호하는 장르별 영화 ▼</h3>
-	        <hr>
+	    	<c:if test="${wTRGenre == 0 }">
+		        <h3 id="userLikeGenre" class="sliderTitle">""님이 선호하는 장르별 영화 ▼</h3>
+		        <hr>
+	        </c:if>
         </div>
         
         <!-- 연령별 선호 영화 -->
@@ -104,12 +113,9 @@
 	
 		// 유저가 선호하는 배우가 출연한 영화를 가져오는 함수
 		function getUserActorML() {
-			
-			id = "qwer";	// 테스트용 임시 아이디
-			console.log(id);
 	
 			$.getJSON(
-				"userLikeActor/" + id,
+				"userLikeActor",
 				function(dataList) {
 					console.log(dataList);
 					
@@ -149,12 +155,9 @@
 	
 		// 유저가 선호하는 감독의 영화를 가져오는 함수
 		function getUserDirectorML() {
-			
-			id = "qwer";	// 테스트용 임시 아이디
-			console.log(id);
 	
 			$.getJSON(
-				"userLikeDirector/" + id,
+				"userLikeDirector/",
 				function(dataList) {
 					console.log(dataList);
 					
@@ -194,12 +197,9 @@
     
 		// 유저가 선호하는 장르별 영화 함수
 		function getUgMovieList() {
-			
-			id = "qwer";	// 테스트용 임시 아이디
-			console.log(id);
 
 			$.getJSON(
-				"userLikeGenre/" + id,
+				"userLikeGenre",
 				function(dataList) {
 					console.log(dataList);
 					

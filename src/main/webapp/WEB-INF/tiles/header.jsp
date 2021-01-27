@@ -37,7 +37,7 @@
                         <li><a href="${pageContext.request.contextPath }/movie/movieCurrent" class="menu">영화</a></li>
                         <li><a href="${pageContext.request.contextPath }/review/reviewList" class="menu">리뷰</a></li>
                         <li><a href="${pageContext.request.contextPath }/theater/theater" class="menu">영화관</a></li>
-                        <li><a href="#" class="menu">다운로드</a></li>
+                        <li><a href="https://serieson.naver.com/movie/home.nhn" class="menu">다운로드</a></li>
                     </ul>
                   
                     <form name="movieSearchForm" action="${pageContext.request.contextPath}/search" class="navbar-form navbar-right" role="search">
@@ -56,10 +56,11 @@
                         <c:choose>
                     		<c:when test="${login eq NULL }">
                                     <li><a href="${pageContext.request.contextPath }/user/join">회원가입</a></li>
-                                    <li><a href="#" data-toggle="modal" data-target="#myModal">Login</a></li>                    	
+                                    <li><a href="#" data-toggle="modal" data-target="#myModal">Login</a></li>
                     		</c:when>
                     		<c:otherwise>
                                   	<li><a href="${pageContext.request.contextPath }/user/mypage">마이페이지</a></li>
+                                  	<li><a href="${pageContext.request.contextPath }/adminpage">관리자페이지</a></li>
 	                    			<li><a href="${pageContext.request.contextPath }/user/logout">로그아웃</a></li>
                     		</c:otherwise>
                     	</c:choose>
@@ -88,7 +89,6 @@
                             <button type="button" class="btn btn-primary" data-dismiss="modal" id="login" name="login">Login</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         </div>
-                        <p></p>
                     </div>
                 </div>
             </div>

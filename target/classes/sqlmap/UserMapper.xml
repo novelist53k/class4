@@ -126,8 +126,8 @@
 		addrBasic=#{addrBasic},addrDetail=#{addrDetail},addrZipNum=#{addrZipNum} where userId = #{userId}
 	</update>
 	
-	<select id="getReview" resultMap="usersInfo">
-		select u.*,r.* from users u left outer join review r on u.userId = r.writer where r.writer = #{userId}
+	<select id="getReview" resultType="ReviewBoardVO">
+		select * from review where writer = #{user}
 	</select>
 	
 </mapper>

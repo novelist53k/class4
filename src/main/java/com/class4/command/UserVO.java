@@ -49,6 +49,7 @@ public class UserVO {
 	//
 		
 		private ArrayList<ReviewBoardVO> userReview;
+		
 		@Override
 		public String toString() {
 			return "UserVO [userId=" + userId + ", userPw=" + userPw + ", userName=" + userName + ", userEmail1="

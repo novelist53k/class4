@@ -58,7 +58,11 @@ public class UserController {
 	private UserService userService;
 	
 	@RequestMapping("/join")
-	public String join() {
+	public String join(Model model) {
+		List<String> genreList = userService.getGenreList();
+				
+		model.addAttribute("genreList",genreList);
+		
 		return "user/join";
 	}
 	
@@ -118,12 +122,12 @@ public class UserController {
 	public String Join(UserVO vo){
 		
 		String birthday = vo.getUserDay()+"/"+vo.getUserMonth()+"/"+ vo.getUserYear();
-
+		System.out.println(birthday);
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			Date date = dateFormat.parse(birthday);
-			System.out.println(date.getYear());
-			Timestamp age = new Timestamp(date.getYear()+date.getMonth()+date.getDay());
+			System.out.println(date);
+			Timestamp age = new Timestamp(date.getTime());
 			vo.setUserAge(age);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -249,7 +253,7 @@ public class UserController {
 			userService.delUser(userId);
 			session.invalidate();
 			
-			return "/user/join";
+			return "/";
 		}else {
 			
 			return "/user/mypage";
@@ -275,6 +279,7 @@ public class UserController {
 		model.addAttribute("userGenreInfo",userGenre);
 		model.addAttribute("userDirectorInfo",userDirector);
 		model.addAttribute("genreList",genreList);
+		model.addAttribute("vo",vo);
 		System.out.println("3번");
 		System.out.println(userGenre.toString());
 		System.out.println(genreList.toString());

@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
      <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+  <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <style>
     body{
         position: relative;
@@ -152,12 +153,16 @@
      width: 150px;
      height: 170px;
      float: left;
-     border: black 3px solid;
+     margin-left:70px;
+     border: grey 1px solid;
+     
    }
    .reviewBox{
-     width: 80%;
+     width: 60%;
      height: 170px;
-     border: 3px solid black;
+     margin:0 auto;
+     margin-top:15px;
+     border: 1px solid grey;
      
    }
    .reviewBox > div{
@@ -231,6 +236,20 @@
   .gender, .age {
     display: block;
     width: 250px;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 25px;
+  }
+  .userYear,.userMonth,.userDay{
+    display: block;
+    width: 140px;
     height: 34px;
     padding: 6px 12px;
     font-size: 14px;
@@ -357,17 +376,16 @@
 
   <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#myInfo">내정보</a></li>
-    <li><a data-toggle="tab" href="#menu1">내가 쓴 리뷰</a></li>
-    <li><a data-toggle="tab" href="#menu2">목록</a></li>
-    <li><a data-toggle="tab" href="#menu3">회원탈퇴</a></li>
+    <li><a data-toggle="tab" href="#menu1">MY REVIEW</a></li>    
+    <li><a data-toggle="tab" href="#menu2">회원탈퇴</a></li>
   </ul>
 
   <div class="tab-content">
     <div id="myInfo" class="myInfo tab-pane fade in active">
       <form action="" class="joinForm" method="POST">
         <br>
-        	<label for="id" class="joinLabel">ID</label><br>
-       		<input type="text" class="joinId" name="id" id="id" value="${login.userId }" readonly><br>
+        	<h4>아이디</h4><br>
+       		<h4>${login.userId }</h4><hr>
         	
         	<div class="profile" >
         		<div>
@@ -388,106 +406,51 @@
         
         
        
-        <label for="pwCheck" class="joinLabel">이름</label><br>
-        <input type="text" class="pwCheck" id="userName" name="userName" value="${login.userName}" readonly>            
-        <br>
-        <label for="gender" class="joinLabel">성별</label>
-                
-        <select name="gender" id="gender" class="gender">
-	      <option value="man" ${login.userGender eq 'man'?'selected':'' }>남자</option>
-          <option value="woman" ${login.userGender eq 'woman'?'selected':'' }>여자</option>
-        </select>  
+        <h4>이름</h4><br>
+        <h4>${login.userName}</h4>            
+        <hr>
+        <h4>성별</h4><br>
+        <h4>${login.userGender == "man"?'남성':'여성' }</h4>
+        <hr>
         
-        <label for="gender" class="joinLabel"> 나이</label>
-        <input type="text" class="joinId" name="userAge" id="userAge" value="${login.userAge }" readonly><br>
-        <br>
-        <label for="email" class="joinLabel">EMAIL</label><br>
-        <input type="text" class="email1" name="email1" value="${login.userEmail1 }" readonly> @ 
+        <h4>생년월일</h4><br>
+           <h4>${fn:substring(login.userAge,0,4)}년 ${fn:substring(login.userAge,5,7)}월 ${fn:substring(login.userAge,8,10)}일</h4><hr>
+           
+            
+            
        
-       
-        <select id="email2" class="email2"  onchange="email(this)" >          
-          <option ${login.userEmail2 =='google.com'?'selected':'' } value="gmail.com" >gmail.com</option>
-          <option ${login.userEmail2 =='naver.com'?'selected':'' } value="naver.com" >naver.com</option>
-          <option ${login.userEmail2 =='hanmail.net'?'selected':'' } value="hanmail.net" >hanmail.net</option>
-          <option >${login.userEmail2 !=('google.com'&&'naver.com'&&'hanmail.net')?'selected':'' }</option>         
-        </select>
+       <h4> 이메일</h4><br>
+        <h4>${login.userEmail1 } @ ${login.userEmail2 }</h4><hr>
        
        
        
         <br>
-          <label for="joinLabel addr-num">주소</label>
-          <input type="text" class="postNum" id="addrZipNum" value="${login.addrZipNum }" readonly>
-          <button type="button" class="btn btn-primary addrBtn" onclick="goPopup()">주소찾기</button>
-        <div class="form-group">
-          <input type="text" class="form-control" id="addrBasic" value=${login.addrBasic }>
-        </div>
-        <div class="form-group">
-            <input type="text" class="form-control" id="addrDetail" value="${login.addrDetail }">
-        </div>
-        <br>
+          <h4>주소</h4><br>
+          <h4>${login.addrZipNum } ${login.addrBasic } ${login.addrDetail }</h4>
+        <hr>
         <div class="actorSection">
-          <label for="likeActor" class="joinLabel pwlabel">관심있는 배우</label><br>
-                          
+          <h4>좋아하는 배우</h4><br>                          
              <c:forEach var="vo" items="${userActorInfo}">
-             	<input class="likeActor" id="likeActor" name="likeActor" value="${vo.actorName}" readonly>
-                                   
+             	<h4>${vo.actorName}</h4>                                   
              </c:forEach>                         
                                    	
           
-        </div><br><br>
+        </div><hr>
         <div class="diretorSection">
-        <label for="likeDirector" class="joinLabel pwlabel">관심있는 감독</label><br>
+        <h4>좋아하는 감독</h4><br>
         	 <c:forEach var="vo" items="${userDirectorInfo}">
-             	<input class="likeDirector" id="likeDirector" name="likeDirector" value="${vo.directorName}" readonly>
-                                   
+             	<h4>${vo.directorName}</h4>                                   
              </c:forEach>
-      </div>
+      	</div><hr>
        
-        <div class="genre">
-    	    <c:set var="i" value="0" />
+        <div class="genre1">
 
-			<c:set var="j" value="4" />
-
-
-
-			
-          <label class="joinLabel">선호하는 장르</label><br>
+          <h4>좋아하는 장르</h4><br>
           <c:forEach var="vo" items="${userGenreInfo}">
-                  <input class="likeDirector" id="likeGenre" name="likeGenre" value="${vo.genre }">
-        	</c:forEach>
-           <table>
-           <colgroup>
-
-       		<col width="150px" />
-			<col width="150px" />
-        	<col width="150px" />
-
-    		</colgroup>
-           <tbody>
-           
-        	<c:forEach var="vo1" items="${userGenre.genrelist}">
-            <c:if test="${i%j == 0 }">
-                <tr>
-            </c:if>                  
-	        	<td> <label><input type="checkbox" class="genreLike" id="genreLike" name="genreLike" value="${vo1.genre }" > ${vo1.genre}</label></td>                    
-            <c:if test="${i%j == j-1 }">
-                </tr>
-            </c:if>
-            <c:set var="i" value="${i+1 }" />
-        </c:forEach>
-
-    </tbody>
-
-
-
-
-           
-           
-           </table>    
-           	  
-        
+                  <h4>${vo.genre }</h4>&nbsp
+        </c:forEach>   
         </div>
-        <br>
+        <hr>
                 
         <button type="button" class="btn joinbtn" onclick="location.href='update'" style="padding: 15px;">수정</button>
         
@@ -497,26 +460,27 @@
       <br>
       <ul class="mypageReview">
         <div class="myReview">
-          <div class="reviewPoster"><img src="img/1.jpg" class="poster"></div>
-          <div class="reviewBox">
-            <div class="reviewBoxin">
+        <table>
+        	<thead>
+        		<td>제목</td>
+        		<td>영화</td>
+        		<td>제목</td>
+        		<td>제목</td>
+            </thead>
             <c:forEach var="vo" items="${userReview}">
-            	<div class="myrvTitle">제목: ${vo.movieTitle }<a href=""></a></div>
-              <div class="myrvScore">평점: </div>
-              <div class="myrvRegdate">2020-01-11</div>
+            
+          
             </c:forEach>
-              
-          </div>
-          </div>
+        </table>
         </div>
+     </ul>          
+   </div>
        
-      </ul>
-    </div>
-    <div id="menu2" class="tab-pane fade">
-      <br>
+   
+    
       
     </div>
-    <div id="menu3" class="tab-pane fade">
+    <div id="menu2" class="tab-pane fade">
       <br>
       <Button class="delUser btn-danger" id="delUser" data-toggle="modal" data-target="#myModal1">회원탈퇴</BUtton>
     </div>

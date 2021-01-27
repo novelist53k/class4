@@ -2,6 +2,9 @@
     pageEncoding="UTF-8"%>
      <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+ <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+ 
 <style>
     body{
         position: relative;
@@ -372,7 +375,7 @@
       <form action="modify" class="joinForm" method="POST">
         <br>
         <label for="id" class="joinLabel">ID</label><br>
-       	<input type="text" class="joinId" name="userId" id="userId" value="${login.userId }" readonly><br>   
+       	<input type="text" class="joinId" name="userId" id="userId" value="${vo.userId }" readonly><br>   
        		     
         <label for="password" class="joinLabel pwlabel">PASSWORD</label><br>
         <input type="password" class="userPw" name="userPw" id="userPw">
@@ -389,10 +392,10 @@
         </select>  
         
         <label for="gender" class="joinLabel"> 생년월일</label><br>
-            <select name="userYear" id="userYear" class="userYear">
+            <select name="userYear" id="userYear" class="userYear" >
            		<c:forEach begin="1930" end="2015" var="i" >
            		
-           		<option>${i }
+           		<option ${fn:substring(vo.userAge,0,4) eq i?'selected':''}>${i }
            		
            		</c:forEach>
            		</select> 
@@ -400,10 +403,10 @@
            	<c:forEach begin="1" end="12" var="i">
            		<c:choose>
            			<c:when test="${i<10 }">
-           				<option>0${i}
+           				<option  ${fn:substring(vo.userAge,6,7) eq i?'selected':''}>0${i}
            			</c:when>
            			<c:otherwise>
-           				<option>${i }
+           				<option  ${fn:substring(vo.userAge,5,7) eq i?'selected':''}>${i }
            			</c:otherwise>
            		</c:choose>  
            	</c:forEach>
@@ -412,10 +415,10 @@
            	<c:forEach begin="1" end="31" var="i">
            		<c:choose>
            			<c:when test="${i<10 }">
-           				<option>0${i}
+           				<option  ${fn:substring(vo.userAge,9,10) eq i?'selected':''}>0${i}
            			</c:when>
            			<c:otherwise>
-           				<option>${i }
+           				<option  ${fn:substring(vo.userAge,8,10) eq i?'selected':''}>${i }
            			</c:otherwise>
            		</c:choose>       		
            		
@@ -449,8 +452,8 @@
         <div class="actorSection">
           <label for="likeActor" class="joinLabel pwlabel">관심있는 배우</label><br>
                           
-             <c:forEach var="vo" items="${userActorInfo}">
-             	<input class="likeActor" id="likeActor" name="likeActor" value="${vo.actorName}" >
+             <c:forEach var="ua" items="${userActorInfo}">
+             	<input class="likeActor" id="likeActor" name="likeActor" value="${ua.actorName}" >
                                    
              </c:forEach>     
         </div>
@@ -461,31 +464,21 @@
         <br>
         <div class="diretorSection">
         <label for="likeDirector" class="joinLabel pwlabel">관심있는 감독</label><br>
-        	 <c:forEach var="vo" items="${userDirectorInfo}">
-             	<input class="likeDirector" id="likeDirector" name="likeDirector" value="${vo.directorName }" >
+        	 <c:forEach var="ud" items="${userDirectorInfo}">
+             	<input class="likeDirector" id="likeDirector" name="likeDirector" value="${ud.directorName }" >
                                    
              </c:forEach>
       </div>
         <button type="button" class="add btn-primary" onclick="addDirector()">+</button>
         <button type="button" class="minus btn-primary" onclick="minusDirector()">-</button>
         
-        <div class="genre">
-    	    <c:set var="i" value="0" />
-
-			<c:set var="j" value="4" />
-
-		
+        <div class="genre">		
           <label class="joinLabel">선호하는 장르</label><br>
-          
-          	<c:forEach var="vo" items="${genreList}">
-          	
-        	  <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre"  name="genrelist" value="${vo}"/>${vo}</label>
-        	</c:forEach>
-             
-        	
-          
-        
-        
+           	<c:forEach var="g" items="${genreList}">
+          	 <c:forEach var="ug" items="${userGenreInfo}">
+        	  <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre"  name="genrelist"  ${ug.genre eq g?'checked':'' } value="${g}"/>${g}</label>
+        	  </c:forEach>
+        	</c:forEach>      
         </div>
         <br>
                 

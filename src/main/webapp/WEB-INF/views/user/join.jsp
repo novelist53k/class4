@@ -205,7 +205,6 @@
             
             <label for="gender" class="joinLabel">성별</label>
             <select name="userGender" id="userGender" class="userGender">
-              <option value="choice">성별</option>
               <option value="man">남자</option>
               <option value="woman">여자</option>
             </select> 
@@ -275,18 +274,10 @@
             <button type="button" class="add btn-primary" onclick="addDirector()">+</button>
             <button type="button" class="minus btn-primary" onclick="minusDirector()">-</button>
             <div class="genre">
-			  <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist1" name="genrelist" value="애니메이션"/> 애니메이션</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist2" name="genrelist" value="드라마"/> 드라마</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist3" name="genrelist" value="가족"/> 가족</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist4" name="genrelist" value="미스테리"/> 미스테리</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist5" name="genrelist" value="범죄"/> 범죄</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist6" name="genrelist" value="다큐멘터리"/> 다큐멘터리</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist7" name="genrelist" value="스릴러"/> 스릴러</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist8" name="genrelist" value="공포"/> 공포</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist9" name="genrelist" value="판타지"/> 판타지</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist0" name="genrelist" value="액션"/> 액션</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist11" name="genrelist" value="로맨스"/> 로맨스</label>
-              <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist12" name="genrelist" value="SF"/> SF</label>
+            <c:forEach var="vo" items="${genreList}">
+			  <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist1" name="genrelist" value="${vo}"/>${vo}</label>
+			</c:forEach>
+              
               
               
               

@@ -262,18 +262,19 @@
             </div>
             <br>
             <div class="actorSection">
-              <label for="likeActor" class="joinLabel pwlabel">관심있는 배우</label><br>
+              <label for="likeActor" class="joinLabel pwlabel">좋아하는 배우</label><br>
             </div>
             <button type="button" class="add btn-primary" id="addActorBtn" onclick="addActor()">+</button>
             <button type="button" class="minus btn-primary" onclick="minusActor()">-</button>
             <br>
             <br>
             <div class="diretorSection">
-            <label for="likeDirector" class="joinLabel pwlabel">관심있는 감독</label><br>
+            <label for="likeDirector" class="joinLabel pwlabel">좋아하는 감독</label><br>
           </div>
             <button type="button" class="add btn-primary" onclick="addDirector()">+</button>
             <button type="button" class="minus btn-primary" onclick="minusDirector()">-</button>
             <div class="genre">
+            <label for="likeDirector" class="joinLabel pwlabel">좋아하는 장르</label><br>
             <c:forEach var="vo" items="${genreList}">
 			  <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist1" name="genrelist" value="${vo}"/>${vo}</label>
 			</c:forEach>

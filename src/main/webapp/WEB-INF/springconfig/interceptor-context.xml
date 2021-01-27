@@ -17,6 +17,7 @@
 			
 		<bean id="userAuthHandler" class="com.class4.common.util.interceptor.UserAuthHandler"/>
 		<bean id="ReviewHandler" class="com.class4.common.util.interceptor.ReviewHandler"/>
+		<bean id="MovieHandler" class="com.class4.common.util.interceptor.MovieHandler"/>
 		
 		
 		
@@ -38,6 +39,10 @@
 				
 			</mvc:interceptor>
 			
+			<mvc:interceptor>				
+				<mvc:mapping path="/movie/movieRegist"/>				
+				<ref bean="MovieHandler"/>				
+			</mvc:interceptor>
 			
 			
 		</mvc:interceptors>

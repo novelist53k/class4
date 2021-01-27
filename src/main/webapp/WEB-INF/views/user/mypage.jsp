@@ -30,7 +30,10 @@
         line-height: normal;
         background-color: white;
         opacity:1;
-        border-radius: 8px;
+        /* border-radius: 8px;
+        background-image:url(${pageContext.request.contextPath}/resources/img/paper.jpg);
+    	background-repeat:no-repeat;
+    	background-size:120%; */
     }
     .joinArea{
         
@@ -360,6 +363,19 @@
     	display:box;
     	width: 24%;
     }
+    .myInfo{
+    
+    }
+    .joinForm{
+    	border-radius: 7px;
+    	background-color:white;
+    	
+    }
+  
+    .link{
+    	overflow: hidden;
+    }
+    
 
 
 </style>
@@ -369,15 +385,15 @@
 <div class="container-fluid text-left">
   <div class="semi-back">
   <div class="mypage-back">
-  <h2>마이페이지</h2>
+  <h2 class="Mypagetitle">마이페이지</h2>
   <p>${login.userName }님 환영합니다</p>
   <br>
   <br>
 
   <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#myInfo">내정보</a></li>
-    <li><a data-toggle="tab" href="#menu1">MY REVIEW</a></li>    
-    <li><a data-toggle="tab" href="#menu2">회원탈퇴</a></li>
+    <li><a data-toggle="tab" href="#myreviewTab" class="tab2">내리뷰</a></li>    
+    <li><a data-toggle="tab" href="#deleteTab">탈퇴하기</a></li>
   </ul>
 
   <div class="tab-content">
@@ -447,8 +463,8 @@
 
           <h4>좋아하는 장르</h4><br>
           <c:forEach var="vo" items="${userGenreInfo}">
-                  <h4>${vo.genre }</h4>&nbsp
-        </c:forEach>   
+                 <span style="margin: 10px; ">${vo.genre }</span>  
+        	</c:forEach>   
         </div>
         <hr>
                 
@@ -456,39 +472,48 @@
         
       </form>
     </div>
-    <div id="menu1" class="tab-pane fade">
+    <div id="myreviewTab" name="myreviewTab" class="tab-pane fade">
       <br>
-      <ul class="mypageReview">
+      <ul class="mypageReview" >
         <div class="myReview">
-        <table>
-        	<thead>
-        		<td>제목</td>
-        		<td>영화</td>
-        		<td>제목</td>
-        		<td>제목</td>
-            </thead>
+        <table class="table table-striped table-hover">
+        <thead>
+        	<tr>
+        		<th>번호</th>
+        		<th class="board-title">영화</th>
+        		<th>내용</th>
+        		<th>등록일</th>        		
+        	</tr>
+        </thead>	
+        <tbody>
             <c:forEach var="vo" items="${userReview}">
-            
-          
+        	
+        	<tr>
+        		<td><a class="link" href="${pageContext.request.contextPath}/review/reviewContent?bno=${vo.bno}"> ${vo.bno }</a></td>
+        		<td><a class="link" href="${pageContext.request.contextPath}/review/reviewContent?bno=${vo.bno}"> ${vo.movieTitle}</a></td>
+        		<td style="overflow:hidden;"><a class="link" style="overflow:hidden;" href="${pageContext.request.contextPath}/review/reviewContent?bno=${vo.bno}" >${vo.content }</a></td>
+        		<td> ${fn:substring(vo.regDate,0,16)}</td>         	
+        	</tr>
+        	
             </c:forEach>
-        </table>
-        </div>
+        </tbody>
+      </table>
+       </div>
      </ul>          
    </div>
-       
-   
-    
       
-    </div>
-    <div id="menu2" class="tab-pane fade">
+
+
+    <div id="deleteTab" class="tab-pane fade">
       <br>
-      <Button class="delUser btn-danger" id="delUser" data-toggle="modal" data-target="#myModal1">회원탈퇴</BUtton>
+      <Button class="delUser btn-danger" id="delUser" data-toggle="modal" data-target="#myModal1">ARE YOU SURE?</BUtton>
     </div>
   </div>
 </div>
 </div>
 </div>
-      
+
+<!-- 회원탈퇴 모달 -->
 <div class="modal fade" id="myModal1" role="dialog">
                 <div class="modal-dialog">
                 
@@ -506,12 +531,11 @@
                             <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
                             </form>
                         </div>
-                        <div class="modal-footer">
-                        	
-                        </div>
+                       
                     </div>
                 </div>
-            </div>    
+</div> 
+            
   
 
 

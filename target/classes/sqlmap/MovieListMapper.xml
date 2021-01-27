@@ -5,109 +5,138 @@
 
 <mapper namespace="com.class4.movieList.mapper.MovieListMapper">
 
-	<select id="cMovieList" resultType="MovieListVO">
-		<![CDATA[  
-		select *
-		from(select rownum as rn,
-   				 c.*
-				from(select a.*,
-      				 b.subhead,
-       				 b.content,
-       				 b.poster,
+   <select id="cMovieList" resultType="MovieListVO">
+      <![CDATA[  
+      select *
+      from(select rownum as rn,
+                c.*
+            from(select a.*,
+                   b.subhead,
+                    b.content,
+                    b.poster,
                      b.trailer
-    				    from movie a
-						left join moviesub b
-						on a.title = b.title
-						where a.opendt > sysdate-30 and a.opendt <= sysdate
-						order by opendt) c 
-						)
-			where rn > (#{pageNum}-1) * #{amount} and rn <= #{pageNum} * #{amount}
-			]]>
-	
-	</select>
-	
-	<select id="eMovieList" resultType="MovieListVO">
-		<![CDATA[  
-		select *from(select rownum as rn, c.* from(select a.*,
-      				 b.subhead,
-       				 b.content,
-       				 b.poster,
+                    from movie a
+                  left join moviesub b
+                  on a.title = b.title
+                  where a.opendt > sysdate-30 and a.opendt <= sysdate
+                  order by opendt) c 
+                  )
+         where rn > (#{pageNum}-1) * #{amount} and rn <= #{pageNum} * #{amount}
+         ]]>
+   
+   </select>
+   
+   <select id="eMovieList" resultType="MovieListVO">
+      <![CDATA[  
+      select *from(select rownum as rn, c.* from(select a.*,
+                   b.subhead,
+                    b.content,
+                    b.poster,
                      b.trailer
-    				    from movie a
-						left join moviesub b
-						on a.title = b.title
-						where a.opendt > sysdate
-						order by opendt) c 
-						)
-			where rn > (#{pageNum}-1) * #{amount} and rn <= #{pageNum} * #{amount}
-			]]>
-	
-	</select>
-	
-	<select id="getTotalC" resultType="int">
-	<![CDATA[
-	select count(*) from movie where opendt > sysdate-30 and opendt <= sysdate
-	]]>  
-		
-		
-	</select>
+                    from movie a
+                  left join moviesub b
+                  on a.title = b.title
+                  where a.opendt > sysdate
+                  order by opendt desc) c 
+                  )
+         where rn > (#{pageNum}-1) * #{amount} and rn <= #{pageNum} * #{amount}
+         ]]>
+   
+   </select>
+   
+   <select id="getTotalC" resultType="int">
+   <![CDATA[
+   select count(*) from movie where opendt > sysdate-30 and opendt <= sysdate
+   ]]>  
+      
+      
+   </select>
 
-	<select id="getMovieInfo" resultType = "MovieInfoVO">
+   <select id="getMovieInfo" resultType = "MovieInfoVO">
 select a.*,
       b.subhead,
-  	  b.content,
-  	  b.poster,
+       b.content,
+       b.poster,
       b.trailer
-	from movie a
-		left join moviesub b
-		on a.title = b.title
-		where a.moviecd = #{cd}
-	</select>
+   from movie a
+      left join moviesub b
+      on a.title = b.title
+      where a.moviecd = #{cd}
+   </select>
 
-	<select id="getTotalE" resultType="int">
-		select count(*) from movie where opendt > sysdate
-	</select>
-	
-	<update id="update">
-		update [테이블] set subhead = #{subhead}, content=#{content}, poster=#{poster}, trailer = #{trailer}
-		where title = #{title}
-	</update>
-	
-	<insert id="regist">
-		INSERT INTO movie(movieCd, title, ftitle, grade, openDt) VALUES(#{movieCd}, #{title}, #{ftitle}, #{grade}, #{openDt})
-	</insert>
-	
-	<select id="getCodeList" resultType="String">
-		SELECT movieCd FROM movie
-	</select>
-	
-	
-	<select id="getActorCodeList" resultType="String">
-		SELECT ano FROM actor
-	</select>
-	
-	<select id="getDirectorCodeList" resultType="String">
-		SELECT dno FROM director
-	</select>
-	
-	<insert id="ActorInsert">
-		INSERT INTO actor(ano, actorName, fActorName) VALUES(#{ano}, #{actorName}, #{fActorName})
-	</insert>
-	
-	<insert id="DirectorInsert">
-		INSERT INTO director(dno, directorName, fDirectorName) VALUES(#{dno}, #{directorName}, #{fDirectorName})
-	</insert>
-	
-	<select id = "getGenreList" resultType="String">
-		SELECT * FROM genre
-	</select>
-	
-	<insert id="GenreInsert">
-		INSERT INTO genre(genre) values(#{genre})
-	</insert>
-	
-	
-	
-	
-	
+   <select id="getTotalE" resultType="int">
+      select count(*) from movie where opendt > sysdate
+   </select>
+   
+   <update id="update">
+      update moviesub set subhead = #{subhead}, content=#{content}, trailer = #{trailer}
+      where title = #{title}
+   </update>
+   
+   <insert id="regist">
+      INSERT INTO movie(movieCd, title, ftitle, grade, openDt) VALUES(#{movieCd}, #{title}, #{ftitle}, #{grade}, #{openDt})
+   </insert>
+   
+   <select id="getCodeList" resultType="String">
+      SELECT movieCd FROM movie
+   </select>
+   
+   
+   <select id="getActorCodeList" resultType="String">
+      SELECT ano FROM actor
+   </select>
+   
+   <select id="getDirectorCodeList" resultType="String">
+      SELECT dno FROM director
+   </select>
+   
+   <insert id="ActorInsert">
+      INSERT INTO actor(ano, actorName, fActorName) VALUES(#{ano}, #{actorName}, #{fActorName})
+   </insert>
+   
+   <insert id="DirectorInsert">
+      INSERT INTO director(dno, directorName, fDirectorName) VALUES(#{dno}, #{directorName}, #{fDirectorName})
+   </insert>
+   
+   <select id = "getGenreList" resultType="String">
+      SELECT genre FROM genre
+   </select>
+   
+   <insert id="GenreInsert">
+      INSERT INTO Genre(genre) values(#{genre})
+   </insert>
+   
+   <update id="postUpload">
+       UPDATE MOVIESUB set poster=#{poster} where title = #{title}
+   </update>
+   
+   
+     <select id="getGenreSize" resultType="int">
+      SELECT COUNT(*) FROM genre
+   </select>
+   
+   <insert id="registMovieGenre">
+      INSERT INTO movieGenre VALUES(movieGenre_seq.nextval, #{mno}, #{genre})
+   </insert>
+   
+   <select id="getGenreByMno" resultType="String">
+      SELECT genre FROM movieGenre WHERE mno = #{mno}
+   </select>
+   
+   <select id="getMnoByAno" resultType="String">
+      SELECT mno FROM movieActor WHERE mno = #{mno}
+   </select>
+   
+   <select id="getMnoByDno" resultType="String">
+      SELECT mno FROM movieDirector WHERE mno = #{mno}
+   </select>
+   
+   <insert id="registMovieActor">
+      INSERT INTO movieActor VALUES(movieActor_seq.nextval, #{mno}, #{ano})
+   </insert>
+   
+   <insert id="registMovieDirector">
+      INSERT INTO movieDirector VALUES(movieDirector_seq.nextval, #{mno}, #{dno})
+   </insert>
+   
 </mapper>

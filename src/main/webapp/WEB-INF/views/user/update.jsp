@@ -378,9 +378,11 @@
        	<input type="text" class="joinId" name="userId" id="userId" value="${vo.userId }" readonly><br>   
        		     
         <label for="password" class="joinLabel pwlabel">PASSWORD</label><br>
-        <input type="password" class="userPw" name="userPw" id="userPw">
+        <input type="password" class="userPw" name="userPw" id="userPw"><label id="msgPw" class="msgPw"></label><br>
+        
         <label for="pwCheck" class="joinLabel">PASSWORD 확인</label><br>
-        <input type="password" class="pwCheck" name="pwCheck" id="pwCheck" ><br>
+        <input type="password" class="pwCheck" name="pwCheck" id="pwCheck" >
+        <label class="msgPw-c" id="msgPw-c"></label><br>
         <label for="pwCheck" class="joinLabel">이름</label><br>
         <input type="text" class="pwCheck" id="userName" name="userName">            
         <br>
@@ -450,7 +452,7 @@
         </div>
         <br>
         <div class="actorSection">
-          <label for="likeActor" class="joinLabel pwlabel">관심있는 배우</label><br>
+          <label for="likeActor" class="joinLabel pwlabel">좋아하는 배우</label><br>
                           
              <c:forEach var="ua" items="${userActorInfo}">
              	<input class="likeActor" id="likeActor" name="likeActor" value="${ua.actorName}" >
@@ -463,7 +465,7 @@
         <br>
         <br>
         <div class="diretorSection">
-        <label for="likeDirector" class="joinLabel pwlabel">관심있는 감독</label><br>
+        <label for="likeDirector" class="joinLabel pwlabel">좋아하는 감독</label><br>
         	 <c:forEach var="ud" items="${userDirectorInfo}">
              	<input class="likeDirector" id="likeDirector" name="likeDirector" value="${ud.directorName }" >
                                    
@@ -473,12 +475,12 @@
         <button type="button" class="minus btn-primary" onclick="minusDirector()">-</button>
         
         <div class="genre">		
-          <label class="joinLabel">선호하는 장르</label><br>
-           	<c:forEach var="g" items="${genreList}">
-          	 <c:forEach var="ug" items="${userGenreInfo}">
-        	  <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre"  name="genrelist"  ${ug.genre eq g?'checked':'' } value="${g}"/>${g}</label>
-        	  </c:forEach>
-        	</c:forEach>      
+          <label class="joinLabel">좋아하는 장르</label><br>
+          
+	  				<c:forEach items="${genreList }" var="g">         	 
+        		  	 	<label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre"  name="genrelist" value="${g}"/>${g}</label>          	  
+			  		</c:forEach>
+	  		 
         </div>
         <br>
                 

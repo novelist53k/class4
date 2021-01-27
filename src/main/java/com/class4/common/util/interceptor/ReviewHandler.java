@@ -31,7 +31,7 @@ public class ReviewHandler extends HandlerInterceptorAdapter{
 		
 		PrintWriter out = response.getWriter();
 		out.println("<script>");
-		out.println("alert('권한이 없습니다');");
+		out.println("alert('Permission Denied');");
 		out.println("history.go(-1);");		
 		out.println("</script>");	
 		

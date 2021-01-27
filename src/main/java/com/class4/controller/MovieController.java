@@ -8,12 +8,17 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.class4.command.ActorVO;
@@ -133,14 +138,12 @@ public class MovieController {
 					movieCdList.add(movieCd);
 				}//end out for
 				
-//				//테이블에 저장된 장르와 비교하여 없는 경우 테이블에 추가
-//				GenreVO genre = new GenreVO(); 
-//				String a = (String) genreList.get(i).get("genreNm");
-//				System.out.println(a);
-//				ArrayList<String> tableGenre = movieListService.getGenreList();
+
 				System.out.println("첫번째여기");
 				
+				ArrayList<String> tableGenres = movieListService.getGenreList();//<----------------------------
 				
+				System.out.println("장르목록 : "+tableGenres);
 				for(int i = 0 ; i < movieCdList.size(); ++i) {
 					String strMovieInfo = service.getMovieInfo(true, movieCdList.get(i));
 					HashMap<String, Object> movieInfoHashMap = mapper.readValue(strMovieInfo, HashMap.class);
@@ -151,17 +154,30 @@ public class MovieController {
 					System.out.println(genres.size());
 					//불러오기 
 					
-					
+					boolean flag= true;
+					String genreNm = "";
 					///////학원에서 해야지... 지금 여기서부터 오류
-					ArrayList<String> tableGenres = movieListService.getGenreList();
 					start:for(int j = 0; j < genres.size() ; j++) {
-						if(tableGenres.get(j).equals( genres.get(j).get("genreNm") )){
-							continue start;
+						System.out.println("되냐?");
+						genreNm = genres.get(j).get("genreNm").toString();
+						System.out.println("테이블값:"+tableGenres);
+						if(tableGenres.equals(genreNm)){
+							flag = false;
+							break;
 						}
-						System.out.println(genres.get(j).get("genreNm"));
+//						GenreVO genre = new GenreVO();
+//						genre.setGenre(genreNm);
+//						movieListService.GenreInsert(genre);
+					
+						//System.out.println(genres.get(j).get("genreNm"));
 //						String a = (String) genres.get(j).get("genreNm");
 //						GenreVO genre = new GenreVO(a);
 //						movieListService.GenreInsert(genre);
+					}
+					if(flag) {
+						GenreVO genre = new GenreVO();
+						genre.setGenre(genreNm);
+						movieListService.GenreInsert(genre);
 					}
 					
 				}
@@ -387,6 +403,73 @@ public class MovieController {
 	public String update(MovieInfoVO vo) {
 		int result = movieListService.update(vo);
 		return null;
+	}
+	
+	@RequestMapping("/upload")
+	@ResponseBody
+	public String upload(@RequestParam("file") MultipartFile file,
+						 @RequestParam("content") String content,
+						 HttpSession session) {
+		try {
+			UserVO userVO = (UserVO)session.getAttribute("userVO");
+			String writer = userVO.getUserId(); //작성자정보
+			
+			//1. 날짜별로 폴더로 관리
+			Date date = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			String fileLoca = sdf.format(date); //폴더명
+			
+			//2. 저장할 폴더
+			String uploadPath = "/var/upload/" + fileLoca;
+			//String uploadPath = "D:\\course\\upload\\"+fileLoca;
+			File folder = new File(uploadPath);
+			if(!folder.exists() ) {
+				folder.mkdir(); //폴더생성
+			}
+			
+			
+			//3. 서버에 저장할 파일 이름
+			String fileRealName = file.getOriginalFilename(); //파일이름
+			Long size = file.getSize(); //파일사이즈
+			String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."), fileRealName.length());//확장자
+			
+			UUID uuid = UUID.randomUUID();
+			String uuids = uuid.toString().replaceAll("-", "");
+			
+			String fileName = uuids + fileExtension;//변경해서 저장할 파일이름 (uuid이름 + 확장자)
+			
+			System.out.println("=========================");
+			System.out.println("저장할폴더 : "+uploadPath);
+			System.out.println("파일실제이름 : "+fileRealName);
+			System.out.println("파일사이즈 : " + size);
+			System.out.println("파일확장자 : "+ fileExtension);
+			System.out.println("변경해서저장할 파일명 : "+ fileName);
+			
+			
+			//4. 파일 업로드처리
+			File saveFile = new File(uploadPath + "\\" +  fileName );
+			file.transferTo(saveFile); //스프링의 업로드처리
+			
+			//5.DB에 insert작업
+			SnsBoardVO vo = new SnsBoardVO(0, writer, content, uploadPath, fileLoca, fileName, fileRealName, null);
+			boolean result = snsBoardService.insertFile(vo);
+			
+			if(result) { //성공
+				return "success";
+			} else {
+				return "fail"; 
+					
+			}
+			
+		} catch (NullPointerException e) {
+			System.out.println("세션정보가 없음");
+			return "fail";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "fail";
+		}
+		
+		
 	}
 	
 	

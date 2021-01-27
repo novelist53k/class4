@@ -52,7 +52,7 @@
 
             <tr>
                 <td>포스터</td>
-                <td class="td2"><input type="file" id="file" id="poster" name="poster"></td>
+                <td class="td2"><input type="file" id="file" name="poster"></td>
             </tr>
 
             <tr>
@@ -63,7 +63,7 @@
             
         </table>       
         <button type="button" style="width: 80px; height: 30px;" class="btn3">등록하기</button>
-        <button type="button" style="width: 80px; height: 30px;" class="upbtn">수2정하기</button>
+        <button type="button" style="width: 80px; height: 30px;" class="upbtn">수정하기</button>
 
         <br><br><br><br>
     </form>
@@ -85,4 +85,39 @@
      		document.registForm.submit();
      	}
      	
+     	//파일비동기 전송시 반드시 필요한 FormData()객체 생성
+		var data = $("#file")
+		console.log(data)
+		console.log(data[0])
+		console.log(data[0].files) //파일태그에 담긴 파일을 확인하는 키값
+		console.log(data[0].files[0])
+		
+		var content = $("#content").val();
+		
+		var formData = new FormData();
+		formData.append("file" , data[0].files[0]); //file이름으로 file데이터저장
+		formData.append("content", content);
+			
+		$.ajax({
+			type : "POST",
+			url : "upload",
+			processData : false, //폼형식이  &변수=값의 형태로 변경되는 것을 막는다.
+			contentType : false, //false로 지정하면 기본으로 "multipart/form-data" 으로 선언됨
+			data : formData, //폼데이터객체
+			success : function(result){
+				if(result === 'success'){
+					alert("됨");
+					/* $("#file").val(""); //파일데이터 초기화
+					$("#content").val(""); //content 초기화
+					$(".fileDiv").css("display","none"); //미리보기 숨기기
+					getList(); //목록 호출 */
+				}else{
+					alert("업로드에 실패했습니다. 관리자에게 문의하세요");
+				}
+			
+			},
+			error : function(status, error){}
+			
+		});//end ajax
+	};//등록end
      </script>

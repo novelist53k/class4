@@ -103,7 +103,7 @@ select a.*,
 	</select>
 	
 	<insert id="GenreInsert">
-		INSERT INTO genre(genre) values(#{genre})
+		INSERT INTO Genre(genre) values(#{genre})
 	</insert>
 	
 	

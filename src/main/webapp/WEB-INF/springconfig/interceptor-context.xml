@@ -16,7 +16,7 @@
 		<!-- web.xml에 설정파일로 추가.  -->
 			
 		<bean id="userAuthHandler" class="com.class4.common.util.interceptor.UserAuthHandler"/>
-
+		<bean id="ReviewHandler" class="com.class4.common.util.interceptor.ReviewHandler"/>
 		
 		
 		

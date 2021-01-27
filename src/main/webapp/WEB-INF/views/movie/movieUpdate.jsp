@@ -18,7 +18,9 @@
 
             <tr>
                 <td>포스터</td>
-                <td class="td2"><input type="file" id="file" name="poster"></td>
+                <td class="td2"><input type="file" id="file" name="file"></td>
+                <!-- <td><button type="button" class="upload btn btn-default" id="upload" name="upload">확인</button></td> -->
+                <td><button type="button" class="upload btn btn-default" id="upload" name="upload">확인</button></td>
             </tr>
 
             <tr>
@@ -32,17 +34,94 @@
         	<input type="hidden" name="cd" value="">
         </form>
         <button type="button" style="width: 80px; height: 30px;" class="btn3">등록하기</button>
-        <button type="button" style="width: 80px; height: 30px;" class="upload" id="upload" name="upload">수정하기</button>
+        <button type="button" style="width: 80px; height: 30px;" class="modify">수정하기</button>
 
 		
         <br><br><br><br>
-         <input type="hidden"  id="movieCd" value="${info.movieCd }">
+         <input type="hidden"  id="title" value="${info.title }">
         
 
     </section>
            
-     <script>
-     $("#upload").click(function(){
+    <script>
+    $("#upload").click(function(){
+    	console.log(1)
+ 		var file = $("#file").val();
+ 		var title = $("#title").val();
+ 		
+ 		var file = file.substring(file.lastIndexOf('.')+1, file.length).toLowerCase();
+ 		if(file !="jpg" && file !="png"&&file!="jpeg" && file!="gif"){
+ 			alert("이미지파일만 등록 가능");
+ 			return;
+ 		}
+ 		var data = $("#file")
+ 		console.log(data);
+ 		console.log(data[0]);
+ 		console.log(data[0].files);
+ 		console.log(data[0].files[0]);
+ 		
+ 		var formData = new FormData();
+ 		formData.append("file",data[0].files[0]);
+ 		formData.append("title",title);
+ 		
+ 		$.ajax({
+ 			url:"upload",
+ 			processData: false,
+ 			contentType: false,
+ 			data: formData,
+ 			type:"POST",
+ 			success: function(result){
+ 				console.log(result);
+ 				alert("업로드 성공")
+ 			},
+ 			error:function(status, er){
+ 				alert("업로드 실패");
+ 			}
+ 		}) //ajax
+    });
+    
+    </script>
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+    /*  $("#upload").click(function(){
  		console.log(1)
  		var cd = $("#movieCd").val();
 		document.regForm.cd.value=cd;
@@ -56,12 +135,13 @@
      	}
      	
      	//파일비동기 전송시 반드시 필요한 FormData()객체 생성
-		var data = $("#file")
+		var data = $("#file").val();
+		
 		/* console.log(data)
 		console.log(data[0])
 		console.log(data[0].files) //파일태그에 담긴 파일을 확인하는 키값
 		console.log(data[0].files[0]) */
-		var formData = new FormData();
+		/* var formData = new FormData();
 		formData.append("file" , data[0].files[0]); //file이름으로 file데이터저장
 		$.ajax({
 			type : "POST",
@@ -83,6 +163,6 @@
 			},
 			error : function(status, error){}
 			
-		});//end ajax
-	//등록end
-     </script>
+		});//end ajax */
+	//등록end */
+

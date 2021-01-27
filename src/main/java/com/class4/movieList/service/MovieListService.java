@@ -18,7 +18,7 @@ public interface MovieListService {
 	public int update(MovieInfoVO vo);
 	public void regist(RegistVO vo);
 	public void registP(RegistVO vo);
-
+	
 	public ArrayList<String> getGenreList();
 	public ArrayList<String> getCodeList();
 	public MovieInfoVO getMovieInfo(String cd);
@@ -27,6 +27,7 @@ public interface MovieListService {
 	public ArrayList<String> getPeopleCodeList();
 	public void ActorInsert(ActorVO vo);
 	public void DirectorInsert(DirectorVO vo);
+	public boolean postUpload(MovieInfoVO vo);
 
 	public void GenreInsert(GenreVO vo);
 }

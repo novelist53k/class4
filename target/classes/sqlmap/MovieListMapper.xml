@@ -69,7 +69,7 @@ select a.*,
 	</select>
 	
 	<update id="update">
-		update [테이블] set subhead = #{subhead}, content=#{content}, poster=#{poster}, trailer = #{trailer}
+		update moviesub set subhead = #{subhead}, content=#{content}, trailer = #{trailer}
 		where title = #{title}
 	</update>
 	
@@ -106,8 +106,21 @@ select a.*,
 		INSERT INTO Genre(genre) values(#{genre})
 	</insert>
 	
+	<update id="postUpload">
+		 UPDATE MOVIESUB set poster=#{poster} where title = #{title}
+	</update>
 	
 	
-	
+  <select id="getGenreSize" resultType="int">
+      SELECT COUNT(*) FROM genre
+   </select>
+   
+   <insert id="registMovieGenre">
+      INSERT INTO movieGenre VALUES(movieGenre_seq.nextval, #{mno}, #{genre})
+   </insert>
+   
+   <select id="getGenreByMno" resultType="String">
+      SELECT genre FROM movieGenre WHERE mno = #{mno}
+   </select>
 	
 </mapper>

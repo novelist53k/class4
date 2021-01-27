@@ -214,6 +214,11 @@ section {
 	cursor: pointer;
 }
 
+.movie_title > label> a:hover{
+	font-size: large;
+	text-decoration: none;
+}
+
 </style>
 
 <section>
@@ -234,7 +239,7 @@ section {
         </form>
         <!--리뷰 -->
         <div class = "review_main">
-            <lable style="font-size: 40px; font-weight: bold;">영화 리뷰</lable>
+            <label style="font-size: 40px; font-weight: bold;">영화 리뷰</label>
             <hr style="border-bottom: 3px solid black; margin: 10px 0;">
 			
             <ul class="review_list" id="movie_review_list">
@@ -243,7 +248,7 @@ section {
                 	<span class="review_bno">${vo.bno }</span>
                     <div class="box_profile">
                         <span class="profile_img">
-                            <img src="${pageContext.request.contextPath }/resources/img/default_profile.gif" alt="프로필 이미지">
+                            <img src = "${pageContext.request.contextPath }/resources/img/${vo.fileRealName == null ? 'default_profile.gif' : vo.fileRealName }" alt="프로필 이미지">
                         </span>
                         <span class="profile_mask">
                             <img src="${pageContext.request.contextPath }/resources/img/bg_photocircle.png" alt="원형 프레임">
@@ -252,7 +257,7 @@ section {
                     <div class="box_contents">
                         <ul class="writer_info">
                             <li class = "movie_title">
-                                <label>${vo.movieTitle }</label>
+                                <label><a href="reviewContent?bno=${vo.bno }">${vo.movieTitle }</a></label>
                                 <span class = "point glyphicon glyphicon glyphicon-star" aria-hidden="true" style="color: rgb(233, 49, 49);"></span>
                                 <span class = "score">5</span><br>
                             </li>
@@ -261,13 +266,13 @@ section {
                             </li>
                             <li class="writer_etc">
                                 <span class = "day">
-                                	<fmt:formatDate value="${vo.regDate }" pattern="yyyy-MM-dd HH:ss"/> 
+                                	<fmt:formatDate value="${vo.regDate }" pattern="yyyy-MM-dd HH:mm"/> 
                                 </span>
                             </li>
                         </ul>
                     </div>
                     <div class="box-comment">
-                        <p><a href="reviewContent?bno=${vo.bno }">${vo.content }</a></p>
+                        <p>${vo.content }</p>
 
                     </div>
                 </li>

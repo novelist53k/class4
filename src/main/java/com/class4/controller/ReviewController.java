@@ -30,11 +30,12 @@ public class ReviewController {
 		//화면으로 넘어갈 때 글정보를 가지고 갈수 있도록 처리 getList()로 조회한 결과를 리스트화면에 출력.
 		//3. 검색과 페이지
 		ArrayList<ReviewBoardVO> list = reviewBoardService.getList(cri);
+		for(ReviewBoardVO vo : list) {
+			System.out.println(vo.toString());
+		}
 		
 		int total = reviewBoardService.getTotal(cri);
 		PageVO pageVO = new PageVO(cri, total);
-		System.out.println(pageVO.toString());
-		System.out.println(cri.toString());
 		
 		//화면으로 전달
 		model.addAttribute("list", list);
@@ -51,12 +52,13 @@ public class ReviewController {
 	}
 	
 	//글 등록
-	@RequestMapping(value = "/reviewRegistForm", method=RequestMethod.POST)
+	@RequestMapping(value="reviewRegistForm", method=RequestMethod.POST)
 	public String reviewRegistForm(ReviewBoardVO vo, RedirectAttributes RA) {
+		//System.out.println(1);
+		reviewBoardService.regist(vo);
 		
-		reviewBoardService.regist(vo); 
-		RA.addFlashAttribute("msg", "리뷰 등록이 완료 되었습니다."); //화면 전달
-		
+		RA.addFlashAttribute("msg", "리뷰가 등록 되었습니다.");
+	
 		return "redirect:/review/reviewList";
 	}
 	
@@ -92,7 +94,7 @@ public class ReviewController {
 			RA.addFlashAttribute("msg", "재수정 해주세요.");
 		}
 		
-		return "redirect:reviewList";
+		return "redirect:/review/reviewContent?bno=" + vo.getBno();
 	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)

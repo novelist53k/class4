@@ -500,9 +500,12 @@
           <div class="reviewPoster"><img src="img/1.jpg" class="poster"></div>
           <div class="reviewBox">
             <div class="reviewBoxin">
-              <div class="myrvTitle">제목: <a href=""></a></div>
+            <c:forEach var="vo" items="${userReview}">
+            	<div class="myrvTitle">제목: ${vo.movieTitle }<a href=""></a></div>
               <div class="myrvScore">평점: </div>
               <div class="myrvRegdate">2020-01-11</div>
+            </c:forEach>
+              
           </div>
           </div>
         </div>

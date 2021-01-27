@@ -193,7 +193,7 @@ public class UserController {
 			String fileLoca = userVO.getUserId();
 			
 			//占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙
-			String path = "D:\\course\\workspace\\class4\\src\\main\\webapp\\resources\\img\\profile\\"+fileLoca;
+			String path = "D:\\project\\class4\\src\\main\\webapp\\resources\\img\\profile\\"+fileLoca;
 			String sqlPath = "\\movie\\resources\\img\\profile\\"+fileLoca;
 			File folder = new File(path);
 			if(!folder.exists()) {

@@ -152,7 +152,7 @@ input:focus{
 	    <div class = wrap>
 	    	<span class="review_bno">${vo.bno }</span>
 	        <div class = "movie-img">
-	            <img src="${pageContext.request.contextPath}/resources/img/movie_image.jpg" alt="영화포스터">
+	            <img src="${pageContext.request.contextPath }/resources/img/poster/${movieInfo.poster == null ? 'b.png' : movieInfo.poster}" alt="영화포스터">
 	        </div>    
 	        <div class = "review-content">
 	        	<label>${vo.movieTitle }</label>
@@ -207,52 +207,13 @@ input:focus{
     
     <script>
     	
-    	function del(bno) {
+    	function del(bno,writer) {
     		var chk = confirm("정말 삭제하시겠습니까?");
     		if (chk) {
     			location.href='delete?bno='+bno;
     		}
 		}
-    	
-  	
-    $(document).ready(function name() {
-   		
-    	$("#repl-regist").click(repl);
-		
-    	
-    	function repl() {
-			var rno = "${rvo.rno}";
-			var content = $("#reply").val();
-			
-		}
-    	
-    	$.ajax({
-    		type : "POST",
-    		url : "../reply/replyRegist",
-    		data : JSON.stringify({"rno":rno, "reply":reply}),
-    		contentType: "application/json; charset=utf-8",
-    		succcess: function (data) {
-				
-    			if(data == 1){
-    				$("#reply").val("");
-    				alert("댓글이 등록 되었습니다.");
-    				getList(1, true);
-    				
-    			}else{
-    				alert("재등록 해주세요");
-    			}
-			}
-    	})
-    	
-	})
     
-    
-    	
-    	
-    	
-    	
-    	
-    	
     </script>
     
     

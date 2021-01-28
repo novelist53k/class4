@@ -19,6 +19,7 @@ public class ReviewHandler extends HandlerInterceptorAdapter{
 		HttpSession session = request.getSession();
 		UserVO vo = (UserVO)session.getAttribute("login");
 		System.out.println(writer);
+		System.out.println(vo);
 		System.out.println( "review인터셉터 실행");
 		if (vo != null) {
 			if(writer != null) {

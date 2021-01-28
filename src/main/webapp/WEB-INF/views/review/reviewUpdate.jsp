@@ -112,7 +112,7 @@ input:focus{
 	    <div class = wrap>
 	    	<input name="bno" type="text" class="review_bno" value="${vo.bno }">
 	        <div class = "movie-img">
-	            <img src="${pageContext.request.contextPath }/resources/img/movie_image.jpg" alt="영화포스터">
+	            <img src="${pageContext.request.contextPath }/resources/img/poster/${movieInfo.poster == null ? 'b.png' : movieInfo.poster}" alt="영화포스터">
 	            
 	        </div>    
 	        <div class = "review-content">

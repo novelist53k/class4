@@ -110,6 +110,7 @@ public class MovieController {
 	@RequestMapping("/movieContent")
 	public String movieContent(MovieInfoVO vo, Model model) {
 		String cd = vo.getMovieCd();
+		
 		MovieInfoVO info = movieListService.getMovieInfo(cd);
 		ArrayList<String>genreList = movieListService.getGenreByMno(cd);
 		ArrayList<String>directorList = movieListService.getMnoByDno(cd);

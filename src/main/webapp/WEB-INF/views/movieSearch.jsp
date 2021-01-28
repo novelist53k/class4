@@ -3,6 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+	<style type="text/css">
+		.sliderTitle{ margin-top:10px; color:white;}
+	</style>
+	
       <section class = "movie_list_area">
         <div class = "box_list_movie">
             <ul class="list_movie">
@@ -11,11 +15,11 @@
                 <li>
                     <div class="info_movie">
                         <span class="thumb_movie">
-                            <c:choose>
+                        	<c:choose>
                         	<c:when test="${vo.grade eq '청소년관람불가' && vo.poster eq null}">
                             <img src="${pageContext.request.contextPath }/resources/img/poster/a.jpg" class = "img_g">
                             </c:when>
-                            <c:when test="${vo.grade ne '청소년관람불가' && vo.poster eq null}">
+                        	<c:when test="${vo.grade ne '청소년관람불가' && vo.poster eq null}">
                             <img src="${pageContext.request.contextPath }/resources/img/poster/b.png" class = "img_g">
                             </c:when>
                             <c:otherwise>
@@ -35,7 +39,7 @@
                     <div class="wrap_movie">
                         <div class="info_tit">
                          <em class="ico_movie ico_allrating">${vo.grade }</em><br>
-                       <a href="#" class="name_movie" style="text-decoration: none; color :black; font-weight: 700">${vo.title }</a>
+                       <a href="movie/movieContent?movieCd=${vo.movieCd }" class="name_movie" style="text-decoration: none; color :black; font-weight: 700">${vo.title }</a>
                     </div>
                         <span class="info_state"><fmt:formatDate value="${vo.openDt }" pattern="yyyy/MM/dd"/><b>개봉</b></span>
                     </div>
@@ -45,56 +49,26 @@
             </ul>
         </div>
         
-        <form action="movieExpected" name="pageForm">
-		    		
-                    <div class="text-center">
-                    <hr>
-                    <ul class="pagination pagination-sm">
-                        <!-- 3.이전버튼활성화여부 -->
-                        <c:if test="${pageVO.prev }">
-                        <li>
-                        	<a href="#" data-page="${pageVO.startPage-1 }">이전</a>
-                        </li>
-                        </c:if>
-                        <!-- 1.페이지네이션 번호 처리 -->
-                        <c:forEach var="num" begin="${pageVO.startPage }" end="${pageVO.endPage }">
-                        <li class="${num == pageVO.pageNum ? 'active' : '' }">
-                        	<a href="#" data-page="${num }" >${num }</a>
-                        </li>
-                        </c:forEach>	
-                        
-                        <!-- 2.다음버튼활성화여부 -->
-                        <c:if test="${pageVO.next }">
-                        <li>
-                        	<a href="#" data-page="${pageVO.endPage+1 }">다음</a>
-                        </li>
-                        </c:if>
-                    </ul>
-                    </div>
-                   	<input type="hidden" name="pageNum" value="${pageVO.cri.pageNum }">
-		    		</form>
-
+        <hr>
+        <h3 class="sliderTitle">
+        	<a href="#" style="${sessionScope.login == null ? 'visibility:hidden' : ''}">이런 영화는 어떠신가요?(사용자 검색기록을 통해 자주 사용된 단어로 영화를 가져옵니다)</a>
+        </h3>
         
+        <ul id="searchAnalysis" class="list_movie" >
+        </ul>
+
      </section>
      
 	
     <script>
-	//페이징
-   	var pagination = document.querySelector(".pagination");
-   	pagination.onclick = function(){
-   		event.preventDefault();
-   		if(event.target.tagName !== "A") return;
-   		
-   		var pageNum = event.target.dataset.page;
-   		document.pageForm.pageNum.value = pageNum;
-   		document.pageForm.submit();
-  	 	}
-   	
+
+
    	//개봉작별로 style변화주기
-  
-   var rightbox = document.querySelector(".right-inbox");
-   var expm = document.querySelector(".expm");
-   		rightbox.style.border = "1px solid #23527c";
-   		expm.style.color = "#23527c";
-   		expm.style.fontWeight = "bold"; 
+   var leftbox = document.querySelector(".left-inbox");
+   var curm = document.querySelector(".curm");
+   		leftbox.style.border = "1px solid #23527c";
+   		curm.style.color = "#23527c";
+   		curm.style.fontWeight = "bold"; 
+   		
+ 
    	</script>

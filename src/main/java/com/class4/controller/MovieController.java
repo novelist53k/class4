@@ -1,6 +1,7 @@
 package com.class4.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -28,6 +29,7 @@ import com.class4.command.GenreVO;
 import com.class4.command.MovieInfoVO;
 import com.class4.command.MovieListVO;
 import com.class4.command.RegistVO;
+import com.class4.command.UserVO;
 import com.class4.command.mapping.MovieActorVO;
 import com.class4.command.mapping.MovieDirectorVO;
 import com.class4.movie.util.Criteria;
@@ -109,7 +111,14 @@ public class MovieController {
 	public String movieContent(MovieInfoVO vo, Model model) {
 		String cd = vo.getMovieCd();
 		MovieInfoVO info = movieListService.getMovieInfo(cd);
+		ArrayList<String>genreList = movieListService.getGenreByMno(cd);
+		ArrayList<String>directorList = movieListService.getMnoByDno(cd);
+		ArrayList<String>actorList = movieListService.getMnoByAno(cd);
+		
 		model.addAttribute("info", info);
+		model.addAttribute("genre", genreList);
+		model.addAttribute("director", directorList);
+		model.addAttribute("actor",actorList);
 		
 		return "movie/movieContent";
 	}
@@ -119,87 +128,93 @@ public class MovieController {
 	public String movieUpdate(@RequestParam("cd")String cd, Model model) {
 		MovieInfoVO vo = new MovieInfoVO();
 		MovieInfoVO info = movieListService.getMovieInfo(cd);
+		
 		model.addAttribute("info", info);
 		return "movie/movieUpdate";
 	}
 	
+	
+	//사진등록페이지
+	@RequestMapping(value="/phobtn",method=RequestMethod.POST)
+	public String movieUpdatePhoto(@RequestParam("cd")String cd, Model model) {
+		MovieInfoVO vo = new MovieInfoVO();
+		MovieInfoVO info = movieListService.getMovieInfo(cd);
+		model.addAttribute("info", info);
+		return "movie/movieUpdatePoster";
+	}
+	
+	
+	
 	@RequestMapping(value="/modify",method=RequestMethod.POST)
-	public String movieUpdate(@RequestParam("cd")String cd, MovieInfoVO vo) {
-		System.out.println(1);
-		vo.setMovieCd(cd);
-		System.out.println(vo.getMovieCd());
-		System.out.println(vo.getSubhead());
-		System.out.println(vo.getContent());
-		System.out.println(vo.getTrailer());
-		System.out.println(vo.getPoster());
-		return "movie/movieUpdate";
+	public String movieUpdate(MovieInfoVO vo,Model model) {
+		
+		movieListService.update(vo);
+		System.out.println("됨?");
+		String cd = vo.getMovieCd();
+		MovieInfoVO info = movieListService.getMovieInfo(cd);
+		model.addAttribute("info", info);
+		return "redirect:/movie/movieContent";
 	}
 	
 	
 	
 	
-	@RequestMapping("/upload")
 	@ResponseBody
+	@RequestMapping(value = "upload" ,method=RequestMethod.POST )
 	public String upload(@RequestParam("file") MultipartFile file,
-						 @RequestParam("subhead") String subhead,
-						 @RequestParam("content") String content,
-						 @RequestParam("trailer") String trailer,
-						 @RequestParam("movieCd") String movieCd,
-						 HttpSession session,
-						 MovieInfoVO infoVo) {
+						 @RequestParam("title")String title
+						 ) {
+		
 		try {
-			System.out.println(movieCd);
-			//2. 저장할 폴더
-			//String uploadPath = "/var/upload/" + fileLoca;
-			String uploadPath = "C:\\Users\\1104-07\\Desktop\\새 폴더\\git\\class4\\src\\main\\webapp\\resources\\img\\poster";
-			File folder = new File(uploadPath);
-			if(!folder.exists() ) {
-				folder.mkdir(); //폴더생성
+			System.out.println("영화제목:"+title);
+			//UserVO userVO = (UserVO)session.getAttribute("login");
+			MovieInfoVO vo = new MovieInfoVO();
+			//占쏙옙占쏙옙占쏙옙
+			//String fileLoca = vo.getPoster();
+			
+			//占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙
+			String path = "C:\\Users\\user\\Desktop\\프로젝트\\class4\\class4\\src\\main\\webapp\\resources\\img\\poster";
+			//String sqlPath = "\\movie\\resources\\img\\profile\\"+fileLoca;
+			File folder = new File(path);
+			if(!folder.exists()) {
+				folder.mkdir();
 			}
 			
+			String fileRealName = file.getOriginalFilename();
+			Long size = file.getSize();
 			
-			//3. 서버에 저장할 파일 이름
-			String fileRealName = file.getOriginalFilename(); //파일이름
-			Long size = file.getSize(); //파일사이즈
-			String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."), fileRealName.length());//확장자
+			String fileExtention = fileRealName.substring(fileRealName.lastIndexOf("."), fileRealName.length());
+			vo.setPoster(fileRealName);
+			vo.setTitle(title);
 			
+			//占쏙옙占싸듸옙
+			File saveFile = new File(path + "\\" + fileRealName);
+			file.transferTo(saveFile);
+			vo.setPoster(fileRealName);
+			boolean result = movieListService.postUpload(vo);
+			if(result) {
+				return "success";
+			}else {
+				return "fail";
+			}
+		} catch (IllegalStateException e) {
 			
-			
-			String fileName = fileRealName + fileExtension;//변경해서 저장할 파일이름 (uuid이름 + 확장자)
-			
-			System.out.println("=========================");
-			System.out.println("저장할폴더 : "+uploadPath);
-			System.out.println("파일실제이름 : "+fileRealName);
-			System.out.println("파일사이즈 : " + size);
-			System.out.println("파일확장자 : "+ fileExtension);
-			System.out.println("변경해서저장할 파일명 : "+ fileName);
-			
-			
-			//4. 파일 업로드처리
-			File saveFile = new File(uploadPath + "\\" +  fileName );
-			file.transferTo(saveFile); //스프링의 업로드처리
-			
-			//5.DB에 insert작업
-			
-			
-			//boolean result = snsBoardService.insertFile(vo);
-			
-//			if(result) { //성공
-//				return "success";
-//			} else {
-//				return "fail"; 
-//					
-//			}
-			
-		} catch (NullPointerException e) {
-			System.out.println("세션정보가 없음");
+			e.printStackTrace();
+			return "fail";
+		} catch (IOException e) {
+
+			e.printStackTrace();
 			return "fail";
 		} catch (Exception e) {
+			
+			
 			e.printStackTrace();
 			return "fail";
 		}
 		
-		return "redirect:/movie/movieContent";
+		
+		
+		
 	}
 	
 	

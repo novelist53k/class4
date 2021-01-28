@@ -51,4 +51,9 @@ public interface HomeService {
 	
 	// 검색 기록 추가
 	public void addSearchHistory(String id, String keyword);
+	
+	
+	// 배우, 감독 코드로 영화 추출
+	public ArrayList<String> test();
+	
 }

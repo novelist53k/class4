@@ -8,7 +8,6 @@ create table director(
     directorName varchar2(50) not null,
     fDirectorName VARCHAR2(50)
 );
-ALTER TABLE director ADD fDirectorName VARCHAR2(50);
 
 -- 배우
 create table actor(

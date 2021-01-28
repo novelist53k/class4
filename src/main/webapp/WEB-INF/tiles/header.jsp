@@ -60,7 +60,6 @@
                     		</c:when>
                     		<c:otherwise>
                                   	<li><a href="${pageContext.request.contextPath }/user/mypage">마이페이지</a></li>
-                                  	<li><a href="${pageContext.request.contextPath }/adminpage">관리자페이지</a></li>
 	                    			<li><a href="${pageContext.request.contextPath }/user/logout">로그아웃</a></li>
                     		</c:otherwise>
                     	</c:choose>

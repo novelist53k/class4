@@ -375,6 +375,12 @@
     .link{
        overflow: hidden;
     }
+    #upload{
+	position: absolute;
+    bottom: 935px;
+    left: 1091px;
+	    
+    }
     
 
 
@@ -414,8 +420,8 @@
                  </c:otherwise>
                  </c:choose>
                  <input type="file" name="file" id="file">
-              </div>
                  <button type="button" class="upload btn btn-default" id="upload" name="upload">확인</button>
+              </div>
               
            </div>
         

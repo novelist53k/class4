@@ -93,8 +93,9 @@ input:focus{
 
 .btns{
    width: 84%;
-}
+   height: 30px;
 
+}
 </style>     
    
 <section>
@@ -118,11 +119,11 @@ input:focus{
        
        <div class="content form-group">
            <label>내용</label>
-           <textarea class="content form-control" rows="10" name='content' id='msgContent' placeholder="영화를 어떻게 보셨나요?(100글자 이내)"></textarea>
-       </div>
-       <div class="btns" style="">
+           <textarea class="content form-control" rows="8" name='content' id='msgContent' placeholder="영화를 어떻게 보셨나요?(100글자 이내)"></textarea>
+       </div><br>
+       <div class="btns" style="text-align: right;">
             <button type = "button" class = "list-modify" onclick="regist()">작성</button>
-            <button type = "button" class = "list-delete" onclick="location.href= '../movie/movieContent'">취소</button>
+            <button type = "button" class = "list-delete" onclick="location.href= '../movie/movieContent?movieCd='+ ${movieInfo.movieCd}">취소</button>	
        </div>
     </form>    
 </section>

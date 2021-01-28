@@ -13,6 +13,7 @@
         		<td class="td1">제목</td>
         		<td class="td2"><input type="text" id="title" name="title" value="${info.title }"  readonly></td>
         	</tr>
+        	
             <tr>
                 <td class="td1">줄거리</td>
                 <td class="td2"><input type="text" id="subhead" name="subhead" value="${info.subhead }"></td>
@@ -35,22 +36,24 @@
             </tr>
             
             </table>       
+	        
             
           </form>
           
 
         <br><br><br><br><br>
          
-	         
 
     </section>
-           
+         
     <script>
     $("#modify").click(function(){
     	
  		document.regForm.submit();
     })
     
+    
+   
    
     </script>
      

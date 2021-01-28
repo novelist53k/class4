@@ -21,6 +21,7 @@ public interface MovieListService {
 	public void update(MovieInfoVO vo);
 	public void regist(RegistVO vo);
 	public void registP(RegistVO vo);
+	public int getMovieSub(String title);
 	
 	public ArrayList<String> getGenreList();
 	public ArrayList<String> getCodeList();

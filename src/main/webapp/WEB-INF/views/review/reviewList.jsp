@@ -1,16 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>	
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>   
 <style>
 <link rel ="stylesheet " href ="../resource /css /bootstrap.min.css ">
-	
-	<!--jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
-	<script src ="https: //ajax.googleapis.com /ajax /libs /jquery /1.11.2/jquery.min.js "></script>
-	
-	<!--합쳐지고 최소화된 최신 자바스크립트 --> 
-	<script src="../resource /js /bootstrap.min.js "> </script>
-	
+   
+   <!--jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
+   <script src ="https: //ajax.googleapis.com /ajax /libs /jquery /1.11.2/jquery.min.js "></script>
+   
+   <!--합쳐지고 최소화된 최신 자바스크립트 --> 
+   <script src="../resource /js /bootstrap.min.js "> </script>
+   
 * {
 box-sizing: border-box;
 
@@ -207,45 +207,45 @@ section {
 }
 
 .pagination > .active > a:hover{
-	
-	background: #ddd;
-	border: 1px #ddd;
-	color: black;
-	cursor: pointer;
+   
+   background: #ddd;
+   border: 1px #ddd;
+   color: black;
+   cursor: pointer;
 }
 
 .movie_title > label> a:hover{
-	font-size: large;
-	text-decoration: none;
+   font-size: large;
+   text-decoration: none;
 }
 
 </style>
 
 <section>
-		<form action="reviewList">
-	        <div class = "search">
-	            <select class="search-select" name="searchType" style="height: 30px;">
-	            	<option value="total" ${pageVO.cri.searchType eq 'total' ? 'selected' : ''}>전체</option>
-	                <option value="title" ${pageVO.cri.searchType eq 'title' ? 'selected' : ''}>영화제목</option>
-	                <option value="writer" ${pageVO.cri.searchType eq 'writer' ? 'selected' : ''}>작성자</option>
-	            </select>
-	            <input type="text" name="searchName" value="${pageVO.cri.searchName}"> 
-	            <button type="submit" class="btn btn-primary">검색</button>
-	        </div>
-	        
-	        <input type="hidden" name="pageNum" value="1"> 
+      <form action="reviewList">
+           <div class = "search">
+               <select class="search-select" name="searchType" style="height: 30px;">
+                  <option value="total" ${pageVO.cri.searchType eq 'total' ? 'selected' : ''}>전체</option>
+                   <option value="title" ${pageVO.cri.searchType eq 'title' ? 'selected' : ''}>영화제목</option>
+                   <option value="writer" ${pageVO.cri.searchType eq 'writer' ? 'selected' : ''}>작성자</option>
+               </select>
+               <input type="text" name="searchName" value="${pageVO.cri.searchName}"> 
+               <button type="submit" class="btn btn-primary">검색</button>
+           </div>
+           
+           <input type="hidden" name="pageNum" value="1"> 
             <input type="hidden" name="amount" value="${pageVO.amount }">
-	        
+           
         </form>
         <!--리뷰 -->
         <div class = "review_main">
             <label style="font-size: 40px; font-weight: bold;">영화 리뷰 게시판</label>
             <hr style="border-bottom: 3px solid black; margin: 10px 0;">
-			
+         
             <ul class="review_list" id="movie_review_list">
-            	<c:forEach var="vo" items="${list }">
+               <c:forEach var="vo" items="${list }">
                 <li class="review_comment">
-                	<span class="review_bno">${vo.bno }</span>
+                   <span class="review_bno">${vo.bno }</span>
                     <div class="box_profile">
                         <span class="profile_img">
                             <img src = "${pageContext.request.contextPath }/resources/img/${vo.fileRealName == null ? 'default_profile.gif' : vo.fileRealName }" alt="프로필 이미지">
@@ -266,7 +266,7 @@ section {
                             </li>
                             <li class="writer_etc">
                                 <span class = "day">
-                                	<fmt:formatDate value="${vo.updateDate }" pattern="yyyy-MM-dd HH:mm"/> 
+                                   <fmt:formatDate value="${vo.updateDate }" pattern="yyyy-MM-dd HH:mm"/> 
                                 </span>
                             </li>
                         </ul>
@@ -280,42 +280,42 @@ section {
             </ul>
          </div>
                   
-		  <!-- 페이징 -->
-		  <form action="reviewList" name="pageForm">  
-		    <div class = "pagination_box">
-		        <ul class="pagination">
-		        	<!--이전 버튼 -->
-		        	<c:if test="${pageVO.prev }">
-		            <li class="page-item">
-			            <a class="page-link" href="#" aria-label="Previous" data-page="${pageVO.startPage - 1}" >
-			                <span aria-hidden="true">&laquo;</span>
-			                <span class="sr-only">Previous</span>
-			            </a>
-		            </li>
-		            </c:if>
-		            <!--1. 페이지네이션 번호 처리  -->
-		            <c:forEach var="num" begin="${pageVO.startPage }" end="${pageVO.endPage}"> 
-		            <li class="page-item ${num == pageVO.pageNum ? 'active' : '' }">
-		            	<a class="page-link" href="#" data-page = "${num }">${num }</a>
-	            	</li>
-		            </c:forEach>
-		            
-					<c:if test="${pageVO.next }">	
-		            <li class="page-item">
-			            <a class="page-link" href="#" aria-label="Next" data-page="${pageVO.endPage + 1 }">
-			                <span aria-hidden="true">&raquo;</span>	
-			                <span class="sr-only">Next</span>
-			            </a>
-		            </li>
-		            </c:if>
-		        </ul>
-		    </div>
-		      <!-- 폼형식으로 보내는데 숨겨서 보낼값 hidden으로 표시 -->
+        <!-- 페이징 -->
+        <form action="reviewList" name="pageForm">  
+          <div class = "pagination_box">
+              <ul class="pagination">
+                 <!--이전 버튼 -->
+                 <c:if test="${pageVO.prev }">
+                  <li class="page-item">
+                     <a class="page-link" href="#" aria-label="Previous" data-page="${pageVO.startPage - 1}" >
+                         <span aria-hidden="true">&laquo;</span>
+                         <span class="sr-only">Previous</span>
+                     </a>
+                  </li>
+                  </c:if>
+                  <!--1. 페이지네이션 번호 처리  -->
+                  <c:forEach var="num" begin="${pageVO.startPage }" end="${pageVO.endPage}"> 
+                  <li class="page-item ${num == pageVO.pageNum ? 'active' : '' }">
+                     <a class="page-link" href="#" data-page = "${num }">${num }</a>
+                  </li>
+                  </c:forEach>
+                  
+               <c:if test="${pageVO.next }">   
+                  <li class="page-item">
+                     <a class="page-link" href="#" aria-label="Next" data-page="${pageVO.endPage + 1 }">
+                         <span aria-hidden="true">&raquo;</span>   
+                         <span class="sr-only">Next</span>
+                     </a>
+                  </li>
+                  </c:if>
+              </ul>
+          </div>
+            <!-- 폼형식으로 보내는데 숨겨서 보낼값 hidden으로 표시 -->
             <input type="hidden" name="pageNum" value="${pageVO.cri.pageNum }">
             <input type="hidden" name="amount" value="${pageVO.cri.amount }">
             <input type="hidden" name="searchType" value="${pageVO.cri.searchType }">
             <input type="hidden" name="searchName" value="${pageVO.cri.searchName }">
-		    
+          
          </form>
         </section>
 
@@ -335,27 +335,27 @@ section {
        
             var pagination = document.querySelector(".pagination");
             pagination.onclick = function () {
-				event.preventDefault(); //고유이벤트 중단
-				if(event.target.tagName !== 'A') return; //중단
-				
-				var pageNum = event.target.dataset.page; //클릭한 타겟의 데이터셋값
-				document.pageForm.pageNum.value = pageNum; //히든폼에 pageNum 타켓값을 저장
-				
-				document.pageForm.submit();
-			}
+            event.preventDefault(); //고유이벤트 중단
+            if(event.target.tagName !== 'A') return; //중단
+            
+            var pageNum = event.target.dataset.page; //클릭한 타겟의 데이터셋값
+            document.pageForm.pageNum.value = pageNum; //히든폼에 pageNum 타켓값을 저장
+            
+            document.pageForm.submit();
+         }
             
             window.onload = function() {
-   			 if(history.state === '' ) return;
-   			 console.log(history.state);
-   			 
-   			 var msg = "${msg}"; //컨트롤러에서 넘어온 메시지
-   			 if(msg !== '') {
-   				 alert(msg);
-   				 //브라우저의 기록을 새롭게 변경(데이터, 페이지제목, 변경할주소)
-   				 //이렇게 변경된 기록정보는 history.state 객체를 통해서 확인이 가능합니다.
-   				 history.replaceState('', null, null); 
-   			 }
-   		}
+             if(history.state === '' ) return;
+             console.log(history.state);
+             
+             var msg = "${msg}"; //컨트롤러에서 넘어온 메시지
+             if(msg !== '') {
+                alert(msg);
+                //브라우저의 기록을 새롭게 변경(데이터, 페이지제목, 변경할주소)
+                //이렇게 변경된 기록정보는 history.state 객체를 통해서 확인이 가능합니다.
+                history.replaceState('', null, null); 
+             }
+         }
        
        
        

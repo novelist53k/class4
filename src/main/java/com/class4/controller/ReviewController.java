@@ -54,6 +54,7 @@ public class ReviewController {
 	public String reviewRegist(@RequestParam("mno") String mno, Model model, HttpSession session) {
 		UserVO userVO = (UserVO)session.getAttribute("login");
 		MovieInfoVO movieInfo = reviewBoardService.getMovieInfo(mno);
+		System.out.println("영화 정보 : " + movieInfo.toString());
 		model.addAttribute("movieInfo", movieInfo);
 		model.addAttribute("login", userVO);
 		return "review/reviewRegist";
@@ -107,7 +108,6 @@ public class ReviewController {
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public String reviewDelete(@RequestParam("bno") int bno, RedirectAttributes RA) {
-		
 		int result = reviewBoardService.delete(bno);
 		System.out.println(result);
 		

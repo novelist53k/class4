@@ -1,17 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-	
+   pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>   
+   
 <style>
-	<link rel ="stylesheet " href ="../resource /css /bootstrap.min.css ">
-	
-	<!--jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
-	<script src ="https: //ajax.googleapis.com /ajax /libs /jquery /1.11.2/jquery.min.js "></script>
-	
-	<!--합쳐지고 최소화된 최신 자바스크립트 --> 
-	<script src="../resource /js /bootstrap.min.js "> </script>
-	
-	* {
-	box-sizing: border-box;
+   <link rel ="stylesheet " href ="../resource /css /bootstrap.min.css ">
+   
+   <!--jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
+   <script src ="https: //ajax.googleapis.com /ajax /libs /jquery /1.11.2/jquery.min.js "></script>
+   
+   <!--합쳐지고 최소화된 최신 자바스크립트 --> 
+   <script src="../resource /js /bootstrap.min.js "> </script>
+   
+   * {
+   box-sizing: border-box;
 }
 
 ul,ol{
@@ -75,11 +77,11 @@ section {
 }
 
 .wrap>input, .review-content>input, .review-content>label>input{
-	border: none;
-	background-color: whitesmoke;
+   border: none;
+   background-color: whitesmoke;
 }
 input:focus{
-	outline:none;
+   outline:none;
 }
 
 
@@ -90,63 +92,65 @@ input:focus{
 }
 
 .btns{
-	width: 84%;
+   width: 84%;
 }
 
-</style>  	
-	
+</style>     
+   
 <section>
-    <label style="font-size: 40px; font-weight: bold;">영화 리뷰 작성 페이지</label>
+    <label style="font-size: 40px; font-weight: bold;">
+       영화 리뷰 작성 페이지
+       ${movieInfoVO.movieCd}
+    </label>
     <hr style="border-bottom: 3px solid black; margin: 10px 0;">
     
     <form action="reviewRegistForm" method="post" name="registForm">
-	    <div class = "wrap">
-	    	<input name="mno" type="text" class="movie-mno" value="${movieInfoVO.movieCd}" readonly="readonly">
-	        <div class = "movie-img">
-	            <img src="${pageContext.request.contextPath }/resources/img/movie_image.jpg" alt="영화포스터">
-	        </div>    
-	        <div class = "review-content">
-	          <label><input type="text" name="movieTitle" value="${movieInfoVO.title }" readonly="readonly"></label><br>
-	          <input type="text" class = "writer" name ="writer" value ="${login.userId }" readonly="readonly">
-	        </div>
-	    </div>
-	    
-	    <div class="content form-group">
-	        <label>내용</label>
-	        <textarea class="content form-control" rows="10" name='content' id='msgContent' placeholder="영화를 어떻게 보셨나요?(100글자 이내)"></textarea>
-	    </div>
-	    <div class="btns" style="text-align: right;">
+       <div class = "wrap">
+          <input name="mno" type="text" class="movie-mno" value="${movieInfo.movieCd}" readonly="readonly">
+           <div class = "movie-img">
+               <img src="${pageContext.request.contextPath }/resources/img/poster/${movieInfo.poster == null ? 'b.png' : movieInfo.poster}" alt="영화포스터">
+           </div>    
+           <div class = "review-content">
+             <label><input type="text" name="movieTitle" value="${movieInfo.title }" readonly="readonly"></label><br>
+             <input type="text" class = "writer" name ="writer" value ="${sessionScope.login.userId }" readonly="readonly">
+           </div>
+       </div>
+       
+       <div class="content form-group">
+           <label>내용</label>
+           <textarea class="content form-control" rows="10" name='content' id='msgContent' placeholder="영화를 어떻게 보셨나요?(100글자 이내)"></textarea>
+       </div>
+       <div class="btns" style="text-align: right;">
             <button type = "button" class = "list-modify" onclick="regist()">작성</button>
             <button type = "button" class = "list-delete" onclick="location.href= '../movie/movieContent'">취소</button>
-	    </div>
+       </div>
     </form>    
 </section>
 
 <script>
-	//글 등록
-	function regist() {
-		
-		if(document.registForm.content.value === ''){
-			document.getElementById("msgContent").innerHTML = "내용을 입력해주세요!!";
-			document.registForm.content.focus();
-			return;
-		}else{
-			document.registForm.submit();
-		}
-		
-	}
-	
-	$(document).ready(function() {
-		$("#msgContent").keyup(function() {
-			var inputLength = $(this).val().length;
-			if(inputLength > 100) {
-				$(this).val($(this).val().substring(0,100));
-				alert("더이상 입력 할 수 없습니다.");
-			}
-		});
-	});
+   //글 등록
+   function regist() {
+      
+      if(document.registForm.content.value === ''){
+         document.getElementById("msgContent").innerHTML = "내용을 입력해주세요!!";
+         document.registForm.content.focus();
+         return;
+      }else{
+         document.registForm.submit();
+      }
+      
+   }
+   
+   $(document).ready(function() {
+      $("#msgContent").keyup(function() {
+         var inputLength = $(this).val().length;
+         if(inputLength > 100) {
+            $(this).val($(this).val().substring(0,100));
+            alert("더이상 입력 할 수 없습니다.");
+         }
+      });
+   });
 </script>
-
 
 
 

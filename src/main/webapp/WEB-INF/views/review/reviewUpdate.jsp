@@ -3,16 +3,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>    
 <style>
-	<link rel ="stylesheet " href ="../resource /css /bootstrap.min.css ">
-	
-	<!--jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
-	<script src ="https: //ajax.googleapis.com /ajax /libs /jquery /1.11.2/jquery.min.js "></script>
-	
-	<!--합쳐지고 최소화된 최신 자바스크립트 --> 
-	<script src="../resource /js /bootstrap.min.js "> </script>
-	
-	* {
-	box-sizing: border-box;
+   <link rel ="stylesheet " href ="../resource /css /bootstrap.min.css ">
+   
+   <!--jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
+   <script src ="https: //ajax.googleapis.com /ajax /libs /jquery /1.11.2/jquery.min.js "></script>
+   
+   <!--합쳐지고 최소화된 최신 자바스크립트 --> 
+   <script src="../resource /js /bootstrap.min.js "> </script>
+   
+   * {
+   box-sizing: border-box;
 }
 
 ul,ol{
@@ -83,20 +83,20 @@ section {
 }
 
 .writer{
-	position: absolute;
-	top : 110px;	
+   position: absolute;
+   top : 110px;   
 }
 .day{
-	position: absolute;
-	top : 130px;
+   position: absolute;
+   top : 130px;
 }
 
 .wrap>input, .review-content>input, .review-content>label>input{
-	border: none;
-	background-color: whitesmoke;
+   border: none;
+   background-color: whitesmoke;
 }
 input:focus{
-	outline:none;
+   outline:none;
 }
 
 
@@ -109,69 +109,68 @@ input:focus{
     <hr style="border-bottom: 3px solid black; margin: 10px 0;">
     
     <form action="reviewModify" method = "post" name="reviewModify">
-	    <div class = wrap>
-	    	<input name="bno" type="text" class="review_bno" value="${vo.bno }">
-	        <div class = "movie-img">
-	            <img src="${pageContext.request.contextPath }/resources/img/movie_image.jpg" alt="영화포스터">
-	            
-	        </div>    
-	        <div class = "review-content">
-		          <label><input type="text" name="movieTitle" value="${vo.movieTitle }" readonly="readonly"></label><br>
-		          <!-- <p class = "point glyphicon glyphicon glyphicon-star" aria-hidden="true" style="color: rgb(233, 49, 49);"></p>
-		          <p class = "score" style="display: inline-block;">5</p><br> -->
-		          <input type = "text" class = "writer" name="writer" value = "${vo.writer}" readonly="readonly">
-		          <div class = "day">	        		 
-		           		<fmt:formatDate value="${vo.updateDate }" pattern="yyyy-MM-dd HH:mm"/>
-	        	</div>
-	        </div>
-	    </div>
-	    
-	    <div class="content form-group">
-	        <label>내용(100글자 이내)</label>
-	        <textarea class="content form-control" rows="10" name='content' id="updateContent">${vo.content }</textarea>
-	        <div class="btns" style="text-align: right;">
-	            <button type = "button" class="list-modify" id="modifyBtn">수정</button>
-	            <button type = "button" class = "list-cancel" id="cancelBtn">취소</button>
-	        </div>    
-	    </div>
+       <div class = wrap>
+          <input name="bno" type="text" class="review_bno" value="${vo.bno }">
+           <div class = "movie-img">
+               <img src="${pageContext.request.contextPath }/resources/img/poster/${movieInfo.poster == null ? 'b.png' : movieInfo.poster}" alt="영화포스터">
+               
+           </div>    
+           <div class = "review-content">
+                <label><input type="text" name="movieTitle" value="${vo.movieTitle }" readonly="readonly"></label><br>
+                <!-- <p class = "point glyphicon glyphicon glyphicon-star" aria-hidden="true" style="color: rgb(233, 49, 49);"></p>
+                <p class = "score" style="display: inline-block;">5</p><br> -->
+                <input type = "text" class = "writer" name="writer" value = "${vo.writer}" readonly="readonly">
+                <div class = "day">                  
+                       <fmt:formatDate value="${vo.updateDate }" pattern="yyyy-MM-dd HH:mm"/>
+              </div>
+           </div>
+       </div>
+       
+       <div class="content form-group">
+           <label>내용(100글자 이내)</label>
+           <textarea class="content form-control" rows="10" name='content' id="updateContent">${vo.content }</textarea>
+           <div class="btns" style="text-align: right;">
+               <button type = "button" class="list-modify" id="modifyBtn">수정</button>
+               <button type = "button" class = "list-cancel" id="cancelBtn">취소</button>
+           </div>    
+       </div>
     </form>
 </section>
-	
+   
 
 
 <script>
-	/* 수정 버튼 */
-	var modifyBtn = document.getElementById("modifyBtn");
-	modifyBtn.onclick = function () {	
-		if(document.reviewModify.content.value === ''){
-			alert("내용을 입력해 주세요.");
-			document.reviewModify.content.focus();
-			return;
-		}else{
-			document.reviewModify.action = "reviewModify";
-			document.reviewModify.submit();
-		}
-	}
-	
-	var cancelBtn = document.getElementById("cancelBtn");
-	cancelBtn.onclick = function () {
-		location.href = 'reviewList';
-	}
-	
-	
-	/*굴자수 제한*/
-	$(document).ready(function() {
-		$("#updateContent").keyup(function() {
-			var inputLength = $(this).val().length;
-			if(inputLength > 100) {
-				$(this).val($(this).val().substring(0,100));
-				alert("더이상 입력 할 수 없습니다.");
-			}
-		});
-	});
-	
-	
-	
+   /* 수정 버튼 */
+   var modifyBtn = document.getElementById("modifyBtn");
+   modifyBtn.onclick = function () {   
+      if(document.reviewModify.content.value === ''){
+         alert("내용을 입력해 주세요.");
+         document.reviewModify.content.focus();
+         return;
+      }else{
+         document.reviewModify.action = "reviewModify";
+         document.reviewModify.submit();
+      }
+   }
+   
+   var cancelBtn = document.getElementById("cancelBtn");
+   cancelBtn.onclick = function () {
+      location.href = 'reviewList';
+   }
+   
+   
+   /*굴자수 제한*/
+   $(document).ready(function() {
+      $("#updateContent").keyup(function() {
+         var inputLength = $(this).val().length;
+         if(inputLength > 100) {
+            $(this).val($(this).val().substring(0,100));
+            alert("더이상 입력 할 수 없습니다.");
+         }
+      });
+   });
+   
+   
+   
 </script>
-
 

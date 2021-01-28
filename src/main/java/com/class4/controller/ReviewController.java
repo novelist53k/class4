@@ -51,12 +51,10 @@ public class ReviewController {
    
    
    @RequestMapping("/reviewRegist")
-   public String reviewRegist(@RequestParam("mno") String mno, Model model, HttpSession session) {
-      UserVO userVO = (UserVO)session.getAttribute("login");
+   public String reviewRegist(@RequestParam("mno") String mno, Model model) {
       MovieInfoVO movieInfo = reviewBoardService.getMovieInfo(mno);
       System.out.println("영화 정보 : " + movieInfo.toString());
       model.addAttribute("movieInfo", movieInfo);
-      model.addAttribute("login", userVO);
       return "review/reviewRegist";
    }
    

@@ -120,7 +120,7 @@ input:focus{
            <label>내용</label>
            <textarea class="content form-control" rows="10" name='content' id='msgContent' placeholder="영화를 어떻게 보셨나요?(100글자 이내)"></textarea>
        </div>
-       <div class="btns" style="text-align: right;">
+       <div class="btns" style="">
             <button type = "button" class = "list-modify" onclick="regist()">작성</button>
             <button type = "button" class = "list-delete" onclick="location.href= '../movie/movieContent'">취소</button>
        </div>

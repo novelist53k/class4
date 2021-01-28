@@ -172,7 +172,7 @@
       margin-bottom:15px;
     }
     
-	.ui-autocomplete { 
+   .ui-autocomplete { 
     overflow-y: scroll; 
     overflow-x: hidden;}
 
@@ -205,42 +205,41 @@
             
             <label for="gender" class="joinLabel">성별</label>
             <select name="userGender" id="userGender" class="userGender">
-              <option value="choice">성별</option>
               <option value="man">남자</option>
               <option value="woman">여자</option>
             </select> 
             <label for="gender" class="joinLabel"> 생년월일</label>
             <select name="userYear" id="userYear" class="userYear">
-           		<c:forEach begin="1930" end="2015" var="i" >
-           		
-           		<option>${i }
-           		
-           		</c:forEach>
-           		</select> 
-           	<select name="userMonth" id="userMonth" class="userMonth">
-           	<c:forEach begin="1" end="12" var="i">
-           		<c:choose>
-           			<c:when test="${i<10 }">
-           				<option>0${i}
-           			</c:when>
-           			<c:otherwise>
-           				<option>${i }
-           			</c:otherwise>
-           		</c:choose>  
-           	</c:forEach>
-           	</select> 
+                 <c:forEach begin="1930" end="2015" var="i" >
+                 
+                 <option>${i }
+                 
+                 </c:forEach>
+                 </select> 
+              <select name="userMonth" id="userMonth" class="userMonth">
+              <c:forEach begin="1" end="12" var="i">
+                 <c:choose>
+                    <c:when test="${i<10 }">
+                       <option>0${i}
+                    </c:when>
+                    <c:otherwise>
+                       <option>${i }
+                    </c:otherwise>
+                 </c:choose>  
+              </c:forEach>
+              </select> 
             <select name="userDay" id="userDay" class="userDay">
-           	<c:forEach begin="1" end="31" var="i">
-           		<c:choose>
-           			<c:when test="${i<10 }">
-           				<option>0${i}
-           			</c:when>
-           			<c:otherwise>
-           				<option>${i }
-           			</c:otherwise>
-           		</c:choose>       		
-           		
-           	</c:forEach>
+              <c:forEach begin="1" end="31" var="i">
+                 <c:choose>
+                    <c:when test="${i<10 }">
+                       <option>0${i}
+                    </c:when>
+                    <c:otherwise>
+                       <option>${i }
+                    </c:otherwise>
+                 </c:choose>             
+                 
+              </c:forEach>
             
             </select>
             <br>
@@ -263,21 +262,24 @@
             </div>
             <br>
             <div class="actorSection">
-              <label for="likeActor" class="joinLabel pwlabel">관심있는 배우</label><br>
+              <label for="likeActor" class="joinLabel pwlabel">좋아하는 배우</label><br>
             </div>
             <button type="button" class="add btn-primary" id="addActorBtn" onclick="addActor()">+</button>
             <button type="button" class="minus btn-primary" onclick="minusActor()">-</button>
             <br>
             <br>
             <div class="diretorSection">
-            <label for="likeDirector" class="joinLabel pwlabel">관심있는 감독</label><br>
+            <label for="likeDirector" class="joinLabel pwlabel">좋아하는 감독</label><br>
           </div>
             <button type="button" class="add btn-primary" onclick="addDirector()">+</button>
             <button type="button" class="minus btn-primary" onclick="minusDirector()">-</button>
             <div class="genre">
-			  <c:forEach var="vo" items="${genreList}">
-           		<label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist1" name="genrelist" value="${vo}"/>${vo}</label>
-         	  </c:forEach>
+            <label for="likeDirector" class="joinLabel pwlabel">좋아하는 장르</label><br>
+            <c:forEach var="vo" items="${genreList}">
+           <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre" id="genrelist1" name="genrelist" value="${vo}"/>${vo}</label>
+         </c:forEach>
+              
+              
               
               
             </div>
@@ -327,8 +329,8 @@ id.onkeyup=function(){
             }
   
 }
-	//패스워드 옵션
-	var pw = document.getElementById("userPw");
+   //패스워드 옵션
+   var pw = document.getElementById("userPw");
         pw.onkeyup = function(){
             var regex = /^[A-Za-z0-9+]{8,16}$/;
              if(regex.test(document.getElementById("userPw").value )) {
@@ -354,37 +356,37 @@ id.onkeyup=function(){
 
 //중복체크
 $("#checkBtn").click(function(){
-	$("#msgId").html = "사용 가능한 아이디입니다";
-	var userId = $("#userId").val()
-	  if(userId == " "){
-		    alert("아이디를 입력하세요")
-		    return;
-	  }else if($("#userId").val().length <6){
-		    alert("아이디는 6글자 이상입니다")
-		    return;
-	  }else{
-		  $.ajax({
-  			type : "POST",
-  			url : "idCheck",
-  			data : JSON.stringify({"userId": userId}),
-  			contentType : "application/json; charset=utf-8",
-  			success : function(data){
-  				console.log(data)
-  				if(data == 0){
-  					   					
-  					$("#msgId").val("사용 가능한 아이디입니다");
-  					
-  				}else{
-  					alert("사용 불가능합니다 다시 입력해주세요")
-  					$("#userId").val(" ")
-  					return;
-  				}
-  			},
-  			error : function(status, error){}	
-  			
-  		})
-	  }
-	
+   $("#msgId").html = "사용 가능한 아이디입니다";
+   var userId = $("#userId").val()
+     if(userId == " "){
+          alert("아이디를 입력하세요")
+          return;
+     }else if($("#userId").val().length <6){
+          alert("아이디는 6글자 이상입니다")
+          return;
+     }else{
+        $.ajax({
+           type : "POST",
+           url : "idCheck",
+           data : JSON.stringify({"userId": userId}),
+           contentType : "application/json; charset=utf-8",
+           success : function(data){
+              console.log(data)
+              if(data == 0){
+                                   
+                 $("#msgId").val("사용 가능한 아이디입니다");
+                 
+              }else{
+                 alert("사용 불가능합니다 다시 입력해주세요")
+                 $("#userId").val(" ")
+                 return;
+              }
+           },
+           error : function(status, error){}   
+           
+        })
+     }
+   
 
 
 })
@@ -420,10 +422,10 @@ var directorName = null;
   
   
   function autocomplete(a){
-	  count = $(".likeActor").length-1;
+     count = $(".likeActor").length-1;
   $(".likeActor").autocomplete({
-		 
-		 source : function( request, response ) {
+       
+       source : function( request, response ) {
        $.ajax({
               type: 'POST',
               url: "autocomplete",
@@ -432,25 +434,25 @@ var directorName = null;
               success: function(data) {
                   var result = data;
                   response(result);     
-  					
+                 
                   
                   
               },
               error : function(data) {
-              	
-              	
-              	console.log("에러발생");
+                 
+                 
+                 console.log("에러발생");
               }
-						
-					});
-       }				
-	});
+                  
+               });
+       }            
+   });
   }
   function autocomplete1(a){
-	  count1 = $(".likeDirector").length-1;
+     count1 = $(".likeDirector").length-1;
   $(".likeDirector").autocomplete({
-		 
-		 source : function( request, response ) {
+       
+       source : function( request, response ) {
        $.ajax({
               type: 'POST',
               url: "autocomplete1",
@@ -459,25 +461,25 @@ var directorName = null;
               success: function(data) {
                   var result = data;
                   response(result);     
-  					
+                 
                   
                   
               },
               error : function(data) {
-              	
-              	
-              	console.log("에러발생");
+                 
+                 
+                 console.log("에러발생");
               }
-						
-					});
-       }				
-	});
+                  
+               });
+       }            
+   });
   }
   function minusActor() {
     var inp = document.querySelector(".actorSection");
     
     if(inp.children.length > 2){
-    	inp.removeChild(inp.children[inp.children.length-1])
+       inp.removeChild(inp.children[inp.children.length-1])
     }
   }
   function minusDirector() {
@@ -487,18 +489,17 @@ var directorName = null;
 
 //주소찾기
   function goPopup(){
-    		var pop = window.open("${pageContext.request.contextPath}/resources/popup/jusoPopup.jsp","pop","width=570,height=420, scrollbars=yes, resizable=yes");
-    		
-    	}
-    	function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn,detBdNmList,bdNm,bdKdcd,siNm,sggNm,emdNm,liNm,rn,udrtYn,buldMnnm,buldSlno,mtYn,lnbrMnnm,lnbrSlno,emdNo){
-    		document.getElementById("addrBasic").value = roadAddrPart1;
-    		document.getElementById("addrDetail").value = addrDetail;
-    		document.getElementById("addrZipNum").value = zipNo;
-    	}
+          var pop = window.open("${pageContext.request.contextPath}/resources/popup/jusoPopup.jsp","pop","width=570,height=420, scrollbars=yes, resizable=yes");
+          
+       }
+       function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn,detBdNmList,bdNm,bdKdcd,siNm,sggNm,emdNm,liNm,rn,udrtYn,buldMnnm,buldSlno,mtYn,lnbrMnnm,lnbrSlno,emdNo){
+          document.getElementById("addrBasic").value = roadAddrPart1;
+          document.getElementById("addrDetail").value = addrDetail;
+          document.getElementById("addrZipNum").value = zipNo;
+       }
    
-    	
+       
 
   
-	
+   
 </script>
-

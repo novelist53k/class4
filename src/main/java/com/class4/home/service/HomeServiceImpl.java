@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.class4.command.MovieInfoVO;
+import com.class4.command.SearchHistoryVO;
 import com.class4.home.mapper.HomeMapper;
 
 
@@ -354,7 +355,7 @@ public class HomeServiceImpl implements HomeService {
 		ArrayList<MovieInfoVO> listByUserGender = new ArrayList<MovieInfoVO>();
 		RConnection rconn = null;
 		System.out.println("성별 : " + gender);
-		System.out.println("남자 ? : " + gender.equals("male"));
+		System.out.println(gender.equals("man") ? "man" : "women");
 		
 		try {
 			rconn = new RConnection("127.0.0.1", 6311);
@@ -368,14 +369,14 @@ public class HomeServiceImpl implements HomeService {
 			
 			rconn.eval("ua <- dbGetQuery(rconn, 'SELECT * FROM userActor')");
 			rconn.eval("ua <- ua %>%" + 
-					"  filter(UAGENDER == '" + (gender.equals("man") ? "man" : "women") + "') %>%" + 
+					"  filter(UAGENDER == '" + (gender.equals("man") ? "man" : "woman") + "') %>%" + 
 					"  group_by(ANO) %>%" + 
 					"  summarise(feq = n()) %>%" + 
 					"  arrange(desc(feq))");
 
 			rconn.eval("ud <- dbGetQuery(rconn, 'SELECT * FROM userDirector')");
 			rconn.eval("ud <- ud %>%" + 
-					"  filter(UDGENDER == '" + (gender.equals("man") ? "man" : "women") + "') %>%" + 
+					"  filter(UDGENDER == '" + (gender.equals("man") ? "man" : "woman") + "') %>%" + 
 					"  group_by(DNO) %>%" + 
 					"  summarise(feq = n()) %>%" + 
 					"  arrange(desc(feq))");
@@ -469,22 +470,26 @@ public class HomeServiceImpl implements HomeService {
 	@Override
 	public void addSearchHistory(String id, String keyword) {
 		
+		/*
 		int searchMaxCnt = 20;	// 사용자당 검색기록 최대 저장 수
 		int searchCnt = mapper.getSearchCnt(id);	// 사용자당 검색 기록 숫자
 		// 사용자 검색 횟수가 cnt 초과시 앞에서 부터 새로운 검색어로 수정, 이하면 검색어 추가
+
 		if(searchCnt > searchMaxCnt) {
 			mapper.replaceSearchHistory(id, keyword, searchCnt % searchMaxCnt);
 		}
 		else {
 			mapper.addSearchHistory(id, keyword);
 		}
-
+		*/
+		
+		mapper.addSearchHistory(new SearchHistoryVO(1, id, keyword));
 	}
 	
 	
-	// 사용자 검색기록을 분석하여 많이 사용된 단어로 영화 가져오기
+	// 사용자 검색기록을 분석하여 많이 사용된 단어 중 랜덤으로 반환
 	@Override
-	public ArrayList<MovieInfoVO> getSearchHistoryMovieList(String id) {
+	public String getSearchKeyword(String id) {
 		
 		/*
 		rstudio에 필요한 패키지 다 설치했는지 확인하세요
@@ -495,7 +500,7 @@ public class HomeServiceImpl implements HomeService {
 		Rserve(args = "--RS- encoding utf8")
 
 		*/
-		ArrayList<MovieInfoVO> searchHistoryMovieList = new ArrayList<MovieInfoVO>();
+		String searchWord = "";
 		
 		RConnection rconn = null;
 		
@@ -516,19 +521,19 @@ public class HomeServiceImpl implements HomeService {
 				}
 			}
 			r += ")";
-			
+			System.out.println(0);
 			rconn.eval("library(KoNLP)");
+			System.out.println(1);
 			rconn.eval("library(stringr)");
+			System.out.println(2);
 			rconn.eval("library(dplyr)");
 			rconn.eval("useNIADic()");
-			
 			rconn.eval("keyword <- " + r);
 			rconn.eval("keyword <- str_replace_all(keyword, '\\\\W', ' ')");
 			rconn.eval("keyword_list <- extractNoun(keyword)");
 			rconn.eval("keyword_vec <- unlist(keyword_list)");
 			rconn.eval("keyword <- as.data.frame(keyword_vec, stringsAsFactors = F)");
 			rconn.eval("keyword <- rename(keyword, word = keyword_vec)");
-			
 			rconn.eval("keyword <- keyword %>%" + 
 					"  filter(nchar(word) >= 2) %>%" + 
 					"  group_by(word) %>%" + 
@@ -541,30 +546,11 @@ public class HomeServiceImpl implements HomeService {
 			System.out.println(Arrays.toString(word));	// 많이 사용된 단어 순서대로 출력
 			
 			Random ran = new Random();
-			int randomCnt = word.length > 7 ? 7 : word.length;	// 검색어 랜덤 추출에 사용할 단어 개수
-			int wordCnt = word.length > 3 ? 3 : word.length;		// 검색에 사용할 단어 개수,
-			int randomIdx[] = new int[wordCnt];	// 검색어 선정에 사용할 랜덤 인덱스 번호
+
+			
+			searchWord = word[ran.nextInt(word.length > 5 ? 5 : word.length)];
 			
 			
-			for(int i = 0; i < wordCnt; ++i) {
-				randomIdx[i] = ran.nextInt(wordCnt);
-				for(int j = 0; j < i; ++j) {
-					if(randomIdx[i] == randomIdx[j]) {
-						--i;
-						break;
-					}
-				}
-			}
-			System.out.println(Arrays.toString(randomIdx));
-
-
-			for(int i = 0; i < randomIdx.length; ++i) {
-				System.out.println("검색어 : " + word[randomIdx[i]]);
-				ArrayList<MovieInfoVO> result = mapper.searchMovie(word[randomIdx[i]]);
-				for(MovieInfoVO m : result) {
-					searchHistoryMovieList.add(m);
-				}
-			}
 
 			
 		} catch (Exception e) {
@@ -577,7 +563,7 @@ public class HomeServiceImpl implements HomeService {
 		
 		
 		
-		return searchHistoryMovieList;
+		return searchWord;
 	}
 
 

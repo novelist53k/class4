@@ -49,13 +49,12 @@
             </ul>
         </div>
         
+        <!-- 
         <hr>
         <h3 class="sliderTitle">
-        	<a href="#" style="${sessionScope.login == null ? 'visibility:hidden' : ''}">이런 영화는 어떠신가요?(사용자 검색기록을 통해 자주 사용된 단어로 영화를 가져옵니다)</a>
+        	<a href="searchHistory" style="${sessionScope.login == null ? 'visibility:hidden' : ''}">이런 영화는 어떠신가요?(사용자 검색기록을 통해 자주 사용된 단어로 영화를 가져옵니다)</a>
         </h3>
-        
-        <ul id="searchAnalysis" class="list_movie" >
-        </ul>
+ 		-->
 
      </section>
      

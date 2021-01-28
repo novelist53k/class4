@@ -41,7 +41,7 @@
 	</select>
 	<!-- 마이페이지 선호배우 띄우기 -->
 	<select id="getActorInfo" resultMap="getActorInfo" resultType="UserActorVO">
-  		select a.actorName from userActor ua left outer join actor a on ua.ano = a.ano where ua.uaId = #{userId}
+  		select a.*,ua.* from userActor ua left outer join actor a on ua.ano = a.ano where ua.uaId = #{userId}
   	</select>
   	<!-- 마이페이지 선호장르 띄우기 -->
   	<select id="getGenreInfo" resultMap="getGenreInfo" resultType="UserGenreVO">
@@ -49,7 +49,7 @@
   	</select>
   	<!-- 마이페이지 선호감독 띄우기 -->
   	<select id="getDirectorInfo" resultMap="getDirectorInfo" resultType="UserDirectorVO">
-  		select d.directorName from userDirector ud left outer join director d on ud.dno = d.dno where ud.udId = #{userId}
+  		select d.* from userDirector ud left outer join director d on ud.dno = d.dno where ud.udId = #{userId}
   	</select>
   	<!-- 가입시 선호 배우 검색 -->
   	<select id="actorName" resultType="ActorVO">

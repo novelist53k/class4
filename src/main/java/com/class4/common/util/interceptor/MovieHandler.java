@@ -10,15 +10,16 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.class4.command.UserVO;
 
-public class UserAuthHandler extends HandlerInterceptorAdapter{
+public class MovieHandler extends HandlerInterceptorAdapter{
 
    @Override
    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
          throws Exception {
+      
       HttpSession session = request.getSession();
       UserVO vo = (UserVO)session.getAttribute("login");
-      System.out.println( "유저인터셉터");
-      if (vo== null) {
+      System.out.println( "무비인터셉터 가동 ");
+      if (vo== null || !vo.getUserId().equals("admin")) {
          PrintWriter out = response.getWriter();
          out.println("<script>");
          out.println("alert('Permission Denied');");

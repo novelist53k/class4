@@ -2,6 +2,9 @@
     pageEncoding="UTF-8"%>
      <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
  <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+ <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+ 
 <style>
     body{
         position: relative;
@@ -23,7 +26,7 @@
 
     }
     .mypage-back{
-    	margin: 0 auto;
+       margin: 0 auto;
         padding: 50px;
         width: 1200px;
         line-height: normal;
@@ -336,23 +339,23 @@
     
     
     .profile{
-    	float:right;    	
-    	border: 1px solid grey;
-    	width:150px;  
-    	height:150px;
-    	
+       float:right;       
+       border: 1px solid grey;
+       width:150px;  
+       height:150px;
+       
     }
     .profile img{
-    	height: 150px;
-    	width: 150px;
-    	
+       height: 150px;
+       width: 150px;
+       
     }
     .profile input{width: 150px;}
     
     .upload{
     width:150px;}
     .genreLike{
-    	display:box;
+       display:box;
     }
 
 
@@ -372,59 +375,61 @@
       <form action="modify" class="joinForm" method="POST">
         <br>
         <label for="id" class="joinLabel">ID</label><br>
-       	<input type="text" class="joinId" name="userId" id="userId" value="${login.userId }" readonly><br>   
-       		     
+          <input type="text" class="joinId" name="userId" id="userId" value="${vo.userId }" readonly><br>   
+                  
         <label for="password" class="joinLabel pwlabel">PASSWORD</label><br>
-        <input type="password" class="userPw" name="userPw" id="userPw">
+        <input type="password" class="userPw" name="userPw" id="userPw"><label id="msgPw" class="msgPw"></label><br>
+        
         <label for="pwCheck" class="joinLabel">PASSWORD 확인</label><br>
-        <input type="password" class="pwCheck" name="pwCheck" id="pwCheck" ><br>
+        <input type="password" class="pwCheck" name="pwCheck" id="pwCheck" >
+        <label class="msgPw-c" id="msgPw-c"></label><br>
         <label for="pwCheck" class="joinLabel">이름</label><br>
         <input type="text" class="pwCheck" id="userName" name="userName">            
         <br>
         <label for="gender" class="joinLabel">성별</label>
                 
         <select name="userGender" id="userGender" class="gender">
-	      <option value="man" >남자</option>
+         <option value="man" >남자</option>
           <option value="woman">여자</option>
         </select>  
         
         <label for="gender" class="joinLabel"> 생년월일</label><br>
-            <select name="userYear" id="userYear" class="userYear">
-           		<c:forEach begin="1930" end="2015" var="i" >
-           		
-           		<option>${i }
-           		
-           		</c:forEach>
-           		</select> 
-           	<select name="userMonth" id="userMonth" class="userMonth">
-           	<c:forEach begin="1" end="12" var="i">
-           		<c:choose>
-           			<c:when test="${i<10 }">
-           				<option>0${i}
-           			</c:when>
-           			<c:otherwise>
-           				<option>${i }
-           			</c:otherwise>
-           		</c:choose>  
-           	</c:forEach>
-           	</select> 
+            <select name="userYear" id="userYear" class="userYear" >
+                 <c:forEach begin="1930" end="2015" var="i" >
+                 
+                 <option ${fn:substring(vo.userAge,0,4) eq i?'selected':''}>${i }
+                 
+                 </c:forEach>
+                 </select> 
+              <select name="userMonth" id="userMonth" class="userMonth">
+              <c:forEach begin="1" end="12" var="i">
+                 <c:choose>
+                    <c:when test="${i<10 }">
+                       <option  ${fn:substring(vo.userAge,6,7) eq i?'selected':''}>0${i}
+                    </c:when>
+                    <c:otherwise>
+                       <option  ${fn:substring(vo.userAge,5,7) eq i?'selected':''}>${i }
+                    </c:otherwise>
+                 </c:choose>  
+              </c:forEach>
+              </select> 
             <select name="userDay" id="userDay" class="userDay">
-           	<c:forEach begin="1" end="31" var="i">
-           		<c:choose>
-           			<c:when test="${i<10 }">
-           				<option>0${i}
-           			</c:when>
-           			<c:otherwise>
-           				<option>${i }
-           			</c:otherwise>
-           		</c:choose>       		
-           		
-           	</c:forEach>
+              <c:forEach begin="1" end="31" var="i">
+                 <c:choose>
+                    <c:when test="${i<10 }">
+                       <option  ${fn:substring(vo.userAge,9,10) eq i?'selected':''}>0${i}
+                    </c:when>
+                    <c:otherwise>
+                       <option  ${fn:substring(vo.userAge,8,10) eq i?'selected':''}>${i }
+                    </c:otherwise>
+                 </c:choose>             
+                 
+              </c:forEach>
             
             </select>
         <br>
         <label for="email" class="joinLabel">EMAIL</label><br>
-        <input type="text" class="email1" name="userEmail1" value="${vo.userEmail1 }"> @ 
+        <input type="text" class="email1" name="userEmail1"> @ 
        
        
         <select id="userEmail2" name="userEmail2" class="email2"  onchange="email(this)">          
@@ -447,10 +452,10 @@
         </div>
         <br>
         <div class="actorSection">
-          <label for="likeActor" class="joinLabel pwlabel">관심있는 배우</label><br>
+          <label for="likeActor" class="joinLabel pwlabel">좋아하는 배우</label><br>
                           
-             <c:forEach var="vo" items="${userActorInfo}">
-             	<input class="likeActor" id="likeActor" name="likeActor" value="${vo.actorName}" >
+             <c:forEach var="ua" items="${userActorInfo}">
+                <input class="likeActor" id="likeActor" name="likeActor" value="${ua.actorName}" >
                                    
              </c:forEach>     
         </div>
@@ -460,32 +465,22 @@
         <br>
         <br>
         <div class="diretorSection">
-        <label for="likeDirector" class="joinLabel pwlabel">관심있는 감독</label><br>
-        	 <c:forEach var="vo" items="${userDirectorInfo}">
-             	<input class="likeDirector" id="likeDirector" name="likeDirector" value="${vo.directorName }" >
+        <label for="likeDirector" class="joinLabel pwlabel">좋아하는 감독</label><br>
+            <c:forEach var="ud" items="${userDirectorInfo}">
+                <input class="likeDirector" id="likeDirector" name="likeDirector" value="${ud.directorName}" >
                                    
              </c:forEach>
       </div>
         <button type="button" class="add btn-primary" onclick="addDirector()">+</button>
         <button type="button" class="minus btn-primary" onclick="minusDirector()">-</button>
         
-        <div class="genre">
-    	    <c:set var="i" value="0" />
-
-			<c:set var="j" value="4" />
-
-		
-          <label class="joinLabel">선호하는 장르</label><br>
+        <div class="genre">      
+          <label class="joinLabel">좋아하는 장르</label><br>
           
-          	<c:forEach var="vo" items="${genreList}">
-          	
-        	  <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre"  name="genrelist" value="${vo}"/>${vo}</label>
-        	</c:forEach>
-             
-        	
-          
-        
-        
+                 <c:forEach items="${genreList }" var="g">             
+                       <label class="joinLabel checkboxLabel"><input type="checkbox" class="checkbox-genre"  name="genrelist" value="${g}"/>${g}</label>               
+                 </c:forEach>
+            
         </div>
         <br>
                 
@@ -499,7 +494,7 @@
 </section>
 <script>
 //패스워드 옵션
-	
+   
 
 var pw = document.getElementById("userPw");
     pw.onkeyup = function(){
@@ -556,10 +551,10 @@ var directorName = null;
   
   
   function autocomplete(a){
-	  count = $(".likeActor").length-1;
+     count = $(".likeActor").length-1;
   $(".likeActor").autocomplete({
-		 
-		 source : function( request, response ) {
+       
+       source : function( request, response ) {
        $.ajax({
               type: 'POST',
               url: "autocomplete",
@@ -568,25 +563,25 @@ var directorName = null;
               success: function(data) {
                   var result = data;
                   response(result);     
-  					
+                 
                   
                   
               },
               error : function(data) {
-              	
-              	
-              	console.log("에러발생");
+                 
+                 
+                 console.log("에러발생");
               }
-						
-					});
-       }				
-	});
+                  
+               });
+       }            
+   });
   }
   function autocomplete1(a){
-	  count1 = $(".likeDirector").length-1;
+     count1 = $(".likeDirector").length-1;
   $(".likeDirector").autocomplete({
-		 
-		 source : function( request, response ) {
+       
+       source : function( request, response ) {
        $.ajax({
               type: 'POST',
               url: "autocomplete1",
@@ -595,25 +590,25 @@ var directorName = null;
               success: function(data) {
                   var result = data;
                   response(result);     
-  					
+                 
                   
                   
               },
               error : function(data) {
-              	
-              	
-              	console.log("에러발생");
+                 
+                 
+                 console.log("에러발생");
               }
-						
-					});
-       }				
-	});
+                  
+               });
+       }            
+   });
   }
   function minusActor() {
     var inp = document.querySelector(".actorSection");
     
     if(inp.children.length > 2){
-    	inp.removeChild(inp.children[inp.children.length-1])
+       inp.removeChild(inp.children[inp.children.length-1])
     }
   }
   function minusDirector() {
@@ -623,14 +618,14 @@ var directorName = null;
 
 //주소찾기
   function goPopup(){
-    		var pop = window.open("${pageContext.request.contextPath}/resources/popup/jusoPopup.jsp","pop","width=570,height=420, scrollbars=yes, resizable=yes");
-    		
-    	}
-    	function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn,detBdNmList,bdNm,bdKdcd,siNm,sggNm,emdNm,liNm,rn,udrtYn,buldMnnm,buldSlno,mtYn,lnbrMnnm,lnbrSlno,emdNo){
-    		document.getElementById("addrBasic").value = roadAddrPart1;
-    		document.getElementById("addrDetail").value = addrDetail;
-    		document.getElementById("addrZipNum").value = zipNo;
-    	}
+          var pop = window.open("${pageContext.request.contextPath}/resources/popup/jusoPopup.jsp","pop","width=570,height=420, scrollbars=yes, resizable=yes");
+          
+       }
+       function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn,detBdNmList,bdNm,bdKdcd,siNm,sggNm,emdNm,liNm,rn,udrtYn,buldMnnm,buldSlno,mtYn,lnbrMnnm,lnbrSlno,emdNo){
+          document.getElementById("addrBasic").value = roadAddrPart1;
+          document.getElementById("addrDetail").value = addrDetail;
+          document.getElementById("addrZipNum").value = zipNo;
+       }
 
 
 

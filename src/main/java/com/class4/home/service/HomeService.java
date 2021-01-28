@@ -43,7 +43,7 @@ public interface HomeService {
 	
 	
 	// 검색 기록으로 영화 가져오기
-	public ArrayList<MovieInfoVO> getSearchHistoryMovieList(String id);
+	public String getSearchKeyword(String id);
 	
 	
 	// 검색

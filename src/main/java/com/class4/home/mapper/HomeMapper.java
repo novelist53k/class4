@@ -3,6 +3,7 @@ package com.class4.home.mapper;
 import java.util.ArrayList;
 
 import com.class4.command.MovieInfoVO;
+import com.class4.command.SearchHistoryVO;
 
 public interface HomeMapper {
 	
@@ -61,7 +62,7 @@ public interface HomeMapper {
 	public void replaceSearchHistory(String id, String keyword, int searchCnt);
 	
 	// 사용자 검색기록 추가
-	public void addSearchHistory(String id, String keyword);
+	public void addSearchHistory(SearchHistoryVO vo);
 	
 	// 영화 개수 가져오기
 	public int countMovie();

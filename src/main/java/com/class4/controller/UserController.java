@@ -293,6 +293,10 @@ public class UserController {
 			UserVO user = (UserVO)session.getAttribute("login");
 			vo.setUserPw(user.getUserPw());
 		}
+		if(vo.getUserName().equals("")) {
+			UserVO user = (UserVO)session.getAttribute("login");
+			vo.setUserName(user.getUserName());
+		}
 			
 		String birthday = vo.getUserDay()+"/"+vo.getUserMonth()+"/"+ vo.getUserYear();
 
@@ -321,6 +325,7 @@ public class UserController {
 		
 		if(vo.getLikeActor() != null) {
 		for (int i = 0; i < vo.getLikeActor().length; i++) {
+			
 			String actorName = vo.getLikeActor()[i].substring(0,vo.getLikeActor()[i].indexOf("."));
 			String factorName = vo.getLikeActor()[i].substring(vo.getLikeActor()[i].indexOf(".")+1,vo.getLikeActor()[i].lastIndexOf("."));
 			String aco = vo.getLikeActor()[i].substring(vo.getLikeActor()[i].lastIndexOf(".")+1);

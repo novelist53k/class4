@@ -125,7 +125,7 @@
 	<!-- 사용자 검색기록 추가 -->
 	<select id="addSearchHistory">
 		INSERT INTO SearchHistory
-		VALUES(search_history_seq.NEXTVAL, #{id}, #{keyword})
+		VALUES(search_history_seq.NEXTVAL, #{searchUserId}, #{keyword})
 	</select>
 	
 	<!-- 영화 개수 가져오기 -->

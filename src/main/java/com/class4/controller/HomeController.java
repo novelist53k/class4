@@ -2,6 +2,8 @@ package com.class4.controller;
 
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,11 +50,41 @@ public class HomeController {
 		int wTRDirector = 0;
 		int wTRGenre = 0;
 		
+		// 로그인시 선호 목록에 배우나 감독, 장르가 등록되었는지 확인하여 등록되었으면 0이 아닌 수를 반환
 		if(vo != null) {
 			wTRActor = homeService.getWhetherToRegistActor(vo.getUserId());
 			wTRDirector = homeService.getWhetherToRegistDirector(vo.getUserId());
 			wTRGenre = homeService.getWhetherToRegistGenre(vo.getUserId());
+			
+			// 사용자 성별에 따른 추천
+			ArrayList<MovieInfoVO> userLikeByGenderList = homeService.getUserByGenderML(vo.getUserGender());
+			model.addAttribute("listByGender", userLikeByGenderList);
+			
+			// 사용자 나이에 따른 추천
+			
+
+			ArrayList<MovieInfoVO> userLikeByAgeList = homeService.getUserByAgeML(20);
+			model.addAttribute("listByAge", userLikeByAgeList);
 		}
+		System.out.println(wTRActor);
+		
+		// 선호 배우가 존재시 이를 화면에 전달
+		if(wTRActor != 0) {
+			ArrayList<MovieInfoVO> userLikeActorList = homeService.getUserActorML(vo.getUserId());
+			model.addAttribute("userLikeActorList", userLikeActorList);
+		}
+		// 선호 감독이 존재시 이를 화면에 전달
+		if(wTRDirector != 0) {
+			ArrayList<MovieInfoVO> userLikeDirectorList = homeService.getUserDirectorML(vo.getUserId());
+			model.addAttribute("userLikeDirectorList", userLikeDirectorList);
+		}
+		// 선호 장르가 존재시 이를 화면에 전달
+		if(wTRGenre != 0) {
+			ArrayList<MovieInfoVO> userLikeGenreList = homeService.getUserGenreML(vo.getUserId());
+			model.addAttribute("userLikeGenreList", userLikeGenreList);
+		}
+		
+		
 		
 	
 		model.addAttribute("wTRActor", wTRActor);
@@ -138,7 +170,9 @@ public class HomeController {
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public String search(String keyword, Model model, HttpSession session) {
 		UserVO vo = (UserVO)session.getAttribute("login");
+		System.out.println(vo);
 		if(vo != null) {
+			System.out.println(vo.getUserId());
 			homeService.addSearchHistory(vo.getUserId(), keyword);
 		}
 		System.out.println(1);
@@ -154,21 +188,20 @@ public class HomeController {
 	
 	// 이런 영화는 어떠세요 버튼 누를 시 작동
 	// 검색 기록에서 많이 사용된 단어로 영화 검색
-	@GetMapping("/searchHistory")
-	@ResponseBody
-	public ArrayList<MovieInfoVO> searchHistory(HttpSession session) {
+	@RequestMapping(value = "/searchHistory", method = RequestMethod.GET)
+	public String searchHistory(HttpSession session) {
 		UserVO vo = (UserVO)session.getAttribute("login");
 		
 		if(vo == null) {
-			return new ArrayList<MovieInfoVO>();
+			return "";
 		}
 		
 		
 		// 검색기록 쿠키에 따른 텍스트마이닝
-		ArrayList<MovieInfoVO> searchHistoryList = homeService.getSearchHistoryMovieList(vo.getUserId());
+		String searchHistory = homeService.getSearchKeyword(vo.getUserId());
 
 		
-		return searchHistoryList;
+		return "search?=" + searchHistory;
 	}
 	
 	

@@ -87,7 +87,7 @@
 				        <div class="option">
 				            <div class="searchTheater">
 				                <form onsubmit="searchPlaces(); return false;">
-				                    키워드 : <input type="text" value="강남구 영화관" id="keyword" size="15"> 
+				                    키워드 : <input type="text" value="기흥구 영화관" id="keyword" size="15"> 
 				                    <button type="submit">검색하기</button> 
 				                </form>
 				            </div>

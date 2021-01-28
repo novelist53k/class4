@@ -12,34 +12,32 @@ import com.class4.command.UserVO;
 
 public class ReviewHandler extends HandlerInterceptorAdapter{
 
-	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception {
-		String writer = request.getParameter("writer");
-		HttpSession session = request.getSession();
-		UserVO vo = (UserVO)session.getAttribute("login");
-		System.out.println(writer);
-		System.out.println( "review인터셉터 실행");
-		if (vo != null) {
-			if(writer != null) {
-				if(vo.getUserId().equals(writer)) {
-					return true;
-				}
-			}
-			
-		}
-		response.setCharacterEncoding("UTF-8"); 
-		response.setContentType("text/html; charset=UTF-8");
-		
-		PrintWriter out = response.getWriter();
-		out.println("<script>");
-		out.println("alert('권한이 없습니다');");
-		out.println("history.go(-1);");		
-		out.println("</script>");	
-		
-		return false;
-	}
+   @Override
+   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+         throws Exception {
+      String writer = request.getParameter("writer");
+      HttpSession session = request.getSession();
+      UserVO vo = (UserVO)session.getAttribute("login");
+      System.out.println(writer);
+      System.out.println( "review인터셉터 실행");
+      if (vo != null) {
+         if(writer != null) {
+            if(vo.getUserId().equals(writer)) {
+               return true;
+            }
+         }
+         
+      }
+      
+      PrintWriter out = response.getWriter();
+      out.println("<script>");
+      out.println("alert('Permission Denied');");
+      out.println("history.go(-1);");      
+      out.println("</script>");   
+      
+      return false;
+   }
 
-	
-	
+   
+   
 }

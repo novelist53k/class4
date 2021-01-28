@@ -20,11 +20,11 @@
                 <li>
                     <div class="info_movie">
                         <span class="thumb_movie">
-                            <c:choose>
+                        	<c:choose>
                         	<c:when test="${vo.grade eq '청소년관람불가' && vo.poster eq null}">
                             <img src="${pageContext.request.contextPath }/resources/img/poster/a.jpg" class = "img_g">
                             </c:when>
-                            <c:when test="${vo.grade ne '청소년관람불가' && vo.poster eq null}">
+                        	<c:when test="${vo.grade ne '청소년관람불가' && vo.poster eq null}">
                             <img src="${pageContext.request.contextPath }/resources/img/poster/b.png" class = "img_g">
                             </c:when>
                             <c:otherwise>
@@ -44,7 +44,7 @@
                     <div class="wrap_movie">
                         <div class="info_tit">
                          <em class="ico_movie ico_allrating">${vo.grade }</em><br>
-                       <a href="#" class="name_movie" style="text-decoration: none; color :black; font-weight: 700">${vo.title }</a>
+                       <a href="movieContent?movieCd=${vo.movieCd }" class="name_movie" style="text-decoration: none; color :black; font-weight: 700">${vo.title }</a>
                     </div>
                         <span class="info_state"><fmt:formatDate value="${vo.openDt }" pattern="yyyy/MM/dd"/><b>개봉</b></span>
                     </div>
@@ -54,7 +54,7 @@
             </ul>
         </div>
         
-        <form action="movieExpected" name="pageForm">
+        <form action="movieCurrent" name="pageForm">
 		    		
                     <div class="text-center">
                     <hr>
@@ -81,8 +81,7 @@
                     </ul>
                     </div>
                    	<input type="hidden" name="pageNum" value="${pageVO.cri.pageNum }">
-		    		</form>		    		
-	      	<input type="button" value="영화등록" class="btn-regist">
+		    		</form>		   		
 
         
      </section>

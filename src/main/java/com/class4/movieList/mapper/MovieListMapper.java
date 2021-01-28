@@ -20,6 +20,8 @@ public interface MovieListMapper {
 	public int getTotalE();
 	public void update(MovieInfoVO vo);
 	public ArrayList<String> getGenreList();
+	public int getMovieSub(String title);
+	
 	
 	public void regist(MovieInfoVO vo);
 	public ArrayList<String> getCodeList();

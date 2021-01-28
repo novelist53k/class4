@@ -8,7 +8,7 @@
 
     <div class="container">
       <div class="outter">
-  
+  		<span id="msg"></span>   
         <div class="mid1">
           <div class="photo-box">
             <img src="${pageContext.request.contextPath }/resources/img/poster/${info.poster}" style="width: 200px; height: 306px;">
@@ -194,7 +194,6 @@
 	});
 	
 	$(".updbtn").click(function(){
-		console.log(1)
 		var cd = $("#movieCd").val();
 		document.regForm.cd.value=cd;
 		document.regForm.submit();
@@ -206,5 +205,9 @@
 		document.phoForm.submit();
 	});
 	
-	
+	 var msg="${msg}";
+     
+     if(msg != ""){
+        alert(msg);
+     }
 </script>

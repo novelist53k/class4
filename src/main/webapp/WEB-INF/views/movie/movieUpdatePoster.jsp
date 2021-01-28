@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 
    <section class="movie_regist_update_area">
-      <form action="modify" method="post" name="regForm">
+      <form action="poster" method="post" name="regForm">
         <h2>[수정]</h2><br><br>
         <table class="up">
         
@@ -39,7 +39,7 @@
     <script>
     $("#goback").click(function(){
     	var cd = $("#movieCd").val()
- 		location.href="movieCurrent";
+ 		document.regForm.submit();
     })
     
     $("#upload").click(function(){
@@ -49,7 +49,7 @@
  		
  		var file = file.substring(file.lastIndexOf('.')+1, file.length).toLowerCase();
  		if(file !="jpg" && file !="png"&&file!="jpeg" && file!="gif"){
- 			alert("이미지파일만 등록 가능");
+ 			alert("이미지파일만 등록 가능합니다");
  			return;
  		}
  		var data = $("#file")

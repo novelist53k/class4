@@ -10,6 +10,7 @@ import java.util.LinkedHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.class4.command.ActorVO;
 import com.class4.command.DirectorVO;
@@ -165,9 +166,10 @@ public class MovieListServiceImpl implements MovieListService{
 	         e.printStackTrace();
 	      }
 	      
+	      
 	   }
 	
-	
+	   
 	
 	
 	   //영화등록메서드
@@ -264,7 +266,8 @@ public class MovieListServiceImpl implements MovieListService{
 	         
 	   
 	         for(int i = 0 ; i < movieCdList.size(); ++i) {
-	            String strMovieInfo = service.getMovieInfo(true, movieCdList.get(i));
+	        	 String cd = movieCdList.get(i);
+	            String strMovieInfo = service.getMovieInfo(true,cd);
 	            HashMap<String, Object> movieInfoHashMap = mapper.readValue(strMovieInfo, HashMap.class);
 	            LinkedHashMap<String, Object> movieInfoResult = (LinkedHashMap<String, Object>) movieInfoHashMap.get("movieInfoResult");
 	            LinkedHashMap<String, Object> movieInfo = (LinkedHashMap<String, Object>) movieInfoResult.get("movieInfo");
@@ -402,7 +405,6 @@ public class MovieListServiceImpl implements MovieListService{
 	      
 	      
 	      
-	      
 	   }
 	
 	
@@ -438,11 +440,6 @@ public class MovieListServiceImpl implements MovieListService{
 
 
 
-	@Override
-	public MovieInfoVO getMovieInfo(String cd) {
-		
-		return movieListMapper.getMovieInfo(cd);
-	}
 	
 	@Override
 	public ArrayList<String> getActorCodeList() {
@@ -563,6 +560,28 @@ public class MovieListServiceImpl implements MovieListService{
 	public void registMovieDirector(MovieDirectorVO vo) {
 		movieListMapper.registMovieDirector(vo);
 	}
+
+
+
+
+	@Override
+	public int getMovieSub(String title) {
+		
+		return movieListMapper.getMovieSub(title);
+	}
+
+
+
+
+	@Override
+	public MovieInfoVO getMovieInfo(String cd) {
+	
+		return movieListMapper.getMovieInfo(cd);
+	}
+
+
+
+
 
 
 

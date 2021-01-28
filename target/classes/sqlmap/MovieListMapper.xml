@@ -53,7 +53,7 @@
 	</select>
 
 	<select id="getMovieInfo" resultType = "MovieInfoVO">
-select a.*,
+	select a.*,
       b.subhead,
   	  b.content,
   	  b.poster,
@@ -138,5 +138,9 @@ select a.*,
    <insert id="registMovieDirector">
       INSERT INTO movieDirector VALUES(movieDirector_seq.nextval, #{mno}, #{dno})
    </insert>
+   
+   <select id="getMovieSub" resultType ="int">
+   		SELECT count(*) from MOVIESUB where title = #{title}
+   </select>
 	
 </mapper>

@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -51,26 +52,41 @@ public class MovieController {
 		//영화 등록페이지
 		@RequestMapping("/movieRegist")
 		public String movieRegist() {
+			
 			return "movie/movieRegist";
 		}
 		
 		
 		// 영화 등록
 		@RequestMapping(value ="regist",method = RequestMethod.POST )
-		public String regist(RegistVO vo) {
+		public String regist(RegistVO vo, Model model,Criteria cri, MovieListVO listVO) {
 			
 			movieListService.regist(vo);
+			System.out.println("등록끝");
+			int total = movieListService.getTotalC();
+			ArrayList<MovieListVO> list = movieListService.cMovieList(cri);
+			PageVO pageVO = new PageVO(cri,total);
 			
-			return "redirect:/movie/movieCurrent";
+			model.addAttribute("list", list);
+			model.addAttribute("pageVO", pageVO);
+			
+			return "movie/movieCurrent";
 		
 				
 			
 		}
 		//사람등록
 		@RequestMapping(value="registP",method = RequestMethod.POST)
-		public String registPeople(RegistVO vo) {
+		public String registPeople(RegistVO vo,Model model,Criteria cri, MovieListVO listVO) {
 			
 			movieListService.registP(vo);
+			System.out.println("등록끝");
+			int total = movieListService.getTotalC();
+			ArrayList<MovieListVO> list = movieListService.cMovieList(cri);
+			PageVO pageVO = new PageVO(cri,total);
+			model.addAttribute("list", list);
+			model.addAttribute("pageVO", pageVO);
+			
 			return "movie/movieCurrent";
 		}
 		
@@ -107,7 +123,7 @@ public class MovieController {
 	}
 	
 	//영화 정보페이지
-	@RequestMapping("/movieContent")
+	@RequestMapping(value={"/movieContent", "/poster"})
 	public String movieContent(MovieInfoVO vo, Model model) {
 		String cd = vo.getMovieCd();
 		MovieInfoVO info = movieListService.getMovieInfo(cd);
@@ -147,13 +163,25 @@ public class MovieController {
 	
 	@RequestMapping(value="/modify",method=RequestMethod.POST)
 	public String movieUpdate(MovieInfoVO vo,Model model) {
-		
-		movieListService.update(vo);
-		System.out.println("됨?");
+		//조회
+		String title = vo.getTitle();
+		int result = movieListService.getMovieSub(title);
 		String cd = vo.getMovieCd();
+		System.out.println("컨트롤러 cd : "+cd);
+		if(result != 0) {
+			model.addAttribute("msg","이미 등록된 자료입니다");
+			MovieInfoVO info = movieListService.getMovieInfo(cd);
+			System.out.println("컨트롤러 info1 : " + info.toString());
+			model.addAttribute("info", info);
+			return "movie/movieContent";
+		}else {
+		System.out.println("else 실행");
+		movieListService.update(vo);
 		MovieInfoVO info = movieListService.getMovieInfo(cd);
+		model.addAttribute("msg","정상처리 되었습니다");
 		model.addAttribute("info", info);
-		return "redirect:/movie/movieContent";
+		return "movie/movieContent";
+		}
 	}
 	
 	
@@ -173,7 +201,7 @@ public class MovieController {
 			//String fileLoca = vo.getPoster();
 			
 			//占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙
-			String path = "C:\\Users\\user\\Desktop\\프로젝트\\class4\\class4\\src\\main\\webapp\\resources\\img\\poster";
+			String path = "C:\\Users\\1104-17\\Desktop\\teamclass4\\class4\\src\\main\\webapp\\resources\\img\\poster";
 			//String sqlPath = "\\movie\\resources\\img\\profile\\"+fileLoca;
 			File folder = new File(path);
 			if(!folder.exists()) {
